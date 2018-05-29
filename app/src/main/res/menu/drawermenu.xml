@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/ibadah" android:title="Ibadah" android:icon="@drawable/ibadahicon"/>
+        <item android:id="@+id/grafik" android:title="Grafik Istiqomah" android:icon="@drawable/graficicon"/>
+        <item android:id="@+id/info" android:title="Info Ibadah" android:icon="@drawable/infoicon"/>
+        <item android:id="@+id/notifikasi" android:title="Notifikasi" android:icon="@drawable/notificon"/>
+        <item android:id="@+id/pengaturan" android:title="Pengaturan" android:icon="@drawable/settingicon"/>
+    </group>
+</menu>
