@@ -58,14 +58,24 @@
                 <android.support.design.widget.TabLayout
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:elevation="3dp"
-                    app:layout_collapseMode="pin" />
+                    android:layout_height="55dp"
+                    app:layout_collapseMode="pin"
+                    app:tabTextColor="@color/fontTab"
+                    android:background="@color/white"
+                    app:tabTextAppearance="@style/TabLayoutTextStyle"
+                    />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_above="@+id/layoutDots"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="#EEEEEE" />
 
             </android.support.design.widget.AppBarLayout>
 
             <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
+                android:id="@+id/viewPagerHome"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />

@@ -44,23 +44,6 @@ public class InfoFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_info, container, false);
 
-        CoolToolbar = (CollapsingToolbarLayout) rootView.findViewById(R.id.MyCollapseToolbar);
-
-        ViewPager mViewPager = (ViewPager) rootView.findViewById(R.id.viewPager);
-        ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(this.getActivity().getSupportFragmentManager());
-        mViewPagerAdapter.addFragment(SholatFragment.newInstance(),"Sholat");
-        mViewPagerAdapter.addFragment(PuasaFragment.newInstance(),"Puasa");
-        mViewPagerAdapter.addFragment(SedekahFragment.newInstance(),"Sedekah");
-        mViewPager.setAdapter(mViewPagerAdapter);
-
-        mViewPager.setCurrentItem(0);
-
-        TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.addTab(tabLayout.newTab().setText("Sholat"));
-        tabLayout.addTab(tabLayout.newTab().setText("Puasa"));
-        tabLayout.addTab(tabLayout.newTab().setText("Sedekah"));
-
         return rootView;
     }
 }
