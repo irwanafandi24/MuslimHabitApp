@@ -37,15 +37,12 @@ public class IbadahFragment extends Fragment {
         mViewPagerAdapter.addFragment(SedekahFragment.newInstance(),"SEDEKAH");
         mViewPager.setAdapter(mViewPagerAdapter);
 
-        mViewPager.setCurrentItem(0);
-
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#23C27E"));
         tabLayout.setSelectedTabIndicatorHeight((int) (2 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#23C27E"));
-
-        tabLayout.setupWithViewPager(mViewPager);
         return rootView;
     }
 }
