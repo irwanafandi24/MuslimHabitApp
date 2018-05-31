@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/background_allert"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pilihan Waktu Notifikasi"
+        android:textSize="12pt"
+        android:gravity="center"
+        />
+    <View
+        style="@style/lineView"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        >
+    </View>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        >
+
+        <RadioButton
+            android:id="@+id/rd_3m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3 Menit"
+            />
+
+        <RadioButton
+            android:id="@+id/rd_5m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5 Menit"
+            />
+
+        <RadioButton
+            android:id="@+id/rd_10m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10 Menit"
+            />
+
+        <RadioButton
+            android:id="@+id/rd_15m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15 Menit"
+            />
+
+        <RadioButton
+            android:id="@+id/rd_30m"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30 Menit"
+            />
+    </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_ubah"
+            android:text="SIMPAN PILIHAN"
+            style="@style/customButton"
+            android:background="@drawable/background_button_succes"
+            />
+    <Button
+        android:id="@+id/btn_cancle"
+        android:text="BATAL"
+        style="@style/customButton"
+        android:background="@drawable/background_button_cancel"
+        />
+
+
+</LinearLayout>

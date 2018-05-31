@@ -17,9 +17,57 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="AppTheme.AppBarOverly" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
+    <style name="Titletext">
+        <item name="android:textColor">@color/lightgray</item>
+        <item name="android:background">@color/whitegray</item>
+        <item name="android:textSize">7pt</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:textStyle">normal</item>
+
+    </style>
+
+    <style name="LayoutInnerMargin">
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="Contenttext">
+        <item name="android:textSize">8pt</item>
+        <item name="android:textColor">@color/darkgrey</item>
+
+    </style>
+
+    <style name="Contentradio">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:textColor">@color/darkgrey</item>
+        <item name="android:checked">true</item>
+    </style>
+
+    <style name="lineView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1.5dp</item>
+        <item name="android:background">@color/lightgray</item>
+
+    </style>
+<!--=======-->
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="customButton">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+<!--&gt;>>>>>> df7362e290ecbc9c01c06cc8fde1965fc8602e53-->
 </resources>

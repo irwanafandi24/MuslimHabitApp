@@ -6,9 +6,167 @@
     tools:context=".fragment.NotifikasiFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="notig" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="WAKTU NOTIFIKASI"
+                style="@style/Titletext"
+                />
+            <View
+                style="@style/lineView"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LayoutInnerMargin"
+                android:id="@+id/rel_pick_reminder"
+                >
+
+                <TextView
+                    android:id="@+id/txt_pengingat_shalat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pengingat Shalat"
+                    android:textColor="@color/darkgrey"
+                    style="@style/Contenttext"
+
+                    />
+
+                <TextView
+                    android:id="@+id/txt_waktu_reminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/lightgray"
+                    style="@style/Contenttext"
+                    android:textSize="6pt"
+                    android:layout_below="@id/txt_pengingat_shalat"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_right"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/lineView"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SHALAT WAJIB"
+                style="@style/Titletext"
+                />
+            <View
+                style="@style/lineView"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                style="@style/LayoutInnerMargin"
+                >
+
+                <Switch
+                    android:id="@+id/sw_subuh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Contentradio"
+                    android:text="Subuh" />
+                <View
+                    style="@style/lineView"
+                    />
+                <Switch
+                    android:id="@+id/sw_duhur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Contentradio"
+                    android:text="Duhur" />
+                <View
+                    style="@style/lineView"
+                    />
+                <Switch
+                    android:id="@+id/sw_ashar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Contentradio"
+                    android:text="Ashar" />
+                <View
+                    style="@style/lineView"
+                    />
+                <Switch
+                    android:id="@+id/sw_maghrib"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Contentradio"
+                    android:text="Maghrib" />
+                <View
+                    style="@style/lineView"
+                    />
+                <Switch
+                    android:id="@+id/sw_isya"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Contentradio"
+                    android:text="Isya" />
+            </LinearLayout>
+
+            <View
+                style="@style/lineView"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SHALAT SUNNAH"
+                style="@style/Titletext"
+                />
+            <View
+                style="@style/lineView"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                style="@style/LayoutInnerMargin"
+                >
+
+                <Switch
+                    android:id="@+id/sw_duha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Contentradio"
+                    android:text="Duha" />
+                <View
+                    style="@style/lineView"
+                    />
+                <Switch
+                    android:id="@+id/sw_tahajud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Contentradio"
+                    android:text="Tahajud" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
 </FrameLayout>
