@@ -1,30 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recycleIbadah"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.SholatFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.SholatFragment"
+    android:background="@color/white"
+    app:layoutManager="LinearLayoutManager"
+    tools:listitem="@layout/sholatlist" >
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/main_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:fitsSystemWindows="true">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="kafir kurais kah..? sholat" />
-
-        </android.support.design.widget.CoordinatorLayout>
-    </RelativeLayout>
-
-</FrameLayout>
+</android.support.v7.widget.RecyclerView>
