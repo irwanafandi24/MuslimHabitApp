@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="15dp">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/topText"
+        android:text="Tambah Sholat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="22dp"/>
+
+    <TextView
+        android:id="@+id/jenis"
+        android:text="PILIH SHALAT"
+        android:layout_below="@+id/topText"
+        android:textColor="@color/fontPudar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="9dp"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerPilihShalat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/jenis" />
+
+    <View
+        android:id="@+id/grTempat"
+        android:layout_below="@+id/spinnerPilihShalat"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#EEEEEE"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tempat"
+        android:text="JUMLAH RAKAAT"
+        android:layout_below="@+id/grTempat"
+        android:textColor="@color/fontPudar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="9dp"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerJumlahRakaat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tempat" />
+
+    <View
+        android:id="@+id/grLast"
+        android:layout_below="@+id/spinnerJumlahRakaat"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#EEEEEE"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/Waktu"
+        android:text="MASUKKAN WAKTU"
+        android:layout_below="@+id/grLast"
+        android:textColor="@color/fontPudar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="9dp"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerPickTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Waktu" />
+
+    <View
+        android:id="@+id/grLastN"
+        android:layout_below="@+id/spinnerPickTime"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#EEEEEE"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/btnKonfirmTambah"
+        android:text="SIMPAN"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/grLastN"
+        android:layout_marginTop="10dp"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+
+</RelativeLayout>

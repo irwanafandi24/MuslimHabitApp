@@ -5,4 +5,31 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="spinSholat">
+        <item>Berjamaah</item>
+        <item>Sendirian</item>
+    </string-array>
+    <string-array name="spinTempatSholat">
+        <item>Masjid</item>
+        <item>Rumah</item>
+    </string-array>
+    <string-array name="spinKonfir">
+        <item>Ya</item>
+        <item>Tidak</item>
+    </string-array>
+    <string-array name="spinPilihSholat">
+        <item>Dhuha</item>
+        <item>Witir</item>
+        <item>Tahajut</item>
+        <item>Tasbih</item>
+        <item>Taubat</item>
+    </string-array>
+    <string-array name="spinRakaat">
+        <item>2 rakaat</item>
+        <item>4 rakaat</item>
+        <item>6 rakaat</item>
+        <item>8 rakaat</item>
+        <item>10 rakaat</item>
+        <item>12 rakaat</item>
+    </string-array>
 </resources>

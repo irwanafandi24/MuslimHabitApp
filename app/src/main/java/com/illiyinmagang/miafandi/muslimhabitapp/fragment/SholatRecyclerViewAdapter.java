@@ -3,13 +3,18 @@ package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
@@ -57,6 +62,85 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             holder.relativeLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
             holder.jamSholat.setTextColor(Color.parseColor("#23C27E"));
             holder.imageSholat.setImageResource(R.drawable.ibadahhijauicon);
+
+            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+            View mView = li.inflate(R.layout.dialogsholat, null);
+                Spinner spinnerJenisSholat = (Spinner) mView.findViewById(R.id.spinnerShalat);
+                ArrayAdapter<CharSequence> myAdapter = ArrayAdapter.createFromResource(context,R.array.spinSholat,android.R.layout.simple_spinner_item);
+                myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerJenisSholat.setAdapter(myAdapter);
+                spinnerJenisSholat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                    }
+                });
+
+            Spinner spinnerTempatSholat = (Spinner) mView.findViewById(R.id.spinnerTempat);
+            ArrayAdapter<CharSequence> myAdapter2 = ArrayAdapter.createFromResource(context,R.array.spinTempatSholat,android.R.layout.simple_spinner_item);
+            myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerTempatSholat.setAdapter(myAdapter2);
+            spinnerTempatSholat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+            Spinner spinnerQobliyah = (Spinner) mView.findViewById(R.id.spinnerQobliyah);
+            ArrayAdapter<CharSequence> myAdapter3 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
+            myAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerQobliyah.setAdapter(myAdapter3);
+            spinnerQobliyah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
+            Spinner spinnerBadiyah = (Spinner) mView.findViewById(R.id.spinnerBadiyah);
+            ArrayAdapter<CharSequence> myAdapter4 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
+            myAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerBadiyah.setAdapter(myAdapter4);
+            spinnerBadiyah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+            Button btnKonfirmasi =  (Button) mView.findViewById(R.id.btnKonfirmSholat);
+
+            mBuilder.setView(mView);
+            final AlertDialog dialog = mBuilder.create();
+            dialog.show();
+
+            btnKonfirmasi.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
         }
         else
         {
@@ -64,6 +148,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             holder.jamSholat.setTextColor(Color.parseColor("#C4C4C4"));
             holder.imageSholat.setImageResource(R.drawable.ibadahicon);
         }
+
     }
 
     @Override
@@ -99,7 +184,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
 
         @Override
         public void onClick(View v) {
-            int position = getAdapterPosition();
+//            int position = getAdapterPosition();
 //            Event contentEvent = mValues.get(position);
 //            Intent intent = new Intent(context, DetailEvent.class);
 //            intent.putExtra("judulAcara",contentEvent.getJudul());
@@ -112,6 +197,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
 //            intent.putExtra("noteAcara",contentEvent.getNote());
 //            intent.putExtra("posterAcara",contentEvent.getImage());
 //            context.startActivity(intent);
+
         }
     }
 }
