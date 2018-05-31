@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+
+    <TextView
+        android:id="@+id/txt_judul_alert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Peringatan"
+        android:textSize="12pt"
+        android:gravity="center"
+        />
+    <View
+        style="@style/lineView"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        >
+    </View>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleY="2"
+        android:scaleX="2"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:src="@drawable/ic_notifikasi_warning"
+        />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:id="@+id/txt_content_warning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Apakah Anda yakin ingin mematikan notifikasi shalat subuh ?"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        >
+
+        <Button
+            android:id="@+id/btn_batalkan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BATALKAN"
+            />
+
+        <Button
+            android:id="@+id/btn_matikan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MATIKAN"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -3,12 +3,242 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.SettingFragment">
+    tools:context=".fragment.SettingFragment"
+    >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="setting" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="UBAH LOKASI"
+                    style="@style/Titletext"
+                    />
+
+                <View
+                    style="@style/lineView"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/LayoutInnerMargin"
+                    android:id="@+id/rel_pick_location"
+                    >
+
+                    <ImageView
+                        android:id="@+id/imageLocation"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_location"
+                        />
+
+                    <TextView
+                        android:id="@+id/txt_location_now"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Malang, Jawa Timur"
+                        android:textColor="@color/darkgrey"
+                        style="@style/Contenttext"
+                        android:layout_toRightOf="@id/imageLocation"
+                        android:layout_marginLeft="10dp"
+                        />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_right"
+                        android:layout_alignParentRight="true"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    style="@style/lineView"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PILIH METODE KALKULASI"
+                    style="@style/Titletext"
+                    />
+
+                <View
+                    style="@style/lineView"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/LayoutInnerMargin"
+                    android:id="@+id/rel_metode_kalkulasi"
+                    android:orientation="vertical"
+                    >
+                        <TextView
+                            android:id="@+id/rd_itna"
+                            android:text="Itna Ashari"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Contentradio"
+                            android:checked="true"
+                            />
+
+                        <View
+                            android:id="@+id/ln1"
+                            android:layout_below="@id/rd_itna"
+                            style="@style/lineView"
+                            />
+
+                        <TextView
+                            android:layout_below="@+id/ln1"
+                            android:id="@+id/rd_Universitas_Islamic_Science"
+                            android:text="University of Islamic Science"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Contentradio"
+                            />
+                        <View
+                            android:id="@+id/ln2"
+                            android:layout_below="@id/rd_Universitas_Islamic_Science"
+                            style="@style/lineView"
+                            />
+
+                        <TextView
+                            android:layout_below="@+id/ln2"
+                            android:id="@+id/rd_ISNA"
+                            android:text="Islamic Society of North America (ISNA)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Contentradio"
+                            />
+
+                        <View
+                            android:id="@+id/ln3"
+                            android:layout_below="@id/rd_ISNA"
+                            style="@style/lineView"
+                            />
+
+                        <TextView
+                            android:layout_below="@id/ln3"
+                            android:id="@+id/rd_wml"
+                            android:text="Word Moslem League (WML)"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Contentradio"
+                            />
+                        <View
+                            android:layout_below="@id/rd_wml"
+                            android:id="@+id/ln4"
+                            style="@style/lineView"
+                            />
+                        <TextView
+                            android:layout_below="@id/ln4"
+                            android:id="@+id/rd_umm"
+                            android:text="Umm - Alqura, Makkah"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Contentradio"
+                            />
+                        <View
+                            android:layout_below="@id/rd_umm"
+                            android:id="@+id/ln5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            />
+
+                    <ImageView
+                        android:id="@+id/img_checked_kalkulasi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_check"
+                        android:layout_alignParentRight="true"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    style="@style/lineView"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PILIH METODE JURISTIK"
+                    style="@style/Titletext"
+                    />
+
+                <View
+                    style="@style/lineView"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/LayoutInnerMargin"
+                    >
+
+                    <RelativeLayout
+                        android:id="@+id/rg_pil_juristik"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/rd_shalafi"
+                            android:text="Imam Shalafi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Contentradio"
+                            android:checked="true"
+                            />
+
+                        <View
+                            android:layout_below="@+id/rd_shalafi"
+                            android:id="@+id/ln6"
+                            style="@style/lineView"
+                            />
+
+                        <TextView
+                            android:layout_below="@+id/ln6"
+                            android:id="@+id/rd_hanafi"
+                            android:text="Imam Hanafi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/Contentradio"
+                            />
+
+                        <View
+                            android:id="@+id/ln7"
+                            android:layout_below="@+id/rd_hanafi"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            />
+
+                        <ImageView
+                            android:id="@+id/imgCheckedJuristik"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_check"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="24dp"
+                            />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
 
 </FrameLayout>

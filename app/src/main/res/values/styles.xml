@@ -17,4 +17,42 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="AppTheme.AppBarOverly" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
+    <style name="Titletext">
+        <item name="android:textColor">@color/lightgray</item>
+        <item name="android:background">@color/whitegray</item>
+        <item name="android:textSize">7pt</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:textStyle">normal</item>
+
+    </style>
+
+    <style name="LayoutInnerMargin">
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="Contenttext">
+        <item name="android:textSize">8pt</item>
+        <item name="android:textColor">@color/darkgrey</item>
+
+    </style>
+
+    <style name="Contentradio">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:textColor">@color/darkgrey</item>
+    </style>
+
+    <style name="lineView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1.5dp</item>
+        <item name="android:background">@color/lightgray</item>
+
+    </style>
 </resources>
