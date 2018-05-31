@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/waktu"
+        android:text="WAKTU SHALAT"
+        android:textColor="@color/fontPudar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="9dp"/>
+
+    <RadioGroup
+        android:id="@+id/rdWaktu"
+        android:layout_below="@+id/waktu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/waktuYes"
+            android:text="Tepat Waktu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14dp"
+            android:layout_marginRight="10dp"
+            />
+
+        <RadioButton
+            android:id="@+id/waktuNo"
+            android:text="Terlambat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="14dp"
+            android:layout_marginRight="10dp"
+            />
+
+    </RadioGroup>
+
+    <View
+        android:id="@+id/grWaktu"
+        android:layout_below="@+id/rdWaktu"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@+id/layoutDots"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#EEEEEE"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/jenis"
+        android:text="JENIS SHALAT"
+        android:layout_below="@+id/grWaktu"
+        android:textColor="@color/fontPudar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="9dp"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerShalat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/jenis" />
+
+    <View
+        android:id="@+id/grTempat"
+        android:layout_below="@+id/spinnerShalat"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#EEEEEE"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/tempat"
+        android:text="TEMPAT SHALAT"
+        android:layout_below="@+id/grTempat"
+        android:textColor="@color/fontPudar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="9dp"
+        android:layout_marginTop="10dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerTempat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tempat" />
+
+    <View
+        android:id="@+id/grLast"
+        android:layout_below="@+id/spinnerTempat"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#EEEEEE"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grLast"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginRight="5dp">
+
+            <TextView
+                android:id="@+id/qobliyah"
+                android:text="SHALAT QOBLIYAH"
+                android:textColor="@color/fontPudar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="9dp"
+                android:layout_marginTop="10dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerQobliyah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tempat"
+                android:layout_marginTop="10dp"/>
+            <View
+                android:id="@+id/grLeft"
+                android:layout_below="@+id/spinnerTempat"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="#EEEEEE"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:id="@+id/badiyah"
+                android:text="SHALAT BADIYAH"
+                android:textColor="@color/fontPudar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="9dp"
+                android:layout_marginTop="10dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerBadiyah"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tempat"
+                android:layout_marginTop="10dp"/>
+            <View
+                android:id="@+id/grRight"
+                android:layout_below="@+id/spinnerTempat"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="#EEEEEE"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnKonfirmSholat"
+        android:text="SIMPAN"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/group"
+        android:layout_marginTop="10dp"
+        android:textSize="14dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
