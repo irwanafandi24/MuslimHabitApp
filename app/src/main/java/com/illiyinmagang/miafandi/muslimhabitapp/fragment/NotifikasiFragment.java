@@ -57,6 +57,8 @@ public class NotifikasiFragment extends Fragment implements View.OnClickListener
         swSubuh.setOnClickListener(this);
 
         relPickTime.setOnClickListener(this);
+
+        txtWaktuNotif.setText("15 Menit Sebelumnya");
         return v;
     }
 

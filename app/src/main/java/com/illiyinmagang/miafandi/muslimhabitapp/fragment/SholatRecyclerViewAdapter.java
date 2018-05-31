@@ -86,7 +86,6 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             namaSholat = (TextView) view.findViewById(R.id.txtShalat);
             tungguSholat = (TextView) view.findViewById(R.id.txtWaktu);
             jamSholat = (TextView) view.findViewById(R.id.txtJam);
-            //mContentView = (TextView) view.findViewById(R.id.txtDeskripsi);
             imageSholat = (ImageView) view.findViewById(R.id.iconSholat);
             relativeLayout = (RelativeLayout) view.findViewById(R.id.relatifSholat);
             view.setOnClickListener(this);
@@ -112,6 +111,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
 //            intent.putExtra("noteAcara",contentEvent.getNote());
 //            intent.putExtra("posterAcara",contentEvent.getImage());
 //            context.startActivity(intent);
+
         }
     }
 }
