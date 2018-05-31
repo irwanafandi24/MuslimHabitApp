@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/background_allert"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ubah Lokasi Sekarang"
+        android:textSize="12pt"
+        android:gravity="center"
+        />
+    <View
+        style="@style/lineView"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        >
+    </View>
+
+    <ImageView
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/placeholder2"
+        />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Aktifkan Koneksi Internet dan Layanan Lokasi anda"
+        />
+
+    <Button
+        android:id="@+id/btn_ubah_location"
+        android:text="UBAH LOKASI"
+        style="@style/customButton"
+        android:background="@drawable/background_button_succes"
+        />
+
+    <Button
+        android:id="@+id/btn_cancle_location"
+        android:text="BATAL"
+        style="@style/customButton"
+        android:background="@drawable/background_button_cancel"
+        />
+
+</LinearLayout>

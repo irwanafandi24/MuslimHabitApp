@@ -120,12 +120,10 @@ public class NotifikasiFragment extends Fragment implements View.OnClickListener
 
     public void showAllertDialog(final Context context, final TextView txt){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-        View mView = getLayoutInflater().inflate(R.layout.dialog_pilihwaktu_notifshalat, null);
+        final View mView = getLayoutInflater().inflate(R.layout.dialog_pilihwaktu_notifshalat, null);
 
         Button btnUbah = (Button) mView.findViewById(R.id.btn_ubah);
         Button btnBatal = (Button) mView.findViewById(R.id.btn_cancle);
-
-        final String waktu = getStringFromRadio(mView);
 
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
@@ -134,8 +132,9 @@ public class NotifikasiFragment extends Fragment implements View.OnClickListener
         btnUbah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context,"Berhasil Diganti",Toast.LENGTH_SHORT).show();
-                txt.setText(waktu+"Sebelum");
+                final String waktu = getStringFromRadio(mView);
+                Toast.makeText(context,"Berhasil Diganti "+waktu,Toast.LENGTH_SHORT).show();
+                txt.setText(waktu+" Sebelumnya");
                 dialog.dismiss();
             }
         });
@@ -164,9 +163,10 @@ public class NotifikasiFragment extends Fragment implements View.OnClickListener
             return rd10m.getText().toString();
         }else if(rd30m.isChecked()){
             return rd30m.getText().toString();
-        }else{
+        }else if(rd15m.isChecked()){
             return rd15m.getText().toString();
         }
+        return "";
     }
 }
 

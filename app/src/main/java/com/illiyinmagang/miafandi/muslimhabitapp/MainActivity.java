@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(id == R.id.ibadah){
             ft.replace(R.id.fragment, new IbadahFragment());
             //navigationView.setCheckedItem(R.id.ibadah);
-            getSupportActionBar().setTitle("Ibadah");
+            getSupportActionBar().setTitle("DiaryIbadah");
         }else if(id == R.id.grafik){
             ft.replace(R.id.fragment, new GrafikFragment());
             //navigationView.setCheckedItem(R.id.grafik);

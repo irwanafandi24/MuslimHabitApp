@@ -42,23 +42,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:gravity="center_horizontal"
         >
 
         <Button
-            android:id="@+id/btn_batalkan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BATALKAN"
+            android:id="@+id/btn_matikan"
+            style="@style/customButton"
+            android:text="MATIKAN"
+            android:background="@drawable/background_button_cancel"
             />
 
         <Button
-            android:id="@+id/btn_matikan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MATIKAN"
+            android:id="@+id/btn_batalkan"
+            style="@style/customButton"
+            android:text="BATALKAN"
+            android:background="@drawable/background_button_normal"
             />
 
     </LinearLayout>
