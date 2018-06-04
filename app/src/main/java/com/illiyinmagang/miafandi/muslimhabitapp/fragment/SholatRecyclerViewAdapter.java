@@ -1,7 +1,6 @@
 package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -38,7 +36,6 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final View rootView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sholatlist, parent, false);
-        final ViewHolder viewHolder = new ViewHolder(rootView);
 
         return new ViewHolder(rootView);
     }
@@ -56,6 +53,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             public void onClick(View view) {
                 row_index=position;
                 notifyDataSetChanged();
+
             }
         });
         if(row_index==position){
@@ -65,7 +63,8 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
 
             LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-            View mView = li.inflate(R.layout.dialogsholat, null);
+
+            final View mView = li.inflate(R.layout.dialogsholat, null);
                 Spinner spinnerJenisSholat = (Spinner) mView.findViewById(R.id.spinnerShalat);
                 ArrayAdapter<CharSequence> myAdapter = ArrayAdapter.createFromResource(context,R.array.spinSholat,android.R.layout.simple_spinner_item);
                 myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -129,6 +128,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
 
                 }
             });
+
             Button btnKonfirmasi =  (Button) mView.findViewById(R.id.btnKonfirmSholat);
 
             mBuilder.setView(mView);
@@ -148,6 +148,8 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             holder.jamSholat.setTextColor(Color.parseColor("#C4C4C4"));
             holder.imageSholat.setImageResource(R.drawable.ibadahicon);
         }
+
+
 
     }
 
@@ -173,7 +175,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             jamSholat = (TextView) view.findViewById(R.id.txtJam);
             imageSholat = (ImageView) view.findViewById(R.id.iconSholat);
             relativeLayout = (RelativeLayout) view.findViewById(R.id.relatifSholat);
-            view.setOnClickListener(this);
+            relativeLayout.setOnClickListener(this);
         }
 
         @Override
@@ -200,3 +202,6 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
         }
     }
 }
+
+
+

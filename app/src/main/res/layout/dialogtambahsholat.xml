@@ -78,15 +78,16 @@
         android:textSize="9dp"
         android:layout_marginTop="10dp"/>
 
-    <Spinner
-        android:id="@+id/spinnerPickTime"
+    <TextView
+        android:id="@+id/txtPickTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Pick Your Time Here"
         android:layout_below="@+id/Waktu" />
 
     <View
         android:id="@+id/grLastN"
-        android:layout_below="@+id/spinnerPickTime"
+        android:layout_below="@+id/txtPickTime"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_alignParentLeft="true"

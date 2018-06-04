@@ -181,6 +181,8 @@
 
         </LinearLayout>
 
+
+
     </LinearLayout>
     <Button
         android:id="@+id/btnKonfirmSholat"

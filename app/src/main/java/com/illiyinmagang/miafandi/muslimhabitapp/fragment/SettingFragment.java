@@ -3,14 +3,17 @@ package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,9 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.illiyinmagang.miafandi.muslimhabitapp.LocationConfig;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
@@ -44,6 +50,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private TextView txtLokasi;
     private LocationConfig locationConfig;
     private double longitude,latitude;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,7 +96,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         relPickLoc.setOnClickListener(this);
         return v;
     }
-
 
     @Override
     public void onClick(View v) {
@@ -141,21 +147,45 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         btnUbah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                locationConfig = new LocationConfig(context);
-
                 LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
-                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(getParentFragment().getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1);
+                if ( !lm.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+                    startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
                 }else{
-                    Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                    longitude = location.getLongitude();
-                    latitude = location.getLatitude();
-                }
+                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(getParentFragment().getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1);
+                    }else{
+//                        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+//                        if(location != null){
+//                            longitude = location.getLongitude();
+//                            latitude = location.getLatitude();
+//                            locationConfig = new LocationConfig(context);
+//                            locationConfig.getAddress(latitude,longitude);
+//                            txt.setText(locationConfig.getAddressComplete());
+//                        }else{
+//                            Toast.makeText(context,"GPS Sedang Diaktifkan, Harap Tunggu sebentar dan Coba lagi",Toast.LENGTH_SHORT).show();
+//                        }
+//                        dialog.dismiss();
 
-                locationConfig.getAddress(latitude,longitude);
-                txt.setText(locationConfig.getAddressComplete());
-                dialog.dismiss();
+                        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
+                        mFusedLocationClient.getLastLocation()
+                                .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                                    @Override
+                                    public void onSuccess(Location location) {
+                                        if (location != null) {
+                                            longitude = location.getLongitude();
+                                            latitude = location.getLatitude();
+                                            locationConfig = new LocationConfig(context);
+                                            locationConfig.getAddress(latitude,longitude);
+                                            txt.setText(locationConfig.getAddressComplete());
+                                        }else{
+                                            Toast.makeText(context,"GPS Sedang Diaktifkan, Harap Tunggu sebentar dan Coba lagi",Toast.LENGTH_SHORT).show();
+                                        }
+                                        dialog.dismiss();
+                                    }
+                                });
+                    }
+                }
             }
         });
 

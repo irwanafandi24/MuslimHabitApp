@@ -1,17 +1,15 @@
 package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 
 import android.annotation.TargetApi;
-import android.content.Context;
+import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 //<<<<<<< HEAD
 import android.support.annotation.RequiresApi;
 //=======
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 //>>>>>>> a3665afc1a6936768ebd25bd612a3bdd30d1ac4e
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -26,22 +24,20 @@ import android.widget.ImageButton;
 //=======
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 //>>>>>>> a3665afc1a6936768ebd25bd612a3bdd30d1ac4e
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class IbadahFragment extends Fragment implements View.OnClickListener{
     private ImageButton btnRight,btnLeft;
-    private TextView txtTanggal, txtBulan;
+    private TextView txtTanggal, txtBulan, txtTime;
     private ArrayList<Date> dates;
     private static int position = 1;
     private SimpleDateFormat month_date;
@@ -142,6 +138,24 @@ public class IbadahFragment extends Fragment implements View.OnClickListener{
                     }
                 });
 
+                txtTime = (TextView) mView.findViewById(R.id.txtPickTime);
+                Calendar calendar = Calendar.getInstance();
+                final int jam  = calendar.get(Calendar.HOUR_OF_DAY);
+                final int menit = calendar.get(Calendar.MINUTE);
+
+                txtTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            txtTime.setText(hourOfDay+":"+minute+"PM");
+                        }
+                    },jam,menit,true);
+                    timePickerDialog.show();
+                }
+            });
+
                 Button btnKonfirmasiTambah =  (Button) mView.findViewById(R.id.btnKonfirmTambah);
 
                 mBuilder.setView(mView);
@@ -181,5 +195,4 @@ public class IbadahFragment extends Fragment implements View.OnClickListener{
 
         }
     }
-
 }
