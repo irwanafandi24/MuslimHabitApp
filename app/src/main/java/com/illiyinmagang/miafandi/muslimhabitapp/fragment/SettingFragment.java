@@ -30,7 +30,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.illiyinmagang.miafandi.muslimhabitapp.LocationConfig;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
-public class SettingFragment extends Fragment implements View.OnClickListener {
+public class SettingFragment extends MyFragment implements View.OnClickListener {
 
     public SettingFragment() {
         // Required empty public constructor

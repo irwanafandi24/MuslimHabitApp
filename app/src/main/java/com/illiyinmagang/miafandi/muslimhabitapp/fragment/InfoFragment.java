@@ -17,7 +17,7 @@ import android.widget.ImageView;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
-public class InfoFragment extends Fragment {
+public class InfoFragment extends MyFragment {
     private CollapsingToolbarLayout CoolToolbar;
     private ImageView img;
     private Toolbar toolbar;

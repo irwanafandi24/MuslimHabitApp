@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
-public class PuasaFragment extends Fragment {
+public class PuasaFragment extends MyFragment {
     public PuasaFragment() {
         // Required empty public constructor
     }

@@ -12,9 +12,15 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 //>>>>>>> a3665afc1a6936768ebd25bd612a3bdd30d1ac4e
 import android.support.design.widget.TabLayout;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.TransitionInflater;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.transition.Visibility;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class IbadahFragment extends Fragment implements View.OnClickListener{
+public class IbadahFragment extends MyFragment implements View.OnClickListener{
     private ImageButton btnRight,btnLeft;
     private TextView txtTanggal, txtBulan, txtTime;
     private ArrayList<Date> dates;
@@ -50,7 +56,6 @@ public class IbadahFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @TargetApi(Build.VERSION_CODES.N)

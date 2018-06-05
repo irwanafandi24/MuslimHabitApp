@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
-public class NotifikasiFragment extends Fragment implements View.OnClickListener{
+public class NotifikasiFragment extends MyFragment implements View.OnClickListener{
     public NotifikasiFragment() {
         // Required empty public constructor
     }

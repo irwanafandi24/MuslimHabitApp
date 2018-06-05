@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
-public class GrafikFragment extends Fragment {
+public class GrafikFragment extends MyFragment {
     public GrafikFragment() {
         // Required empty public constructor
     }
