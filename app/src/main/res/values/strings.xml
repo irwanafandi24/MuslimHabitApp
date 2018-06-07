@@ -32,4 +32,18 @@
         <item>10 rakaat</item>
         <item>12 rakaat</item>
     </string-array>
+    <string-array name="months">
+        <item>Januari</item>
+        <item>Februari</item>
+        <item>Maret</item>
+        <item>April</item>
+        <item>Mei</item>
+        <item>Juni</item>
+        <item>Juli</item>
+        <item>Agustus</item>
+        <item>September</item>
+        <item>Oktober</item>
+        <item>Nopember</item>
+        <item>Desember</item>
+    </string-array>
 </resources>

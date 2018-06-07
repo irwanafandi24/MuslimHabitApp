@@ -17,8 +17,10 @@ import android.widget.ListView;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.Sholat;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajib;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SholatFragment extends MyFragment {
     private RecyclerView recyclerView;
@@ -28,6 +30,14 @@ public class SholatFragment extends MyFragment {
     public SholatFragment() {
         // Required empty public constructor
     }
+//    public static SholatFragment newInstance(SholatWajib sholats) {
+//        SholatFragment fragment = new SholatFragment();
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
+//        fragment.sholatArrayList.add(sholats.getSholat(0));
+//        return fragment;
+//    }
+
     public static SholatFragment newInstance() {
         SholatFragment fragment = new SholatFragment();
         Bundle args = new Bundle();

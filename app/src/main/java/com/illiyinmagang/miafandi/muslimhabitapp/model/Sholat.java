@@ -1,7 +1,7 @@
 package com.illiyinmagang.miafandi.muslimhabitapp.model;
 
 public class Sholat {
-    private String namaSholat, waktuTunggu, jamSholat;
+    private String namaSholat, waktuTunggu, jamSholat, tanggal;
     private int image;
 
     public Sholat(String namaSholat, String waktuTunggu, String jamSholat, int image) {
@@ -9,6 +9,18 @@ public class Sholat {
         this.waktuTunggu = waktuTunggu;
         this.jamSholat = jamSholat;
         this.image = image;
+    }
+
+    public Sholat(String namaSholat, String waktuTunggu, String jamSholat, String tanggal, int image) {
+        this.namaSholat = namaSholat;
+        this.waktuTunggu = waktuTunggu;
+        this.jamSholat = jamSholat;
+        this.tanggal = tanggal;
+        this.image = image;
+    }
+
+    public String getTanggal() {
+        return tanggal;
     }
 
     public String getNamaSholat() {

@@ -27,7 +27,9 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.LocationConfig;
+import com.illiyinmagang.miafandi.muslimhabitapp.MainActivity;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
 public class SettingFragment extends MyFragment implements View.OnClickListener {
@@ -51,11 +53,14 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
     private LocationConfig locationConfig;
     private double longitude,latitude;
     private FusedLocationProviderClient mFusedLocationClient;
+    private MyLocatoin myLocatoin;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_setting, container, false);
+
+        myLocatoin = new MyLocatoin(this.getContext());
 
         relPickLoc = (RelativeLayout) v.findViewById(R.id.rel_pick_location);
         txtLokasi = (TextView) v.findViewById(R.id.txt_location_now);
@@ -175,9 +180,11 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
                                         if (location != null) {
                                             longitude = location.getLongitude();
                                             latitude = location.getLatitude();
+
                                             locationConfig = new LocationConfig(context);
                                             locationConfig.getAddress(latitude,longitude);
                                             txt.setText(locationConfig.getAddressComplete());
+                                            myLocatoin.noteMyLocation(locationConfig.getCity().toLowerCase());
                                         }else{
                                             Toast.makeText(context,"GPS Sedang Diaktifkan, Harap Tunggu sebentar dan Coba lagi",Toast.LENGTH_SHORT).show();
                                         }

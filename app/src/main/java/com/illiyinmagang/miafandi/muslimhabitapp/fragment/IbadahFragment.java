@@ -6,37 +6,25 @@ import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
-//<<<<<<< HEAD
 import android.support.annotation.RequiresApi;
-//=======
 import android.support.design.widget.FloatingActionButton;
-//>>>>>>> a3665afc1a6936768ebd25bd612a3bdd30d1ac4e
 import android.support.design.widget.TabLayout;
-import android.transition.Fade;
-import android.transition.Slide;
-import android.transition.TransitionInflater;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.transition.Visibility;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-//<<<<<<< HEAD
 import android.widget.Button;
 import android.widget.ImageButton;
-//=======
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-//>>>>>>> a3665afc1a6936768ebd25bd612a3bdd30d1ac4e
 import android.widget.TextView;
 import android.widget.TimePicker;
-
+import android.widget.Toast;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -48,6 +36,8 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
     private static int position = 1;
     private SimpleDateFormat month_date;
     private String month_name;
+    ViewGroup viewGroup1;
+    private MyLocatoin myLocatoin;
 
     public IbadahFragment() {
         // Required empty public constructor
@@ -65,6 +55,15 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_ibadah, container, false);
         // Inflate the layout for this fragment
+        myLocatoin = new MyLocatoin(this.getContext());
+
+        if(!myLocatoin.getMynotedLocation().equals("malang")){
+            Toast.makeText(this.getContext(),"Jadwal Lokasi Anda Sekarang berada di Kota Malang, Atur Lokasi anda di menu setting",Toast.LENGTH_SHORT).show();
+        }
+
+//        SholatAPI sholatAPI = new SholatAPI(myLocatoin.getMynotedLocation(),getContext());
+//        sholatAPI.setJadwalSholat1Year();
+//        Log.e("nao2",sholatAPI.getShalatofDay(0).getSholat(0).getJamSholat());
 
         ViewPager mViewPager = (ViewPager) rootView.findViewById(R.id.viewPagerHome);
         ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(this.getActivity().getSupportFragmentManager());
@@ -98,11 +97,10 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
         dates.add(new Date(2018,10,10));
         dates.add(new Date(2018,10,11));
 
-        month_date = new SimpleDateFormat("MMMM");
+//        month_date = new SimpleDateFormat("MMMM");
+        setUpTanggal();
 
-        month_name = month_date.format(dates.get(position));
-        txtTanggal.setText(String.valueOf(dates.get(position).getDate()));
-        txtBulan.setText(month_name+" November, 2018");
+        viewGroup1 = (ViewGroup) rootView.findViewById(R.id.layout_top);
 //=======
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -186,18 +184,29 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
         if(v==btnLeft){
             if(position > 0){
                 position = position -1;
-                month_name = month_date.format(dates.get(position));
-                txtTanggal.setText(String.valueOf(dates.get(position).getDate()));
-                txtBulan.setText(month_name+" November, 2018");
+                setUpTanggal();
             }
         }else if(v==btnRight){
             if(position < dates.size()-1){
                 position = position +1;
-                month_name = month_date.format(dates.get(position));
-                txtTanggal.setText(String.valueOf(dates.get(position).getDate()));
-                txtBulan.setText(month_name+" November, 2018");
+                setUpTanggal();
             }
 
         }
+    }
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void setUpTanggal(){
+//        month_name = month_date.format(dates.get(position));
+        String tanggal = String.valueOf(dates.get(position).getDate());
+        if (tanggal.length() < 2){
+            tanggal = "0"+tanggal;
+        }
+        txtTanggal.setText(tanggal);
+//        txtBulan.setText(month_name+", "+dates.get(position).getYear());
+        txtBulan.setText(getNameOfMonth(dates.get(position).getMonth())+", "+dates.get(position).getYear());
+    }
+
+    public String getNameOfMonth(int i){
+        return this.getContext().getResources().getStringArray(R.array.months)[i];
     }
 }
