@@ -9,126 +9,141 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyJSONListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by user on 06/06/2018.
  */
 
 public class SholatAPI {
-    private String URL = "http://muslimsalat.com/";
-    private List<SholatWajib> sholats;
-    private AndroidNetworking androidNetworking;
+    private String URL;
+    public ArrayList<SholatWajib> sholats = new ArrayList();;
+    public AndroidNetworking androidNetworking;
     private Context context;
+    private Realm realm;
+    private RealmResults<SholatWajib> sholatWajibs;
 
     public SholatAPI(String kota, Context context) {
-        this.URL = this.URL+kota+"/yearly.json?key=api_key";
-        this.sholats = new ArrayList();
+        Log.e("kota",kota);
+        if(kota == ""){
+            this.URL = "http://muslimsalat.com/malang/yearly.json?key=api_key";
+        }else{
+            this.URL = "http://muslimsalat.com/"+kota+"/yearly.json?key=api_key";
+        }
+
         this.context = context;
+        this.realm = Realm.getDefaultInstance();
     }
 
     public SholatWajib getShalatofDay(int i){
-        return sholats.get(i);
+        return this.sholats.get(i);
     }
 
     public void setJadwalSholat1Year(){
-        this.androidNetworking.initialize(context);
-        Log.e("berhasil1",this.URL);
-        androidNetworking.get(this.URL)
-                .setPriority(Priority.LOW)
-                .build()
-                .getAsJSONObject(new JSONObjectRequestListener() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.e("berhasil2","berhasil2");
-                try {
-                    JSONArray items = response.getJSONArray("items");;
-                    JSONObject jadwal;
-                    for (int i = 0; i < items.length(); i++) {
-                        jadwal = items.getJSONObject(i);
-                        sholats.add(
-                                //nambah jadwal tiap hari
-                                new SholatWajib(
-                                        //nambah untuk semua sholat wajib
-                                        new Sholat(jadwal.getString("Subuh"),
-                                                "",
-                                                jadwal.getString("fajr"),
-                                                0),
-                                        new Sholat(jadwal.getString("Duhur"),
-                                                "",
-                                                jadwal.getString("dhuhr"),
-                                                0),
-                                        new Sholat(jadwal.getString("Ashar"),
-                                                "",
-                                                jadwal.getString("asr"),
-                                                0),
-                                        new Sholat(jadwal.getString("Maghrib"),
-                                                "",
-                                                jadwal.getString("maghrib"),
-                                                0),
-                                        new Sholat(jadwal.getString("Isya"),
-                                                "",
-                                                jadwal.getString("isha"),
-                                                0)
-                                ).setTanggal(jadwal.getString("date_for"))
-                        );
-                    }
+        AndroidNetworking.get(this.URL)
+                    .setTag("test")
+                    .setPriority(Priority.LOW)
+                    .build()
+                    .getAsJSONObject(new JSONObjectRequestListener() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                JSONArray items = response.getJSONArray("items");
+                                for (int i = 0; i < items.length(); i++) {
+                                    JSONObject jadwal = items.getJSONObject(i);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
+                                    final SholatWajib sholatWajib = new SholatWajib(
+                                            //nambah untuk semua sholat wajib
+                                            new Sholat("Subuh",
+                                                    "",
+                                                    jadwal.getString("fajr"),
+                                                    0),
+                                            new Sholat("Duhur",
+                                                    "",
+                                                    jadwal.getString("dhuhr"),
+                                                    0),
+                                            new Sholat("Ashar",
+                                                    "",
+                                                    jadwal.getString("asr"),
+                                                    0),
+                                            new Sholat("Maghrib",
+                                                    "",
+                                                    jadwal.getString("maghrib"),
+                                                    0),
+                                            new Sholat("Isya",
+                                                    "",
+                                                    jadwal.getString("isha"),
+                                                    0)
+                                    ).setTanggal(jadwal.getString("date_for"));
 
-            @Override
-            public void onError(ANError anError) {
-                Log.e("error_nao",anError.getErrorDetail());
-            }
-        });
+//                                    Number currentIdNum = realm.where(SholatWajib.class).max("id");
+//                                    int nextId;
+//                                    if (currentIdNum == null) {
+//                                        nextId = 1;
+//                                    } else {
+//                                        nextId = currentIdNum.intValue() + 1;
+//                                    }
+//                                    sholatWajib.setId(nextId);
+//                                    realm.copyToRealm(sholatWajib);
 
+                                    realm.executeTransaction(new Realm.Transaction() {
+                                        @Override
+                                        public void execute(Realm realm) {
+                                            Number currentIdNum = realm.where(SholatWajib.class).max("id");
+                                            int nextId;
+                                            if (currentIdNum == null) {
+                                                nextId = 1;
+                                            } else {
+                                                nextId = currentIdNum.intValue() + 1;
+                                            }
+                                            sholatWajib.setId(nextId);
+                                            realm.copyToRealm(sholatWajib);
+                                        }
+                                    });
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.e("error_nao",e.getMessage());
+                            }
+                        }
 
-//        try {
-//            JSONObject forcast = new JSONObject(URL);
-//            JSONArray items = forcast.getJSONArray("items");;
-//            JSONObject jadwal;
-//            for (int i = 0; i < items.length(); i++) {
-//                jadwal = items.getJSONObject(i);
-//
-//                sholats.add(
-//                        //nambah jadwal tiap hari
-//                        new SholatWajib(
-//                                //nambah untuk semua sholat wajib
-//                                new Sholat(jadwal.getString("Subuh"),
-//                                        "",
-//                                        jadwal.getString("fajr"),
-//                                        0),
-//                                new Sholat(jadwal.getString("Duhur"),
-//                                        "",
-//                                        jadwal.getString("dhuhr"),
-//                                        0),
-//                                new Sholat(jadwal.getString("Ashar"),
-//                                        "",
-//                                        jadwal.getString("asr"),
-//                                        0),
-//                                new Sholat(jadwal.getString("Maghrib"),
-//                                        "",
-//                                        jadwal.getString("maghrib"),
-//                                        0),
-//                                new Sholat(jadwal.getString("Isya"),
-//                                        "",
-//                                        jadwal.getString("isha"),
-//                                        0)
-//                        ).setTanggal(jadwal.getString("date_for"))
-//                );
-//            }
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
+                        @Override
+                        public void onError(ANError anError) {
+                            Log.e("error_nao", anError.getErrorDetail());
+                        }
+
+                    });
+    }
+
+    public ArrayList<SholatWajib> getDataShalat(){
+              sholatWajibs = realm.where(SholatWajib.class).findAll();
+               Log.e("lol1",sholatWajibs.size()+"");
+               if (sholatWajibs.size() > 0) {
+                   for (int i = 0; i < sholatWajibs.size(); i++) {
+                       sholats.add(sholatWajibs.get(i));
+                   }
+               } else {
+                   return sholats;
+               }
+
+           return sholats;
+    }
+
+    private void showLog(String s) {
+        Log.d("naon", s);
+
     }
 }

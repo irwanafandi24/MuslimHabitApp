@@ -6,9 +6,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Fade;
-import android.transition.Slide;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,13 +27,6 @@ public class SholatFragment extends MyFragment {
     public SholatFragment() {
         // Required empty public constructor
     }
-//    public static SholatFragment newInstance(SholatWajib sholats) {
-//        SholatFragment fragment = new SholatFragment();
-//        Bundle args = new Bundle();
-//        fragment.setArguments(args);
-//        fragment.sholatArrayList.add(sholats.getSholat(0));
-//        return fragment;
-//    }
 
     public static SholatFragment newInstance() {
         SholatFragment fragment = new SholatFragment();
@@ -44,7 +34,6 @@ public class SholatFragment extends MyFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

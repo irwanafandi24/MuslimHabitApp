@@ -1,6 +1,8 @@
 package com.illiyinmagang.miafandi.muslimhabitapp.model;
 
-public class Sholat {
+import io.realm.RealmObject;
+
+public class Sholat extends RealmObject {
     private String namaSholat, waktuTunggu, jamSholat, tanggal;
     private int image;
 
@@ -9,6 +11,9 @@ public class Sholat {
         this.waktuTunggu = waktuTunggu;
         this.jamSholat = jamSholat;
         this.image = image;
+    }
+
+    public Sholat() {
     }
 
     public Sholat(String namaSholat, String waktuTunggu, String jamSholat, String tanggal, int image) {

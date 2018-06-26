@@ -158,20 +158,8 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
                     startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
                 }else{
                     if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(getParentFragment().getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1);
+                        ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1);
                     }else{
-//                        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-//                        if(location != null){
-//                            longitude = location.getLongitude();
-//                            latitude = location.getLatitude();
-//                            locationConfig = new LocationConfig(context);
-//                            locationConfig.getAddress(latitude,longitude);
-//                            txt.setText(locationConfig.getAddressComplete());
-//                        }else{
-//                            Toast.makeText(context,"GPS Sedang Diaktifkan, Harap Tunggu sebentar dan Coba lagi",Toast.LENGTH_SHORT).show();
-//                        }
-//                        dialog.dismiss();
-
                         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(context);
                         mFusedLocationClient.getLastLocation()
                                 .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {

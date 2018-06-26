@@ -128,6 +128,7 @@ public class NotifikasiFragment extends MyFragment implements View.OnClickListen
         Button btnBatal = (Button) mView.findViewById(R.id.btn_cancle);
 
         mBuilder.setView(mView);
+        mBuilder.setCancelable(false);
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
 
