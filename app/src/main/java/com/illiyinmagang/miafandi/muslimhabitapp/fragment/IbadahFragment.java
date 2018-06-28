@@ -3,6 +3,7 @@ package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.icu.text.SimpleDateFormat;
 import android.os.Build;
@@ -24,6 +25,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyDateSelected;
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
@@ -40,12 +43,13 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
     private ImageButton btnRight,btnLeft;
     private TextView txtTanggal, txtBulan, txtTime;
     private ArrayList<Date> dates;
-    private static int position = 1;
+    public static int position = 1;
     ViewGroup viewGroup1;
     private MyLocatoin myLocatoin;
     private SholatAPI sholatAPI;
-    public ArrayList<SholatWajib> sholatWajibs = new ArrayList();
     private Realm realm;
+    public ArrayList<SholatWajib> sholatWajibs = new ArrayList();
+    private MyDateSelected myDateSelected;
 
     public IbadahFragment() {
         // Required empty public constructor
@@ -63,7 +67,8 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_ibadah, container, false);
         // Inflate the layout for this fragment
-
+//        i = new Intent();
+        myDateSelected = new MyDateSelected(getContext());
         myLocatoin = new MyLocatoin(this.getContext());
 //
         if(!myLocatoin.getMynotedLocation().equals("malang")){
@@ -74,7 +79,11 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
 
         ViewPager mViewPager = (ViewPager) rootView.findViewById(R.id.viewPagerHome);
         ViewPagerAdapter mViewPagerAdapter = new ViewPagerAdapter(this.getActivity().getSupportFragmentManager());
-        mViewPagerAdapter.addFragment(SholatFragment.newInstance(),"SHALAT");
+        SholatFragment sholatFragment = new SholatFragment();
+        PuasaFragment  puasaFragment = new PuasaFragment();
+        SedekahFragment sedekahFragment = new SedekahFragment();
+
+        mViewPagerAdapter.addFragment(sholatFragment.newInstance(),"SHALAT");
         mViewPagerAdapter.addFragment(PuasaFragment.newInstance(),"PUASA");
         mViewPagerAdapter.addFragment(SedekahFragment.newInstance(),"SEDEKAH");
         mViewPager.setAdapter(mViewPagerAdapter);
@@ -181,22 +190,54 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
             }
         });
 
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = mdformat.format(calendar.getTime());
+
+        char a[] = strDate.toCharArray();
+        char separator = '-';
+        String tgl = "" ,bulan = "",tahun = "";
+        int count = 0,i = 0;
+        while (i < a.length) {
+            if (a[i] != separator) {
+                switch (count) {
+                    case 0:
+                        tahun = tahun + a[i];
+                        break;
+                    case 1:
+                        bulan = bulan + a[i];
+                        break;
+                    case 2:
+                        tgl = tgl + a[i];
+                        break;
+                }
+
+            } else {
+                count++;
+            }
+            i++;
+        }
+
+        Log.d("tanggal1", strDate);
+
         //getData jadwal dari API + masuk ke local db
         sholatAPI = new SholatAPI(myLocatoin.getMynotedLocation(),getContext());
 
         RealmResults results = realm.where(SholatWajib.class).findAll();
         if(results.size() == 0){
             sholatAPI.setJadwalSholat1Year();
-//            sholatWajibs = sholatAPI.getDataShalat();
-        }
-        if(results.size() > 0){
+            position = sholatAPI.getDataPosistionByDate(strDate);
+            myDateSelected.notePosition(position);
             setUpTanggal();
         }
+        if(results.size() > 0){
+            position = sholatAPI.getDataPosistionByDate(strDate);
+            myDateSelected.notePosition(position);
+            setUpTanggal();
+            Log.e("posisiku",sholatAPI.getDataPosistionByDate(strDate)+"");
+
+        }
         Log.e("nop",sholatAPI.getDataShalat().size()+","+sholatWajibs.size());
-//        if(sholatWajibs.size() > 0){
-//            Log.e("noop",sholatAPI.getDataShalat().size()+".");
-//
-//        }
 
         return rootView;
     }
@@ -205,28 +246,37 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         if(v==btnLeft){
-            if(position > 0){
-                position = position -1;
+            if(position > 0) {
+                position = position - 1;
+//                SholatFragment.position = position;
+                myDateSelected.notePosition(position);
                 setUpTanggal();
             }
         }else if(v==btnRight){
-            if(position < sholatAPI.getDataShalat().size()-1){
+            //32 data yang kelebihan bulan desember
+            if(position < sholatAPI.getDataShalat().size()-32){
+                btnRight.setVisibility(View.VISIBLE);
                 position = position +1;
+                myDateSelected.notePosition(position);
                 setUpTanggal();
             }
-
         }
     }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setUpTanggal(){
-        String tanggal = sholatAPI.getDataShalat().get(position).getTanggal();
-        String thn = sholatAPI.getDataShalat().get(position).getTahun();
-        int bulan = sholatAPI.getDataShalat().get(position).getBulan();
-        if (tanggal.length() < 2){
-            tanggal = "0"+tanggal;
+        try {
+            String tanggal = sholatAPI.getDataShalat().get(position).getTanggal();
+            String thn = sholatAPI.getDataShalat().get(position).getTahun();
+            int bulan = sholatAPI.getDataShalat().get(position).getBulan();
+
+            Log.e("posisiku1",tanggal+"."+bulan+"."+position);
+
+            txtTanggal.setText(tanggal);
+            txtBulan.setText(getNameOfMonth(bulan) +", "+thn);
+        }catch (ArrayIndexOutOfBoundsException e){
+
         }
-        txtTanggal.setText(tanggal);
-        txtBulan.setText(getNameOfMonth(bulan) +", "+thn);
     }
 
     public String getNameOfMonth(int i){

@@ -99,6 +99,7 @@ public class NotifikasiFragment extends MyFragment implements View.OnClickListen
         TextView contentWarning = (TextView) mView.findViewById(R.id.txt_content_warning);
         contentWarning.setText("Apakah Anda yakin ingin mematikan notifikasi shalat "+Content.toUpperCase()+" ?");
         mBuilder.setView(mView);
+        mBuilder.setCancelable(false);
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
 

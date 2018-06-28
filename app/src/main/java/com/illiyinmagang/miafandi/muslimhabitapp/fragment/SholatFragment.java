@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyDateSelected;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.Sholat;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajib;
 
 import java.util.ArrayList;
@@ -23,6 +26,9 @@ public class SholatFragment extends MyFragment {
     private RecyclerView recyclerView;
     private ArrayList<Sholat> sholatArrayList;
     private ArrayList<Integer> gambar;
+    private SholatAPI sholatAPI;
+    private MyDateSelected myDateSelected;
+    private Sholat sholatSubuh, sholatDuhur, sholatAshar, sholatMaghrib, sholatIsya;
 
     public SholatFragment() {
         // Required empty public constructor
@@ -44,21 +50,34 @@ public class SholatFragment extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_sholat, container, false);
+
+        myDateSelected = new MyDateSelected(getContext());
+        myDateSelected.getMyPosisition();
+        Toast.makeText(getContext(),myDateSelected.getMyPosisition()+"",Toast.LENGTH_LONG).show();
+
+        sholatAPI = new SholatAPI();
+
+        sholatSubuh = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatsubuh();
+        sholatDuhur = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatDuhur();
+        sholatAshar = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatAshar();
+        sholatMaghrib = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatMaghrib();
+        sholatIsya = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatIsya();
+
         sholatArrayList = new ArrayList();
         gambar = new ArrayList();
 
         gambar.add(R.drawable.ibadahicon);
-        sholatArrayList.add(new Sholat("Shalat Subuh","30 Menit Lagi","04.10",gambar.get(0)));
-        sholatArrayList.add(new Sholat("Shalat Duhur","60 Jam Lalu","11.45",gambar.get(0)));
-        sholatArrayList.add(new Sholat("Shalat Ashar","45 Menit Lalu","14.50",gambar.get(0)));
-        sholatArrayList.add(new Sholat("Shalat Magrib","90 Menit Lagi","17.30",gambar.get(0)));
-        sholatArrayList.add(new Sholat("Shalat Isya","55 Menit Lagi","18.27",gambar.get(0)));
-
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycleIbadah);
+
+        sholatArrayList.clear();
+        sholatArrayList.add(new Sholat(sholatSubuh.getNamaSholat(),"30 Menit Lagi",sholatSubuh.getJamSholat(),gambar.get(0)));
+        sholatArrayList.add(new Sholat(sholatDuhur.getNamaSholat(),"30 Menit Lagi",sholatDuhur.getJamSholat(),gambar.get(0)));
+        sholatArrayList.add(new Sholat(sholatAshar.getNamaSholat(),"30 Menit Lagi",sholatAshar.getJamSholat(),gambar.get(0)));
+        sholatArrayList.add(new Sholat(sholatMaghrib.getNamaSholat(),"30 Menit Lagi",sholatMaghrib.getJamSholat(),gambar.get(0)));
+        sholatArrayList.add(new Sholat(sholatIsya.getNamaSholat(),"30 Menit Lagi",sholatIsya.getJamSholat(),gambar.get(0)));
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(new SholatRecyclerViewAdapter(sholatArrayList, this.getContext()));
-
-
         return rootView;
     }
 }
