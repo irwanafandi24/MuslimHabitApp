@@ -27,6 +27,10 @@
         <activity android:name=".introslider.IntroActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity"></activity>
+        <service
+        android:name=".Notif.NotificationDisplayService"
+        android:enabled="true"
+        android:exported="true"></service>
     </application>
 
 </manifest>
