@@ -1,20 +1,19 @@
-package com.illiyinmagang.miafandi.switchrealm.Adapter;
+package com.illiyinmagang.miafandi.muslimhabitapp.Adapter;
 
 import android.content.Context;
-import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.illiyinmagang.miafandi.switchrealm.MainActivity;
-import com.illiyinmagang.miafandi.switchrealm.R;
-import com.illiyinmagang.miafandi.switchrealm.model.RealmHelper;
-import com.illiyinmagang.miafandi.switchrealm.model.SholatWajibNotif;
+import com.illiyinmagang.miafandi.muslimhabitapp.R;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.RealmHelper;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajibNotif;
 
 import java.util.List;
 
@@ -26,6 +25,7 @@ public class SholatAdapter extends RecyclerView.Adapter<SholatAdapter.MyViewHold
     Context context;
     Realm realm;
     RealmHelper realmHelper;
+    public Boolean switched;
 
     public SholatAdapter(Context context, List<SholatWajibNotif> sholatList) {
         this.context = context;
@@ -67,7 +67,43 @@ public class SholatAdapter extends RecyclerView.Adapter<SholatAdapter.MyViewHold
         public void onClick(View view) {
             int posisi = sholatList.get(getAdapterPosition()).getId();
             String namaSholat = sholatList.get(getAdapterPosition()).getNamaSholat();
+            Boolean check = sholatList.get(getAdapterPosition()).isSwitchSholat();
             Boolean switched = true;
+            Log.v("Detail Checked",posisi + " - "+check);
+
+            //=============================================
+            if(check == true) {
+                AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+                View mView = LayoutInflater.from(context).inflate(R.layout.dialog_warning_notifshalat, null);
+                //        getLayoutInflater().inflate(R.layout.dialog_warning_notifshalat, null);
+
+                Button btnMati = (Button) mView.findViewById(R.id.btn_matikan);
+                Button btnBatal = (Button) mView.findViewById(R.id.btn_batalkan);
+
+                TextView contentWarning = (TextView) mView.findViewById(R.id.txt_content_warning);
+                contentWarning.setText("Apakah Anda yakin ingin mematikan notifikasi shalat " + namaSholat.toUpperCase() + " ?");
+                mBuilder.setView(mView);
+                final AlertDialog dialog = mBuilder.create();
+                dialog.show();
+
+                btnMati.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switchDetail.setChecked(false);
+                        dialog.dismiss();
+                    }
+                });
+
+                btnBatal.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        switchDetail.setChecked(true);
+                        dialog.cancel();
+                    }
+                });
+            }
+            //=============================================
+
             if(!switchDetail.isChecked()){
                 switched = false;
             }

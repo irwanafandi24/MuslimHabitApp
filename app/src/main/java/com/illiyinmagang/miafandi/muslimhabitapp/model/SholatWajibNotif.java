@@ -1,4 +1,4 @@
-package com.illiyinmagang.miafandi.switchrealm.model;
+package com.illiyinmagang.miafandi.muslimhabitapp.model;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

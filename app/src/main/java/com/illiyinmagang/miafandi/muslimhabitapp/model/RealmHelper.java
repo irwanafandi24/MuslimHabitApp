@@ -1,4 +1,4 @@
-package com.illiyinmagang.miafandi.switchrealm.model;
+package com.illiyinmagang.miafandi.muslimhabitapp.model;
 
 import android.util.Log;
 
@@ -57,6 +57,56 @@ public class RealmHelper {
             public void onSuccess() {
                 // Transaction was a success.f
                 Log.v("UPDATE","Success update data");
+            }
+        }, new Realm.Transaction.OnError() {
+            @Override
+            public void onError(Throwable error) {
+                // Transaction failed and was automatically canceled.
+                Log.e("UPDATE ERROR : ",error.getMessage());
+            }
+        });
+    }
+
+    public void saveAlarem(final Alarm alarm){
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                if(realm != null){
+                    Log.e("Database Detail: ","Database have been created before");
+                    Number currentData = realm.where(Alarm.class).max("idAlarm");
+                    int numberId;
+                    if(currentData==null){
+                        numberId = 1;
+                    }else{
+                        numberId = currentData.intValue()+1;
+                    }
+                    alarm.setIdAlarm(numberId);
+                    Log.e("Database Detail: ","Database have been created before");
+                    Alarm p = realm.copyToRealm(alarm);
+                }else{
+                    Log.e("Database Detail: ","Database not exis");
+                }
+            }
+        });
+    }
+
+    public List<Alarm> getAllAlarm(){
+        RealmResults<Alarm> alarmRealmResults = realm.where(Alarm.class).findAll();
+        return alarmRealmResults;
+    }
+
+    public void updateAlarem(final int id, final String newTime){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Alarm alarmSholat = realm.where(Alarm.class).equalTo("idAlarm",id).findFirst();
+                alarmSholat.setWaktuAlaram(newTime);
+            }
+        }, new Realm.Transaction.OnSuccess() {
+            @Override
+            public void onSuccess() {
+                // Transaction was a success.f
+                Log.v("UPDATE","Success update data - Waktu");
             }
         }, new Realm.Transaction.OnError() {
             @Override
