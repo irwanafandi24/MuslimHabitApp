@@ -15,22 +15,16 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!--<style name="BaseAppTheme" parent="android:Theme.Material" tools:targetApi="lollipop">-->
-        <!--<item name="android:windowActivityTransitions">true</item>-->
-
-        <!--&lt;!&ndash; specify enter and exit transitions &ndash;&gt;-->
-        <!--<item name="android:windowEnterTransition">@transition/explode</item>-->
-        <!--<item name="android:windowExitTransition">@transition/explode</item>-->
-
-        <!--&lt;!&ndash; specify shared element transitions &ndash;&gt;-->
-        <!--<item name="android:windowSharedElementEnterTransition">-->
-            <!--@transition/change_image_transform</item>-->
-        <!--<item name="android:windowSharedElementExitTransition">-->
-            <!--@transition/change_image_transform</item>-->
-    <!--</style>-->
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="AppTheme.AppBarOverly" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="paddwongTextLayout">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:background">@color/white</item>
+    </style>
 
     <style name="Titletext">
         <item name="android:textColor">@color/lightgray</item>

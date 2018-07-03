@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
             }
         }else if(v==btn_daftar){
-
+            startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
         }
     }
 }
