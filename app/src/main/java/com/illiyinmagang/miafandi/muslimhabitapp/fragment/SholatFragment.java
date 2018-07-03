@@ -1,5 +1,6 @@
 package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyDateSelected;
+import com.illiyinmagang.miafandi.muslimhabitapp.Notif.NotificationDisplayService;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.Sholat;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
@@ -111,6 +113,7 @@ public class SholatFragment extends MyFragment {
                 imbuhan = "Menuju Adzan";
             }else if(selisih < 0){
                 imbuhan = "Setelah Adzan";
+                selisih = selisih*-1;
             }else{
                 imbuhan = "Adzan";
             }
@@ -135,21 +138,19 @@ public class SholatFragment extends MyFragment {
     }
 
     public long convertMinutes(Date now, Date sholat){
-        long jam_now, jm_sholat, menit_now, menit_sholat;
+        long jam_now, jm_sholat, menit_now, menit_sholat, totalMenit;
         jam_now = now.getHours();
         jm_sholat = sholat.getHours();
         menit_now = now.getMinutes();
         menit_sholat = sholat.getMinutes();
 
-        if(menit_now > menit_sholat){
-            jm_sholat = jm_sholat - 1;
-            menit_sholat = menit_sholat + 60;
+        totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now);
+
+        if (totalMenit == 0){
+            getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
         }
 
-        long totalMenit = (jm_sholat - jam_now )*60 + (menit_sholat - menit_now);
-        if(totalMenit < 0){
-            totalMenit = totalMenit * -1;
-        }
+        Log.v("Tanda Menit adalah",totalMenit+"");
         return  totalMenit;
     };
 
