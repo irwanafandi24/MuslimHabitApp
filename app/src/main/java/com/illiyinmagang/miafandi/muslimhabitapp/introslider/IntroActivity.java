@@ -2,8 +2,6 @@ package com.illiyinmagang.miafandi.muslimhabitapp.introslider;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.annotation.ColorRes;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -59,10 +57,9 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         } else {
             txtSkip.setText("SKIP");
         }
-        if (position == 3) {
+        if (position == 2) {
             txtNext.setText("DONE");
         }
-
     }
 
     @Override
@@ -70,7 +67,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         if (v == txtNext) {
             if (posisi < 2) {
                 slider.setCurrentItem(posisi + 1);
-            } else if (posisi == 2) {
+            } else if (txtNext.getText().toString().equals("DONE")) {
                 startActivity(new Intent(IntroActivity.this, LoginActivity.class));
 //            }
             } else if (v == txtSkip) {
@@ -101,4 +98,3 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         }
     };
 }
-

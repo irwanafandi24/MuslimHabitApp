@@ -26,6 +26,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         btn_fb = (LinearLayout) findViewById(R.id.btn_fb);
         btn_twitter = (LinearLayout) findViewById(R.id.btn_tw);
+
+        btn_masuk.setOnClickListener(this);
+        btn_daftar.setOnClickListener(this);
     }
 
     @Override
