@@ -185,19 +185,6 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
 
         @Override
         public void onClick(View v) {
-//            int position = getAdapterPosition();
-//            Event contentEvent = mValues.get(position);
-//            Intent intent = new Intent(context, DetailEvent.class);
-//            intent.putExtra("judulAcara",contentEvent.getJudul());
-//            intent.putExtra("pembuatAcara",contentEvent.getPembuat());
-//            intent.putExtra("tanggalAcara",contentEvent.getTanggal());
-//            intent.putExtra("statusAcara",contentEvent.getStatus());
-//            intent.putExtra("tempatAcara",contentEvent.getTempat());
-//            intent.putExtra("deskripsiAcara",contentEvent.getDeskripsi());
-//            intent.putExtra("jamAcara",contentEvent.getWaktu());
-//            intent.putExtra("noteAcara",contentEvent.getNote());
-//            intent.putExtra("posterAcara",contentEvent.getImage());
-//            context.startActivity(intent);
 
         }
     }

@@ -23,16 +23,25 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.GrafikFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.IbadahFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.InfoFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.NotifikasiFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.SettingFragment;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajib;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
     private NavigationView navigationView;
+    private MyLocatoin myLocatoin;
+    private SholatAPI sholatAPI;
+    private Realm realm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
             navigationView.setCheckedItem(R.id.ibadah);
         }
-
     }
 
     @Override

@@ -26,10 +26,6 @@ public class SholatWajib extends RealmObject {
     private String bulan;
     private String tahun;
 
-    public void setTgl(String tgl) {
-        this.tgl = tgl;
-    }
-
     public void setBulan(String bulan) {
         this.bulan = bulan;
     }
@@ -49,6 +45,15 @@ public class SholatWajib extends RealmObject {
     public SholatWajib() {
     }
 
+    public String getTanggalLengkap(){
+        String bul = String.valueOf(getBulan());
+        if(bul.length() < 2){
+            return this.getTahun()+"-0"+this.getBulan()+"-"+this.getTanggal();
+        }else{
+            return this.getTahun()+"-"+this.getBulan()+"-"+this.getTanggal();
+        }
+
+    }
     public SholatWajib setTanggal(String tanggal) {
         this.tanggal = tanggal;
         char a[] = tanggal.toCharArray();
@@ -103,13 +108,18 @@ public class SholatWajib extends RealmObject {
     }
 
     public void setSeparateDate(String tgl, String bulan, String tahun){
-        setTgl(tgl);
+        this.tgl = tgl;
         setBulan(bulan);
         setTahun(tahun);
         Log.e("tanggal",tgl+"."+bulan+"."+tahun);
     }
     public String getTanggal() {
-        return this.tgl;
+        if (tgl.length() < 2){
+            return "0"+this.tgl;
+        }else{
+            return this.tgl;
+        }
+
     }
     public int getBulan(){
         return Integer.parseInt(this.bulan);

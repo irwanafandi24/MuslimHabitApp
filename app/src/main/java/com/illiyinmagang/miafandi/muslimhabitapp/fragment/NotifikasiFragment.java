@@ -146,6 +146,7 @@ public class NotifikasiFragment extends MyFragment implements View.OnClickListen
         }
     }
 
+//<<<<<<< HEAD
 //    public void showAllertDialog(String judul, String Content, Context context, final Switch sw){
 //        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
 //        View mView = getLayoutInflater().inflate(R.layout.dialog_warning_notifshalat, null);
@@ -176,6 +177,39 @@ public class NotifikasiFragment extends MyFragment implements View.OnClickListen
 //        });
 //
 //    }
+//=======
+    public void showAllertDialog(String judul, String Content, Context context, final Switch sw){
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+        View mView = getLayoutInflater().inflate(R.layout.dialog_warning_notifshalat, null);
+
+        Button btnMati = (Button) mView.findViewById(R.id.btn_matikan);
+        Button btnBatal = (Button) mView.findViewById(R.id.btn_batalkan);
+
+        TextView contentWarning = (TextView) mView.findViewById(R.id.txt_content_warning);
+        contentWarning.setText("Apakah Anda yakin ingin mematikan notifikasi shalat "+Content.toUpperCase()+" ?");
+        mBuilder.setView(mView);
+        mBuilder.setCancelable(false);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        btnMati.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            sw.setChecked(false);
+                dialog.dismiss();
+            }
+        });
+
+        btnBatal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sw.setChecked(true);
+                dialog.cancel();
+            }
+        });
+
+    }
+//>>>>>>> 3e608ed26405357874d06a84b2316aa92b65ab3f
 
     public void showAllertDialog(final Context context, final TextView txt){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
