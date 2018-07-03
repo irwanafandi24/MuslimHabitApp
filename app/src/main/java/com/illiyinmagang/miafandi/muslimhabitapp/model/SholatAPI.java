@@ -30,10 +30,12 @@ import static android.content.ContentValues.TAG;
 
 public class SholatAPI {
     private String URL;
+    private Context context;
     public ArrayList<SholatWajib> sholats = new ArrayList();
     public ArrayList<SholatWajib> sholatA = new ArrayList();
     private Realm realm;
-    private RealmResults<SholatWajib> sholatWajibs;
+    private RealmResults<SholatWajib>sholatWajibs;
+    private AndroidNetworking androidNetworking;
 
     public SholatAPI(String kota, Context context) {
         Log.e("kota", kota);
@@ -42,6 +44,7 @@ public class SholatAPI {
         } else {
             this.URL = "http://muslimsalat.com/" + kota + "/yearly.json?key=api_key";
         }
+        this.context = context;
         this.realm = Realm.getDefaultInstance();
     }
 
@@ -54,7 +57,9 @@ public class SholatAPI {
     }
 
     public void setJadwalSholat1Year() {
-        AndroidNetworking.get(this.URL)
+        androidNetworking.initialize(context);
+        Log.e("androidnet",androidNetworking+"");
+        androidNetworking.post(this.URL)
                 .setTag("test")
                 .setPriority(Priority.LOW)
                 .build()
@@ -63,8 +68,8 @@ public class SholatAPI {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray items = response.getJSONArray("items");
-                            for (int i = 0; i < items.length(); i++) {
-                                JSONObject jadwal = items.getJSONObject(i);
+//                            for (int i = 0; i < items.length(); i++) {
+                                JSONObject jadwal = items.getJSONObject(0);
 
                                 final SholatWajib sholatWajib = new SholatWajib(
                                         //nambah untuk semua sholat wajib
@@ -114,15 +119,15 @@ public class SholatAPI {
                                         realm.copyToRealm(sholatWajib);
                                     }
                                 });
-                            }
                         } catch (JSONException e) {
-                            e.printStackTrace();
+//                            e.printStackTrace();
                             Log.e("error_nao", e.getMessage());
                         }
                     }
 
                     @Override
                     public void onError(ANError anError) {
+//                        anError.printStackTrace();
                         Log.e("error_nao", anError.getErrorDetail());
                     }
 
@@ -149,7 +154,7 @@ public class SholatAPI {
         sholatWajibs = realm.where(SholatWajib.class).findAll();
         sholatA = new ArrayList(sholatWajibs);
 
-        Log.e("lol1", sholatA.get(2).getTanggalLengkap()+ ","+tgl);
+//        Log.e("lol1", sholatA.get(2).getTanggalLengkap()+ ","+tgl);
         while (a < sholatA.size() &&
                 !sholatA.get(a).getTanggalLengkap().equals(tgl)
                 ) {

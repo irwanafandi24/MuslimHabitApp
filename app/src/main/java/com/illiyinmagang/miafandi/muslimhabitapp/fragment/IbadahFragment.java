@@ -190,35 +190,35 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
             }
         });
 
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = mdformat.format(calendar.getTime());
+//        Calendar calendar = Calendar.getInstance();
+//        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
+//        String strDate = mdformat.format(calendar.getTime());
+//
+////        char a[] = strDate.toCharArray();
+//        char separator = '-';
+//        String tgl = "" ,bulan = "",tahun = "";
+//        int count = 0,i = 0;
+//        while (i < a.length) {
+//            if (a[i] != separator) {
+//                switch (count) {
+//                    case 0:
+//                        tahun = tahun + a[i];
+//                        break;
+//                    case 1:
+//                        bulan = bulan + a[i];
+//                        break;
+//                    case 2:
+//                        tgl = tgl + a[i];
+//                        break;
+//                }
+//
+//            } else {
+//                count++;
+//            }
+//            i++;
+//        }
 
-        char a[] = strDate.toCharArray();
-        char separator = '-';
-        String tgl = "" ,bulan = "",tahun = "";
-        int count = 0,i = 0;
-        while (i < a.length) {
-            if (a[i] != separator) {
-                switch (count) {
-                    case 0:
-                        tahun = tahun + a[i];
-                        break;
-                    case 1:
-                        bulan = bulan + a[i];
-                        break;
-                    case 2:
-                        tgl = tgl + a[i];
-                        break;
-                }
-
-            } else {
-                count++;
-            }
-            i++;
-        }
-
-        Log.d("tanggal1", strDate);
+        Log.d("tanggal1", getDateNow());
 
         //getData jadwal dari API + masuk ke local db
         sholatAPI = new SholatAPI(myLocatoin.getMynotedLocation(),getContext());
@@ -226,15 +226,16 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
         RealmResults results = realm.where(SholatWajib.class).findAll();
         if(results.size() == 0){
             sholatAPI.setJadwalSholat1Year();
-            position = sholatAPI.getDataPosistionByDate(strDate);
+            Log.e("datjumlah",sholatAPI.getDataShalat().size()+"");
+            position = sholatAPI.getDataPosistionByDate(getDateNow());
             myDateSelected.notePosition(position);
             setUpTanggal();
         }
         if(results.size() > 0){
-            position = sholatAPI.getDataPosistionByDate(strDate);
+            position = sholatAPI.getDataPosistionByDate(getDateNow());
             myDateSelected.notePosition(position);
             setUpTanggal();
-            Log.e("posisiku",sholatAPI.getDataPosistionByDate(strDate)+"");
+            Log.e("posisiku",sholatAPI.getDataPosistionByDate(getDateNow())+"");
 
         }
         Log.e("nop",sholatAPI.getDataShalat().size()+","+sholatWajibs.size());
@@ -281,5 +282,26 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
 
     public String getNameOfMonth(int i){
         return this.getContext().getResources().getStringArray(R.array.months)[i];
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public String getDateNow(){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = mdformat.format(calendar.getTime());
+        return strDate;
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        position = sholatAPI.getDataPosistionByDate(getDateNow());
+        myDateSelected.notePosition(position);
+        setUpTanggal();
+
     }
 }

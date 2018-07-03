@@ -43,113 +43,130 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
+
         holder.namaSholat.setText(mValues.get(position).getNamaSholat());
         //holder.mContentView.setText(mValues.get(position).getDeskripsi());
         holder.jamSholat.setText(mValues.get(position).getJamSholat());
         holder.tungguSholat.setText(mValues.get(position).getWaktuTunggu());
         holder.imageSholat.setImageResource(mValues.get(position).getImage());
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                row_index=position;
-                notifyDataSetChanged();
 
-            }
-        });
-        if(row_index==position){
-            holder.relativeLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
-            holder.jamSholat.setTextColor(Color.parseColor("#23C27E"));
-            holder.imageSholat.setImageResource(R.drawable.ibadahhijauicon);
-
-            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-
-            final View mView = li.inflate(R.layout.dialogsholat, null);
-                Spinner spinnerJenisSholat = (Spinner) mView.findViewById(R.id.spinnerShalat);
-                ArrayAdapter<CharSequence> myAdapter = ArrayAdapter.createFromResource(context,R.array.spinSholat,android.R.layout.simple_spinner_item);
-                myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinnerJenisSholat.setAdapter(myAdapter);
-                spinnerJenisSholat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                    }
-
-                    @Override
-                    public void onNothingSelected(AdapterView<?> adapterView) {
-
-                    }
-                });
-
-            Spinner spinnerTempatSholat = (Spinner) mView.findViewById(R.id.spinnerTempat);
-            ArrayAdapter<CharSequence> myAdapter2 = ArrayAdapter.createFromResource(context,R.array.spinTempatSholat,android.R.layout.simple_spinner_item);
-            myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerTempatSholat.setAdapter(myAdapter2);
-            spinnerTempatSholat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-
-            Spinner spinnerQobliyah = (Spinner) mView.findViewById(R.id.spinnerQobliyah);
-            ArrayAdapter<CharSequence> myAdapter3 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
-            myAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerQobliyah.setAdapter(myAdapter3);
-            spinnerQobliyah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-
-            Spinner spinnerBadiyah = (Spinner) mView.findViewById(R.id.spinnerBadiyah);
-            ArrayAdapter<CharSequence> myAdapter4 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
-            myAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinnerBadiyah.setAdapter(myAdapter4);
-            spinnerBadiyah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
-
-            Button btnKonfirmasi =  (Button) mView.findViewById(R.id.btnKonfirmSholat);
-
-            mBuilder.setView(mView);
-            final AlertDialog dialog = mBuilder.create();
-            dialog.show();
-
-            btnKonfirmasi.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.cancel();
-                }
-            });
-        }
-        else
-        {
-            holder.relativeLayout.setBackgroundColor(Color.parseColor("#F5F5F5"));
-            holder.jamSholat.setTextColor(Color.parseColor("#C4C4C4"));
-            holder.imageSholat.setImageResource(R.drawable.ibadahicon);
-        }
-
-
+//        if(holder.mItem.getImbuhan().equals("Menuju Adzan")){
+//            holder.relativeLayout.setBackgroundColor(Color.parseColor("#F5F5F5"));
+//            holder.jamSholat.setTextColor(Color.parseColor("#C4C4C4"));
+//            holder.imageSholat.setImageResource(R.drawable.ibadahicon);
+//        }else if(holder.mItem.getImbuhan().equals("Adzan")){
+//            holder.relativeLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+//            holder.jamSholat.setTextColor(Color.parseColor("#23C27E"));
+//            holder.imageSholat.setImageResource(R.drawable.ibadahhijauicon);
+//            notifyDataSetChanged();
+//            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    reportingForm();
+//                    notifyDataSetChanged();
+//
+//                }
+//            });
+//        }else{
+//            holder.relativeLayout.setBackgroundColor(Color.parseColor("#ffcdd2"));
+//            holder.jamSholat.setTextColor(Color.parseColor("#f44336"));
+//            holder.imageSholat.setImageResource(R.drawable.ibadahicon);
+//            notifyDataSetChanged();
+//        }
+//        if(row_index==position){
+//            holder.relativeLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
+//            holder.jamSholat.setTextColor(Color.parseColor("#23C27E"));
+//            holder.imageSholat.setImageResource(R.drawable.ibadahhijauicon);
+//
+//            LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//            AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+//
+//            final View mView = li.inflate(R.layout.dialogsholat, null);
+//                Spinner spinnerJenisSholat = (Spinner) mView.findViewById(R.id.spinnerShalat);
+//                ArrayAdapter<CharSequence> myAdapter = ArrayAdapter.createFromResource(context,R.array.spinSholat,android.R.layout.simple_spinner_item);
+//                myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spinnerJenisSholat.setAdapter(myAdapter);
+//                spinnerJenisSholat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                    @Override
+//                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                    }
+//                });
+//
+//            Spinner spinnerTempatSholat = (Spinner) mView.findViewById(R.id.spinnerTempat);
+//            ArrayAdapter<CharSequence> myAdapter2 = ArrayAdapter.createFromResource(context,R.array.spinTempatSholat,android.R.layout.simple_spinner_item);
+//            myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            spinnerTempatSholat.setAdapter(myAdapter2);
+//            spinnerTempatSholat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                }
+//            });
+//
+//            Spinner spinnerQobliyah = (Spinner) mView.findViewById(R.id.spinnerQobliyah);
+//            ArrayAdapter<CharSequence> myAdapter3 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
+//            myAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            spinnerQobliyah.setAdapter(myAdapter3);
+//            spinnerQobliyah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                }
+//            });
+//
+//            Spinner spinnerBadiyah = (Spinner) mView.findViewById(R.id.spinnerBadiyah);
+//            ArrayAdapter<CharSequence> myAdapter4 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
+//            myAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//            spinnerBadiyah.setAdapter(myAdapter4);
+//            spinnerBadiyah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                @Override
+//                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                }
+//
+//                @Override
+//                public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//                }
+//            });
+//
+//            Button btnKonfirmasi =  (Button) mView.findViewById(R.id.btnKonfirmSholat);
+//
+//            mBuilder.setView(mView);
+//            final AlertDialog dialog = mBuilder.create();
+//            dialog.show();
+//
+//            btnKonfirmasi.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    dialog.cancel();
+//                }
+//            });
+//        }
+//        else
+//        {
+//            holder.relativeLayout.setBackgroundColor(Color.parseColor("#F5F5F5"));
+//            holder.jamSholat.setTextColor(Color.parseColor("#C4C4C4"));
+//            holder.imageSholat.setImageResource(R.drawable.ibadahicon);
+//        }
+//
+//
 
     }
 
@@ -188,7 +205,87 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
 
         }
     }
+
+    public void reportingForm(){
+        LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+
+        final View mView = li.inflate(R.layout.dialogsholat, null);
+        Spinner spinnerJenisSholat = (Spinner) mView.findViewById(R.id.spinnerShalat);
+        ArrayAdapter<CharSequence> myAdapter = ArrayAdapter.createFromResource(context,R.array.spinSholat,android.R.layout.simple_spinner_item);
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerJenisSholat.setAdapter(myAdapter);
+        spinnerJenisSholat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner spinnerTempatSholat = (Spinner) mView.findViewById(R.id.spinnerTempat);
+        ArrayAdapter<CharSequence> myAdapter2 = ArrayAdapter.createFromResource(context,R.array.spinTempatSholat,android.R.layout.simple_spinner_item);
+        myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTempatSholat.setAdapter(myAdapter2);
+        spinnerTempatSholat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner spinnerQobliyah = (Spinner) mView.findViewById(R.id.spinnerQobliyah);
+        ArrayAdapter<CharSequence> myAdapter3 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
+        myAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerQobliyah.setAdapter(myAdapter3);
+        spinnerQobliyah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Spinner spinnerBadiyah = (Spinner) mView.findViewById(R.id.spinnerBadiyah);
+        ArrayAdapter<CharSequence> myAdapter4 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
+        myAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerBadiyah.setAdapter(myAdapter4);
+        spinnerBadiyah.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        Button btnKonfirmasi =  (Button) mView.findViewById(R.id.btnKonfirmSholat);
+
+        mBuilder.setView(mView);
+        final AlertDialog dialog = mBuilder.create();
+        dialog.show();
+
+        btnKonfirmasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+    }
 }
-
-
-

@@ -2,7 +2,7 @@ package com.illiyinmagang.miafandi.muslimhabitapp.model;
 
 import io.realm.RealmObject;
 
-public class Sholat extends RealmObject {
+public class Sholat extends RealmObject{
     private String namaSholat, waktuTunggu, jamSholat, tanggal;
     private int image;
 

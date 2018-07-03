@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class SholatFragment extends MyFragment {
     private RecyclerView recyclerView;
@@ -69,11 +68,11 @@ public class SholatFragment extends MyFragment {
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycleIbadah);
 
         sholatArrayList.clear();
-        sholatArrayList.add(new Sholat(sholatSubuh.getNamaSholat(),getDifferenceTime(sholatSubuh.getJamSholat()),convertDateFormat(sholatSubuh.getJamSholat()),gambar.get(0)));
-        sholatArrayList.add(new Sholat(sholatDuhur.getNamaSholat(),getDifferenceTime(sholatDuhur.getJamSholat()),convertDateFormat(sholatDuhur.getJamSholat()),gambar.get(0)));
-        sholatArrayList.add(new Sholat(sholatAshar.getNamaSholat(),getDifferenceTime(sholatAshar.getJamSholat()),convertDateFormat(sholatAshar.getJamSholat()),gambar.get(0)));
-        sholatArrayList.add(new Sholat(sholatMaghrib.getNamaSholat(),getDifferenceTime(sholatMaghrib.getJamSholat()),convertDateFormat(sholatMaghrib.getJamSholat()),gambar.get(0)));
-        sholatArrayList.add(new Sholat(sholatIsya.getNamaSholat(),getDifferenceTime(sholatIsya.getJamSholat()),convertDateFormat(sholatIsya.getJamSholat()),gambar.get(0)));
+        sholatArrayList.add(new Sholat(sholatSubuh.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatSubuh.getJamSholat())),convertDateFormat(sholatSubuh.getJamSholat()),gambar.get(0)));
+        sholatArrayList.add(new Sholat(sholatDuhur.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatDuhur.getJamSholat())),convertDateFormat(sholatDuhur.getJamSholat()),gambar.get(0)));
+        sholatArrayList.add(new Sholat(sholatAshar.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatAshar.getJamSholat())),convertDateFormat(sholatAshar.getJamSholat()),gambar.get(0)));
+        sholatArrayList.add(new Sholat(sholatMaghrib.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatMaghrib.getJamSholat())),convertDateFormat(sholatMaghrib.getJamSholat()),gambar.get(0)));
+        sholatArrayList.add(new Sholat(sholatIsya.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatIsya.getJamSholat())),convertDateFormat(sholatIsya.getJamSholat()),gambar.get(0)));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(new SholatRecyclerViewAdapter(sholatArrayList, this.getContext()));
@@ -100,41 +99,62 @@ public class SholatFragment extends MyFragment {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        long jam, menit, detik, selisih;
+        long jam, menit, selisih;
         String imbuhan;
         Date date,date1 = null;
         try {
             date = sdf.parse(sdf1.format(cal.getTime()));
             date1 = sdf.parse(time);
-//            Log.e("selisih",date.getTime()+"."+date1.getTime()) ;
 
-            if(date.getTime() < date1.getTime()){
-                selisih = date1.getTime() - date.getTime();
+            selisih = convertMinutes(date,date1);
+            if( selisih > 0){
                 imbuhan = "Menuju Adzan";
-            }else{
-                selisih =  date.getTime() - date1.getTime();
+            }else if(selisih < 0){
                 imbuhan = "Setelah Adzan";
-            }
-
-            jam = selisih / (60 * 1000) % 60;;
-            menit = selisih / (60 * 60 * 1000) % 24;
-            detik = selisih / 1000 % 60;
-
-            Log.e("selisih",imbuhan+""+jam+" jam,"+menit+" menit,"+detik+"detik") ;
-//                tinggal ngasih kondisi if aja disini
-            if(jam >= 1){
-                return imbuhan+" "+menit+" menit,"+detik+"detik";
-            }else if(menit >= 1){
-                return imbuhan+detik+"detik";
-            }else if(detik >= 5){
-                return "Saatnya Adzan";
             }else{
-                return imbuhan+""+jam+" jam,"+menit+" menit,"+detik+"detik";
+                imbuhan = "Adzan";
             }
+
+            jam = selisih / 60; //menit
+            menit = selisih % 60;
+
+            Log.e("selisih",imbuhan+""+jam+" jam,"+menit+" menit,") ;
+            if(jam == 0 ){
+                return imbuhan+" "+menit+" menit";
+            }else if(menit == 0){
+                return imbuhan+" "+jam+" jam";
+            }else{
+                return imbuhan+" "+jam+" jam, "+menit+"menit";
+            }
+
+
         } catch (ParseException e) {
-//            Log.e("selisih",e.getMessage());
         }
 //
         return "";
+    }
+
+    public long convertMinutes(Date now, Date sholat){
+        long jam_now, jm_sholat, menit_now, menit_sholat;
+        jam_now = now.getHours();
+        jm_sholat = sholat.getHours();
+        menit_now = now.getMinutes();
+        menit_sholat = sholat.getMinutes();
+
+        if(menit_now > menit_sholat){
+            jm_sholat = jm_sholat - 1;
+            menit_sholat = menit_sholat + 60;
+        }
+
+        long totalMenit = (jm_sholat - jam_now )*60 + (menit_sholat - menit_now);
+        if(totalMenit < 0){
+            totalMenit = totalMenit * -1;
+        }
+        return  totalMenit;
+    };
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 }
