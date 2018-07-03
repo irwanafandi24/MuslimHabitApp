@@ -5,7 +5,7 @@ import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
-import android.icu.text.SimpleDateFormat;
+import java.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -193,6 +193,7 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
         String strDate = mdformat.format(calendar.getTime());
+        Log.v("Tanggal", strDate);
 
         char a[] = strDate.toCharArray();
         char separator = '-';
