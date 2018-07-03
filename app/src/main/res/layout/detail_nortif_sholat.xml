@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="16dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    android:background="@color/white"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+    <TextView
+        android:id="@+id/txtSholatNotif"
+        android:text="Subuh"
+        android:textSize="8pt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+        <Switch
+            android:id="@+id/sw_sholat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            />
+
+    </LinearLayout>
+
+    <View
+        style="@style/lineView"
+        />
+
+</LinearLayout>
