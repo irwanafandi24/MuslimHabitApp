@@ -190,35 +190,6 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
             }
         });
 
-//<<<<<<< HEAD
-//        Calendar calendar = Calendar.getInstance();
-//        SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
-//        String strDate = mdformat.format(calendar.getTime());
-//
-////        char a[] = strDate.toCharArray();
-//        char separator = '-';
-//        String tgl = "" ,bulan = "",tahun = "";
-//        int count = 0,i = 0;
-//        while (i < a.length) {
-//            if (a[i] != separator) {
-//                switch (count) {
-//                    case 0:
-//                        tahun = tahun + a[i];
-//                        break;
-//                    case 1:
-//                        bulan = bulan + a[i];
-//                        break;
-//                    case 2:
-//                        tgl = tgl + a[i];
-//                        break;
-//                }
-//
-//            } else {
-//                count++;
-//            }
-//            i++;
-//        }
-//=======
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat mdformat = new SimpleDateFormat("yyyy-MM-dd");
         String strDate = mdformat.format(calendar.getTime());
@@ -247,7 +218,6 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
             }
             i++;
         }
-//>>>>>>> 352420426dc7fbd049a6b22ad6c947273e3ed899
 
         Log.d("tanggal1", getDateNow());
 

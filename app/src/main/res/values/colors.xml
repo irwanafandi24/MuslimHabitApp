@@ -12,4 +12,6 @@
     <color name="transparent">#B3000000</color>
     <color name="fontTab">#E0E0E0</color>
     <color name="fontPudar">#C4C4C4</color>
+    <color name="facebook">#3B5998</color>
+    <color name="twitter">#08a0e9</color>
 </resources>

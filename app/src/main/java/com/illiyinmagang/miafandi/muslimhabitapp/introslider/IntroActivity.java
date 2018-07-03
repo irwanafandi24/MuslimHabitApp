@@ -12,9 +12,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.illiyinmagang.miafandi.muslimhabitapp.LoginActivity;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
-public class IntroActivity extends AppCompatActivity implements View.OnClickListener{
+public class IntroActivity extends AppCompatActivity implements View.OnClickListener {
 
     public ViewPager slider;
     private TextView txtSkip, txtNext;
@@ -29,8 +30,8 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 
         slider = (ViewPager) findViewById(R.id.vp_myslider);
         txtNext = (TextView) findViewById(R.id.txt_next);
-        txtSkip  = (TextView) findViewById(R.id.txt_skip);
-        layoutTitik  = (LinearLayout) findViewById(R.id.layout_titik);
+        txtSkip = (TextView) findViewById(R.id.txt_skip);
+        layoutTitik = (LinearLayout) findViewById(R.id.layout_titik);
 
         slider.setAdapter(new SliderAdapter(IntroActivity.this));
         tambahIndokator(0);
@@ -39,7 +40,7 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         txtSkip.setOnClickListener(this);
     }
 
-    public void tambahIndokator(int position){
+    public void tambahIndokator(int position) {
         tanda = new TextView[3];
         layoutTitik.removeAllViews();
 
@@ -50,15 +51,15 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 
             layoutTitik.addView(tanda[i]);
         }
-        if(tanda.length > 0){
+        if (tanda.length > 0) {
             tanda[position].setTextColor(Color.WHITE);
         }
-        if(position > 0 ){
+        if (position > 0) {
             txtSkip.setText("BACK");
-        }else{
+        } else {
             txtSkip.setText("SKIP");
         }
-        if(position == 3){
+        if (position == 3) {
             txtNext.setText("DONE");
         }
 
@@ -66,21 +67,21 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v==txtNext){
-            if(posisi < 2){
-                slider.setCurrentItem(posisi+1);
-            }else if(posisi == 2){
-//                startActivity(new Intent(IntroActivity.this, LoginActivity.class));
-            }
-        }else if(v==txtSkip){
-            if(posisi > 0){
-                slider.setCurrentItem(posisi-1);
-            }else if(posisi == 0){
-//                startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+        if (v == txtNext) {
+            if (posisi < 2) {
+                slider.setCurrentItem(posisi + 1);
+            } else if (posisi == 2) {
+                startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+//            }
+            } else if (v == txtSkip) {
+                if (posisi > 0) {
+                    slider.setCurrentItem(posisi - 1);
+                } else if (posisi == 0) {
+                    startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+                }
             }
         }
     }
-
     ViewPager.OnPageChangeListener changeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -100,3 +101,4 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         }
     };
 }
+
