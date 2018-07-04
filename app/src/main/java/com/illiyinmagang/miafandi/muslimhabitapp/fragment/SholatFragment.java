@@ -56,12 +56,13 @@ public class SholatFragment extends MyFragment {
         Toast.makeText(getContext(),myDateSelected.getMyPosisition()+"",Toast.LENGTH_LONG).show();
 
         sholatAPI = new SholatAPI();
-
         sholatSubuh = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatsubuh();
         sholatDuhur = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatDuhur();
         sholatAshar = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatAshar();
         sholatMaghrib = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatMaghrib();
         sholatIsya = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatIsya();
+
+
 
         sholatArrayList = new ArrayList();
         gambar = new ArrayList();
@@ -79,7 +80,7 @@ public class SholatFragment extends MyFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(new SholatRecyclerViewAdapter(sholatArrayList, this.getContext()));
 
-        Log.e("konvert",convertDateFormat(sholatAshar.getJamSholat()));
+//        Log.e("konvert",convertDateFormat(sholatAshar.getJamSholat()));
         return rootView;
     }
 

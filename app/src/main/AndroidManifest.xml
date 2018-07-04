@@ -9,29 +9,30 @@
     <application
         android:name=".Config.ConfigDBLocal"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/mosquedomes"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/mosquedomes"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".introslider.IntroActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".MainActivity"
+            android:label="DiaryIbadah"
+            android:theme="@style/AppTheme.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
-            android:label="DiaryIbadah" />
-        <activity android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+        <activity android:name=".introslider.IntroActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".introslider.IntroActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity"></activity>
         <service
         android:name=".Notif.NotificationDisplayService"
         android:enabled="true"

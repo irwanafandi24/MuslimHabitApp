@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyIntroConfig;
 import com.illiyinmagang.miafandi.muslimhabitapp.LoginActivity;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
@@ -20,11 +21,13 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
     private TextView[] tanda;
     private LinearLayout layoutTitik;
     int posisi;
+    private MyIntroConfig myIntroConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+        myIntroConfig = new MyIntroConfig(IntroActivity.this);
 
         slider = (ViewPager) findViewById(R.id.vp_myslider);
         txtNext = (TextView) findViewById(R.id.txt_next);
@@ -54,10 +57,11 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         }
         if (position > 0) {
             txtSkip.setText("BACK");
-        } else {
+        }else{
             txtSkip.setText("SKIP");
+            txtNext.setText("NEXT");
         }
-        if (position == 2) {
+        if(position == 2){
             txtNext.setText("DONE");
         }
     }
@@ -67,18 +71,22 @@ public class IntroActivity extends AppCompatActivity implements View.OnClickList
         if (v == txtNext) {
             if (posisi < 2) {
                 slider.setCurrentItem(posisi + 1);
-            } else if (txtNext.getText().toString().equals("DONE")) {
+            } else{
+                myIntroConfig.noteIntro(true);
                 startActivity(new Intent(IntroActivity.this, LoginActivity.class));
-//            }
+                finish();
+            }
             } else if (v == txtSkip) {
                 if (posisi > 0) {
                     slider.setCurrentItem(posisi - 1);
-                } else if (posisi == 0) {
+                } else{
+                    myIntroConfig.noteIntro(true);
                     startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+                    finish();
                 }
             }
         }
-    }
+
     ViewPager.OnPageChangeListener changeListener = new ViewPager.OnPageChangeListener() {
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

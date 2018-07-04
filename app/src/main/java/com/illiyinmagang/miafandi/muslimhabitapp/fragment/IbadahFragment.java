@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyDateSelected;
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLocatoin;
+import com.illiyinmagang.miafandi.muslimhabitapp.MainActivity;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajib;
@@ -66,11 +67,10 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_ibadah, container, false);
-        // Inflate the layout for this fragment
-//        i = new Intent();
+
         myDateSelected = new MyDateSelected(getContext());
         myLocatoin = new MyLocatoin(this.getContext());
-//
+
         if(!myLocatoin.getMynotedLocation().equals("malang")){
             Toast.makeText(this.getContext(),"Jadwal Lokasi Anda Sekarang berada di Kota Malang, Atur Lokasi anda di menu setting",Toast.LENGTH_SHORT).show();
         }
@@ -92,7 +92,6 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
         tabLayout.setupWithViewPager(mViewPager);
 
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor("#23C27E"));
-//        tabLayout.setSelectedTabIndicatorHeight((int) (2 * getResources().getDisplayMetrics().density));
         tabLayout.setTabTextColors(Color.parseColor("#727272"), Color.parseColor("#23C27E"));
 
         btnLeft = (ImageButton) rootView.findViewById(R.id.btn_lef_slider);
@@ -226,20 +225,18 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
 
         RealmResults results = realm.where(SholatWajib.class).findAll();
         if(results.size() == 0){
-            sholatAPI.setJadwalSholat1Year();
-            Log.e("datjumlah",sholatAPI.getDataShalat().size()+"");
-            position = sholatAPI.getDataPosistionByDate(getDateNow());
-            myDateSelected.notePosition(position);
-            setUpTanggal();
+            getActivity().finish();
+            startActivity(new Intent(this.getContext(), MainActivity.class));
         }
-        if(results.size() > 0){
+        else if(results.size() > 0){
             position = sholatAPI.getDataPosistionByDate(getDateNow());
+//            Log.e("datjumlah",sholatAPI.getDataShalat().size()+""+sholatAPI.getDataShalat().get(0));
             myDateSelected.notePosition(position);
             setUpTanggal();
-            Log.e("posisiku",sholatAPI.getDataPosistionByDate(getDateNow())+"");
+            Log.e("posisikuisi",sholatAPI.getDataShalat().size()+"");
 
         }
-        Log.e("nop",sholatAPI.getDataShalat().size()+","+sholatWajibs.size());
+        Log.e("nop",sholatAPI.getDataShalat().size()+",");
 
         return rootView;
     }
@@ -275,7 +272,7 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
             Log.e("posisiku1",tanggal+"."+bulan+"."+position);
 
             txtTanggal.setText(tanggal);
-            txtBulan.setText(getNameOfMonth(bulan) +", "+thn);
+            txtBulan.setText(getNameOfMonth(bulan-1) +", "+thn);
         }catch (ArrayIndexOutOfBoundsException e){
 
         }
@@ -302,7 +299,10 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
 
         position = sholatAPI.getDataPosistionByDate(getDateNow());
         myDateSelected.notePosition(position);
-        setUpTanggal();
+        RealmResults r1 = realm.where(SholatWajib.class).findAll();
+        if(r1.size() > 0){
+            setUpTanggal();
+        }
 
     }
 }

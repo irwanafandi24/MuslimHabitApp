@@ -45,7 +45,6 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
         holder.mItem = mValues.get(position);
 
         holder.namaSholat.setText(mValues.get(position).getNamaSholat());
-        //holder.mContentView.setText(mValues.get(position).getDeskripsi());
         holder.jamSholat.setText(mValues.get(position).getJamSholat());
         holder.tungguSholat.setText(mValues.get(position).getWaktuTunggu());
         holder.imageSholat.setImageResource(mValues.get(position).getImage());

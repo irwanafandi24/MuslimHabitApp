@@ -17,6 +17,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -24,6 +25,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLocatoin;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLoginConfig;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.GrafikFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.IbadahFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.InfoFragment;
@@ -42,28 +44,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MyLocatoin myLocatoin;
     private SholatAPI sholatAPI;
     private Realm realm;
+    private MyLoginConfig myLoginConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("Muslim Habit");
+        myLoginConfig = new MyLoginConfig(MainActivity.this);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerMain);
+        Log.e("ceksession","apakah masuk ?");
+        if(!myLoginConfig.isLogedIn()){
+//            finish();
+            Log.e("masuksession","berhasil masuk"+!myLoginConfig.isLogedIn());
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+        }else{
+            Log.e("keluarifsession","ga boleh kseini"+!myLoginConfig.isLogedIn());
 
-        mToogle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
-        mDrawerLayout.addDrawerListener(mToogle);
-        mToogle.syncState();
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            toolbar.setTitle("Muslim Habit");
 
-        navigationView = (NavigationView) findViewById(R.id.navigationView);
-        navigationView.setNavigationItemSelectedListener(this);
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerMain);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
-            navigationView.setCheckedItem(R.id.ibadah);
+            mToogle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.open, R.string.close);
+            mDrawerLayout.addDrawerListener(mToogle);
+            mToogle.syncState();
+
+            navigationView = (NavigationView) findViewById(R.id.navigationView);
+            navigationView.setNavigationItemSelectedListener(this);
+
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
+                navigationView.setCheckedItem(R.id.ibadah);
+            }
         }
     }
 
@@ -108,39 +122,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-    public void setUpLokasi() {
-        final LocationConfig[] locationConfig = new LocationConfig[1];
-        final double[] longitude = new double[1];
-        final double[] latitude = new double[1];
-        FusedLocationProviderClient mFusedLocationClient;
-
-        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-
-        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
-        } else {
-            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            } else {
-                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
-                mFusedLocationClient.getLastLocation()
-                        .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                if (location != null) {
-                                    longitude[0] = location.getLongitude();
-                                    latitude[0] = location.getLatitude();
-
-                                    locationConfig[0] = new LocationConfig(MainActivity.this);
-                                    //                            locationConfig.getAddress(latitude,longitude);
-                                } else {
-                                    Toast.makeText(MainActivity.this, "GPS Sedang Diaktifkan, Harap Tunggu sebentar dan Coba lagi", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-            }
-        }
-
-    }
+//    public void setUpLokasi() {
+//        final LocationConfig[] locationConfig = new LocationConfig[1];
+//        final double[] longitude = new double[1];
+//        final double[] latitude = new double[1];
+//        FusedLocationProviderClient mFusedLocationClient;
+//
+//        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+//
+//        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
+//        } else {
+//            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+//            } else {
+//                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
+//                mFusedLocationClient.getLastLocation()
+//                        .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
+//                            @Override
+//                            public void onSuccess(Location location) {
+//                                if (location != null) {
+//                                    longitude[0] = location.getLongitude();
+//                                    latitude[0] = location.getLatitude();
+//
+//                                    locationConfig[0] = new LocationConfig(MainActivity.this);
+//                                    //                            locationConfig.getAddress(latitude,longitude);
+//                                } else {
+//                                    Toast.makeText(MainActivity.this, "GPS Sedang Diaktifkan, Harap Tunggu sebentar dan Coba lagi", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+//            }
+//        }
+//
+//    }
 
 }
