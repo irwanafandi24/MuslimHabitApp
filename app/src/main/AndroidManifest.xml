@@ -26,11 +26,16 @@
         </activity>
         <activity android:name=".introslider.IntroActivity" />
         <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+
         <service
-        android:name=".Notif.NotificationDisplayService"
-        android:enabled="true"
-        android:exported="true"></service>
+            android:name=".Notif.NotificationDisplayService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".Notif.AlarmService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

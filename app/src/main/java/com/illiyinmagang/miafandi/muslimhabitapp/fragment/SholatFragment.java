@@ -11,16 +11,24 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyDateSelected;
+import com.illiyinmagang.miafandi.muslimhabitapp.Notif.AlarmService;
 import com.illiyinmagang.miafandi.muslimhabitapp.Notif.NotificationDisplayService;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.Alarm;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.RealmHelper;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.Sholat;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajibNotif;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class SholatFragment extends MyFragment {
     private RecyclerView recyclerView;
@@ -29,6 +37,15 @@ public class SholatFragment extends MyFragment {
     private SholatAPI sholatAPI;
     private MyDateSelected myDateSelected;
     private Sholat sholatSubuh, sholatDuhur, sholatAshar, sholatMaghrib, sholatIsya;
+
+    //for alarm and get Sholat time
+    private Realm realm;
+    private RealmHelper realmHelper;
+    List<SholatWajibNotif> sholatList;
+    List<Alarm> alarmSholat;
+    private String showTime, beforeTime;
+    private Long waktuTunggu;
+    private Boolean cekAlarm;
 
     public SholatFragment() {
         // Required empty public constructor
@@ -63,6 +80,26 @@ public class SholatFragment extends MyFragment {
         sholatMaghrib = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatMaghrib();
         sholatIsya = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatIsya();
 
+        //=============Get it
+        RealmConfiguration configuration = new RealmConfiguration.Builder().build();
+        realm = Realm.getInstance(configuration);
+
+        realmHelper = new RealmHelper(realm);
+        sholatList = new ArrayList<>();
+        alarmSholat = new ArrayList<>();
+
+        sholatList = realmHelper.getAllSholat();
+        alarmSholat = realmHelper.getAllAlarm();
+
+        for(Alarm alarmX:alarmSholat){
+            showTime = alarmX.getWaktuAlaram();
+        }
+
+        Log.v("SHOW TIME",showTime);
+        beforeTime = getTimeBeforeAlarm(showTime);
+        waktuTunggu = Long.parseLong(beforeTime);
+        Log.v("UBAH KE INTEGER",waktuTunggu+"");
+
         sholatArrayList = new ArrayList();
         gambar = new ArrayList();
 
@@ -78,6 +115,7 @@ public class SholatFragment extends MyFragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recyclerView.setAdapter(new SholatRecyclerViewAdapter(sholatArrayList, this.getContext()));
+        soundNotif();
 
         Log.e("konvert",convertDateFormat(sholatAshar.getJamSholat()));
         return rootView;
@@ -94,6 +132,31 @@ public class SholatFragment extends MyFragment {
         } catch (ParseException e) {
         }
         return "";
+    }
+
+    public String getTimeBeforeAlarm(String y){
+        String x = String.valueOf(y.charAt(0));
+        if (!String.valueOf(y.charAt(1)).equals(" ")){
+            x = x + String.valueOf(y.charAt(1));
+        }
+        return x;
+    }
+
+    public void soundNotif(){
+        if(String.valueOf(sholatArrayList.get(0).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(0).isSwitchSholat()== true){
+            getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
+        }else if(String.valueOf(sholatArrayList.get(1).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(1).isSwitchSholat()== true){
+            getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
+        }else if(String.valueOf(sholatArrayList.get(2).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(2).isSwitchSholat()== true){
+            getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
+            Log.v("INI DIA","MASUK BOS");
+        }else if(String.valueOf(sholatArrayList.get(3).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(3).isSwitchSholat()== true){
+            getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
+        }else if(String.valueOf(sholatArrayList.get(4).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(4).isSwitchSholat()== true){
+            getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
+        }
+
+        Log.v("CEK NOOOOOOOTIIIIIF ",sholatArrayList.get(2).getWaktuTunggu().equals("0")+" BOOLEAN "+sholatList.get(2).isSwitchSholat());
     }
 
     public String getDifferenceTime(String time){
@@ -138,17 +201,21 @@ public class SholatFragment extends MyFragment {
     }
 
     public long convertMinutes(Date now, Date sholat){
-        long jam_now, jm_sholat, menit_now, menit_sholat, totalMenit;
+        long jam_now, jm_sholat, menit_now, menit_sholat, totalMenit, alarmBerbunyi;
         jam_now = now.getHours();
         jm_sholat = sholat.getHours();
         menit_now = now.getMinutes();
         menit_sholat = sholat.getMinutes();
 
-        totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now);
+        totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now)+5;
+        alarmBerbunyi = totalMenit-waktuTunggu;
+        cekAlarm = false;
 
-        if (totalMenit == 0){
-            getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
+        if(alarmBerbunyi == 0){
+            getActivity().startService(new Intent(getActivity(),AlarmService.class));
         }
+
+        cekAlarm = false;
 
         Log.v("Tanda Menit adalah",totalMenit+"");
         return  totalMenit;

@@ -22,6 +22,7 @@ import com.illiyinmagang.miafandi.muslimhabitapp.R;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.Alarm;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.RealmHelper;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajibNotif;
+import com.illiyinmagang.miafandi.muslimhabitapp.fragment.SholatFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,26 +50,17 @@ public class NotifikasiFragment extends MyFragment implements View.OnClickListen
     SholatAdapter adapter;
     List<SholatWajibNotif> sholatList;
     List<Alarm> alarmSholat;
+    String showTime, beforeTime;
+    Long timeBeforeAlarm;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_notifikasi, container, false);
-//        swSubuh = (Switch) v.findViewById(R.id.sw_subuh);
-//        swDuhur = (Switch) v.findViewById(R.id.sw_duhur);
-//        swAshar = (Switch) v.findViewById(R.id.sw_ashar);
-//        swMaghrib = (Switch) v.findViewById(R.id.sw_maghrib);
-//        swIsya = (Switch) v.findViewById(R.id.sw_isya);
 
         txtWaktuNotif = (TextView) v.findViewById(R.id.txt_waktu_reminder);
         relPickTime = (RelativeLayout) v.findViewById(R.id.rel_pick_reminder);
-
-//        swIsya.setOnClickListener(this);
-//        swAshar.setOnClickListener(this);
-//        swDuhur.setOnClickListener(this);
-//        swMaghrib.setOnClickListener(this);
-//        swSubuh.setOnClickListener(this);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycleSholatWajib);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
@@ -79,7 +71,6 @@ public class NotifikasiFragment extends MyFragment implements View.OnClickListen
         realm = Realm.getInstance(configuration);
 
         realmHelper = new RealmHelper(realm);
-        //countSholat = new ArrayList<>();
         sholatList = new ArrayList<>();
         alarmSholat = new ArrayList<>();
 
@@ -112,72 +103,23 @@ public class NotifikasiFragment extends MyFragment implements View.OnClickListen
         alarmSholat = realmHelper.getAllAlarm();
         for(Alarm alarmX:alarmSholat){
             txtWaktuNotif.setText(alarmX.getWaktuAlaram());
+            showTime = alarmX.getWaktuAlaram();
         }
+
+       // timeBeforeAlarm = Long.parseLong(beforeTime);
 
         return v;
     }
 
     @Override
     public void onClick(View v) {
-//        if(v==swSubuh){
-//            if(!swSubuh.isChecked()){
-//                showAllertDialog("Peringatan",swSubuh.getText().toString(),this.getContext(),swSubuh);
-//            }
-//        }else if(v==swDuhur){
-//            if(!swDuhur.isChecked()){
-//                showAllertDialog("Peringatan",swDuhur.getText().toString(),this.getContext(),swDuhur);
-//                //updateData(swDuhur,false);
-//            }
-//        }else if(v==swAshar){
-//            if(!swAshar.isChecked()){
-//                showAllertDialog("Peringatan",swAshar.getText().toString(),this.getContext(),swAshar);
-//            }
-//        }else if(v==swMaghrib){
-//            if(!swMaghrib.isChecked()){
-//                showAllertDialog("Peringatan",swAshar.getText().toString().toString(),this.getContext(),swMaghrib);
-//            }
-//        }else if(v==swIsya){
-//            if(!swIsya.isChecked()){
-//                showAllertDialog("Peringatan",swIsya.getText().toString(),this.getContext(),swIsya);
-//            }
-//        }else
         if(v==relPickTime){
             showAllertDialog(this.getContext(),txtWaktuNotif);
         }
     }
 
-//<<<<<<< HEAD
-//    public void showAllertDialog(String judul, String Content, Context context, final Switch sw){
-//        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-//        View mView = getLayoutInflater().inflate(R.layout.dialog_warning_notifshalat, null);
-//
-//        Button btnMati = (Button) mView.findViewById(R.id.btn_matikan);
-//        Button btnBatal = (Button) mView.findViewById(R.id.btn_batalkan);
-//
-//        TextView contentWarning = (TextView) mView.findViewById(R.id.txt_content_warning);
-//        contentWarning.setText("Apakah Anda yakin ingin mematikan notifikasi shalat "+Content.toUpperCase()+" ?");
-//        mBuilder.setView(mView);
-//        final AlertDialog dialog = mBuilder.create();
-//        dialog.show();
-//
-//        btnMati.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            sw.setChecked(false);
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        btnBatal.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                sw.setChecked(true);
-//                dialog.cancel();
-//            }
-//        });
-//
-//    }
-//=======
+
+
     public void showAllertDialog(String judul, String Content, Context context, final Switch sw){
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
         View mView = getLayoutInflater().inflate(R.layout.dialog_warning_notifshalat, null);
