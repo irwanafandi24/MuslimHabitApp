@@ -45,7 +45,6 @@ public class SholatFragment extends MyFragment {
     List<Alarm> alarmSholat;
     private String showTime, beforeTime;
     private Long waktuTunggu;
-    private Boolean cekAlarm;
 
     public SholatFragment() {
         // Required empty public constructor
@@ -207,15 +206,12 @@ public class SholatFragment extends MyFragment {
         menit_now = now.getMinutes();
         menit_sholat = sholat.getMinutes();
 
-        totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now)+5;
+        totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now);
         alarmBerbunyi = totalMenit-waktuTunggu;
-        cekAlarm = false;
 
         if(alarmBerbunyi == 0){
             getActivity().startService(new Intent(getActivity(),AlarmService.class));
         }
-
-        cekAlarm = false;
 
         Log.v("Tanda Menit adalah",totalMenit+"");
         return  totalMenit;
