@@ -38,4 +38,12 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter { //make the the
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
     }
+
+    public void clearContentFragment(){
+        this.mFragmentList.clear();
+    }
+
+    public void addOnlyFragment(Fragment fragment){
+        mFragmentList.add(fragment);
+    }
 }

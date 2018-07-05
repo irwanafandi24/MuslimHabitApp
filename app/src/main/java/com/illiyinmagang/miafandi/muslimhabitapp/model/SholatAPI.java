@@ -58,9 +58,6 @@ public class SholatAPI {
     }
 
     public void setJadwalSholat1Year() {
-//        androidNetworking.initialize(context);
-//        Log.e("androidnet",androidNetworking+"");
-
         final ProgressDialog progressBar = new ProgressDialog(context);
         progressBar.setMessage("Mohon Menunggu");
         progressBar.show();

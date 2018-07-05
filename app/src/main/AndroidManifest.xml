@@ -25,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--<<<<<<< HEAD-->
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -33,10 +34,20 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+<!--=======-->
+        <!--<activity android:name=".introslider.IntroActivity" />-->
+        <!--<activity android:name=".LoginActivity" />-->
+        <!--<activity android:name=".RegisterActivity" />-->
+
         <service
-        android:name=".Notif.NotificationDisplayService"
-        android:enabled="true"
-        android:exported="true"></service>
+            android:name=".Notif.NotificationDisplayService"
+            android:enabled="true"
+            android:exported="true" />
+<!--&gt;>>>>>> 7a685e399a190e325e181e8eb198986967978dc0-->
+        <service
+            android:name=".Notif.AlarmService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
