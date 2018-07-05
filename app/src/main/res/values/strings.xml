@@ -4,6 +4,9 @@
     <string name="close">Close</string>
     <string name="error_email">Masukkan Email Sesuai Format</string>
 
+    <string name="CONSUMER_KEY">KP9dtUDCrduOMncmopFR6y2c4</string>
+    <string name="CONSUMER_SECRET"> p9qnWZ1GUcTPd0jAgCZVs866MCmllkPmJ7DXhrJpVsS1KZ7bS7</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="spinSholat">

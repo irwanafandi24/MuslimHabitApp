@@ -20,13 +20,25 @@ import com.illiyinmagang.miafandi.muslimhabitapp.introslider.IntroActivity;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajib;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.User;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.DefaultLogger;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private Button btn_masuk, btn_daftar;
-    private LinearLayout btn_fb, btn_twitter;
+    private LinearLayout btn_fb;
+    private TwitterLoginButton btn_twitter;
     private TextInputEditText et_email, et_password;
     private MyIntroConfig myIntroConfig;
     private MyLoginConfig myLoginConfig;
@@ -37,6 +49,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TwitterConfig config = new TwitterConfig.Builder(this)
+                .logger(new DefaultLogger(Log.DEBUG))
+                .twitterAuthConfig(new TwitterAuthConfig(getResources().getString(R.string.CONSUMER_KEY), getResources().getString(R.string.CONSUMER_SECRET)))
+                .debug(true)
+                .build();
+
+        Twitter.initialize(config);
+
         setContentView(R.layout.activity_login);
 
         myIntroConfig = new MyIntroConfig(LoginActivity.this);
@@ -57,10 +77,50 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         et_password = (TextInputEditText) findViewById(R.id.et_password);
 
         btn_fb = (LinearLayout) findViewById(R.id.btn_fb);
-        btn_twitter = (LinearLayout) findViewById(R.id.btn_tw);
+        btn_twitter = (TwitterLoginButton) findViewById(R.id.btn_twt);
 
         btn_masuk.setOnClickListener(this);
         btn_daftar.setOnClickListener(this);
+
+        btn_twitter.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                // Do something with result, which provides a TwitterSession for making API calls
+                Log.e("twitterlog","berhasil");
+                TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+                Log.e("twitterlog",session.getUserName());
+                if(!isSavedInDb(session.getUserName())){
+                    Log.e("twitterlog","menyimpan data ke lokal");
+                    realm.beginTransaction();
+                    User u = new User(session.getUserName()," "," "," ");
+                    u.setId(generateID());
+                    Log.e("twitterlog","done setid");
+                    realm.copyToRealm(u);
+                    realm.commitTransaction();
+                    Log.e("twitterlog","done insert");
+                }
+                myLoginConfig.noteIntro(session.getUserName());
+                Log.e("twitterlog","session");
+                sholatAPI.setJadwalSholat1Year();
+                Log.e("datasholat", sholatAPI.getDataShalat().size()+"");
+                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                finish();
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                // Do something on failure
+                Toast.makeText(LoginActivity.this,"Login gagal",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public boolean isSavedInDb(String username){
+        User u = realm.where(User.class).equalTo("username",username).findFirst();
+        if(u == null){
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -80,6 +140,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
             finish();
         }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result to the login button.
+        btn_twitter.onActivityResult(requestCode, resultCode, data);
+    }
+
+
+    public int generateID() {
+        Number currentIdNum = realm.where(User.class).max("id");
+        Log.v("currentID",currentIdNum+"");
+        int nextId;
+        if (currentIdNum == null) {
+            nextId = 1;
+        } else {
+            nextId = currentIdNum.intValue() + 1;
+        }
+        return nextId;
     }
 
     public boolean isLoginCorrect(String username, String password){
@@ -101,4 +181,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onDestroy();
         realm.close();
     }
+
+
 }

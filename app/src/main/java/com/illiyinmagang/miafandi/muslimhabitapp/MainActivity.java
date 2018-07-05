@@ -19,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SholatAPI sholatAPI;
     private Realm realm;
     private MyLoginConfig myLoginConfig;
+    private TextView txtNama;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             navigationView = (NavigationView) findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
+
+            View root = navigationView.getHeaderView(0);
+            txtNama = (TextView) root.findViewById(R.id.txtNama);
+            txtNama.setText(myLoginConfig.getDataString(myLoginConfig.KEY_USERNAME));
 
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();

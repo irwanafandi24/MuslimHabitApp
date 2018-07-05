@@ -240,6 +240,7 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
         sholatAPI = new SholatAPI(myLocatoin.getMynotedLocation(),getContext());
 
         RealmResults results = realm.where(SholatWajib.class).findAll();
+
         if(results.size() == 0){
             getActivity().finish();
             startActivity(new Intent(this.getContext(), MainActivity.class));
