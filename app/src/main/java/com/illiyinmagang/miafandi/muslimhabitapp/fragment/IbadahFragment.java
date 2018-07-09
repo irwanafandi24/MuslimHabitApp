@@ -1,23 +1,18 @@
 package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,25 +26,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyDateSelected;
-import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLocatoin;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyDateSelected;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.MainActivity;
-import com.illiyinmagang.miafandi.muslimhabitapp.Notif.NotificationDisplayService;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
-import com.illiyinmagang.miafandi.muslimhabitapp.model.Alarm;
-import com.illiyinmagang.miafandi.muslimhabitapp.model.RealmHelper;
-import com.illiyinmagang.miafandi.muslimhabitapp.model.Sholat;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajib;
-import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajibNotif;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class IbadahFragment extends MyFragment implements View.OnClickListener{

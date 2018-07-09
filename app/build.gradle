@@ -36,6 +36,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     // Include all the Twitter APIs
     compile 'com.twitter.sdk.android:twitter:3.1.1'
+    //fb
+    implementation 'com.facebook.android:facebook-login:[4,5)'
     //drawer
     implementation 'com.android.support:design:27.1.1'
     //circle image

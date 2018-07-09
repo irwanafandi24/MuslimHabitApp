@@ -1,19 +1,15 @@
 package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,9 +23,8 @@ import android.widget.Toast;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLocatoin;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.LocationConfig;
-import com.illiyinmagang.miafandi.muslimhabitapp.MainActivity;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
 public class SettingFragment extends MyFragment implements View.OnClickListener {

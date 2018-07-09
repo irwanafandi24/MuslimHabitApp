@@ -41,15 +41,16 @@ public class SholatAPI {
     public SholatAPI(String kota, Context context) {
         Log.e("kota", kota);
         if (kota == "") {
-            this.URL = "http://muslimsalat.com/malang/yearly.json?key=api_key";
+            this.URL = "http://muslimsalat.com/yearly.json?key=api_key";
         } else {
-            this.URL = "http://muslimsalat.com/" + kota + "/yearly.json?key=api_key";
+            this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/5.json?key=api_key";
         }
         this.context = context;
         this.realm = Realm.getDefaultInstance();
     }
 
-    public SholatAPI() {
+    public SholatAPI(Context context) {
+        this.context = context;
         this.realm = Realm.getDefaultInstance();
     }
 
@@ -61,73 +62,6 @@ public class SholatAPI {
         final ProgressDialog progressBar = new ProgressDialog(context);
         progressBar.setMessage("Mohon Menunggu");
         progressBar.show();
-//        AndroidNetworking.initialize(context);
-//        progressBar.show();
-//        AndroidNetworking.post(this.URL)
-//                .setTag("test")
-//                .setPriority(Priority.LOW)
-//                .build()
-//                .getAsJSONObject(new JSONObjectRequestListener() {
-//                    @Override
-//                    public void onResponse(JSONObject response) {
-//                        try {
-//                            JSONArray items = response.getJSONArray("items");
-//                            for (int i = 0; i < items.length(); i++) {
-//                                JSONObject jadwal = items.getJSONObject(0);
-//
-//                                final SholatWajib sholatWajib = new SholatWajib(
-//                                        //nambah untuk semua sholat wajib
-//                                        new Sholat("Subuh",
-//                                                "",
-//                                                jadwal.getString("fajr"),
-//                                                0),
-//                                        new Sholat("Duhur",
-//                                                "",
-//                                                jadwal.getString("dhuhr"),
-//                                                0),
-//                                        new Sholat("Ashar",
-//                                                "",
-//                                                jadwal.getString("asr"),
-//                                                0),
-//                                        new Sholat("Maghrib",
-//                                                "",
-//                                                jadwal.getString("maghrib"),
-//                                                0),
-//                                        new Sholat("Isya",
-//                                                "",
-//                                                jadwal.getString("isha"),
-//                                                0)
-//                                ).setTanggal(jadwal.getString("date_for"));
-//
-//                                realm.executeTransaction(new Realm.Transaction() {
-//                                    @Override
-//                                    public void execute(Realm realm) {
-//                                        Number currentIdNum = realm.where(SholatWajib.class).max("id");
-//                                        int nextId;
-//                                        if (currentIdNum == null) {
-//                                            nextId = 1;
-//                                        } else {
-//                                            nextId = currentIdNum.intValue() + 1;
-//                                        }
-//                                        sholatWajib.setId(nextId);
-//                                        realm.copyToRealm(sholatWajib);
-//                                    }
-//                                });
-//                            }
-//                            progressBar.dismiss();
-//                        } catch (JSONException e) {
-////                            e.printStackTrace();
-//                            Log.e("error_nao", e.getMessage());
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onError(ANError anError) {
-////                        anError.printStackTrace();
-//                        Log.e("error_nao", anError.getErrorDetail());
-//                    }
-//
-//                });
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
@@ -179,8 +113,6 @@ public class SholatAPI {
                                         }
                                         sholatWajib.setId(nextId);
                                         realm.copyToRealm(sholatWajib);
-
-
                             }
                             realm.commitTransaction();
                             progressBar.dismiss();

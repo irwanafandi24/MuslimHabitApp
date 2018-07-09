@@ -7,6 +7,9 @@
     <string name="CONSUMER_KEY">KP9dtUDCrduOMncmopFR6y2c4</string>
     <string name="CONSUMER_SECRET"> p9qnWZ1GUcTPd0jAgCZVs866MCmllkPmJ7DXhrJpVsS1KZ7bS7</string>
 
+    <string name="facebook_app_id">241132586477135</string>
+    <string name="fb_login_protocol_scheme">fb241132586477135</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string-array name="spinSholat">

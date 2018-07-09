@@ -1,4 +1,4 @@
-package com.illiyinmagang.miafandi.muslimhabitapp.Config;
+package com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;

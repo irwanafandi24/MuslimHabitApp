@@ -10,8 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyDateSelected;
-import com.illiyinmagang.miafandi.muslimhabitapp.Notif.AlarmService;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyDateSelected;
 import com.illiyinmagang.miafandi.muslimhabitapp.Notif.NotificationDisplayService;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.Alarm;
@@ -71,7 +70,7 @@ public class SholatFragment extends MyFragment {
         myDateSelected.getMyPosisition();
         Toast.makeText(getContext(),myDateSelected.getMyPosisition()+"",Toast.LENGTH_LONG).show();
 
-        sholatAPI = new SholatAPI();
+        sholatAPI = new SholatAPI(getContext());
         sholatSubuh = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatsubuh();
         sholatDuhur = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatDuhur();
         sholatAshar = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatAshar();
