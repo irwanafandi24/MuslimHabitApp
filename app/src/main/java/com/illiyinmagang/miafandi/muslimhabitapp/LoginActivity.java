@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         myLoginConfig = new MyLoginConfig(LoginActivity.this);
 
         myLocatoin = new MyLocatoin(LoginActivity.this);
-        sholatAPI = new SholatAPI(myLocatoin.getMynotedLocation(),LoginActivity.this);
+        sholatAPI = new SholatAPI(myLocatoin.getMynotedLocation(),"5",LoginActivity.this);
 
         btn_daftar = (Button) findViewById(R.id.btn_register);
         btn_masuk = (Button) findViewById(R.id.btn_masuk);
@@ -102,7 +102,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 myLoginConfig.noteIntro(session.getUserName());
                 Log.e("twitterlog","session");
-                sholatAPI.setJadwalSholat1Year();
+                RealmResults results = realm.where(SholatWajib.class).findAll();
+                if(results.size() == 0) {
+                    sholatAPI.setJadwalSholat1Year();
+                }
                 Log.e("datasholat", sholatAPI.getDataShalat().size()+"");
                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 finish();
@@ -120,7 +123,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onSuccess(LoginResult loginResult) {
                 insertDataSosmed(loginResult.getAccessToken().getUserId());
                 myLoginConfig.noteIntro(loginResult.getAccessToken().getUserId());
-                sholatAPI.setJadwalSholat1Year();
+                RealmResults results = realm.where(SholatWajib.class).findAll();
+                if(results.size() == 0) {
+                    sholatAPI.setJadwalSholat1Year();
+                }
                 Log.e("datasholat", sholatAPI.getDataShalat().size()+"");
                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 finish();

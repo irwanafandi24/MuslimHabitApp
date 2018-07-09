@@ -3,7 +3,6 @@ package com.illiyinmagang.miafandi.muslimhabitapp.model;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -24,7 +23,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 /**
  * Created by user on 09/07/2018.

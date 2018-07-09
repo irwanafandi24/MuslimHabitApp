@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.LocationConfig;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
 
 public class SettingFragment extends MyFragment implements View.OnClickListener {
 
@@ -167,7 +169,12 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
                                             locationConfig = new LocationConfig(context);
                                             locationConfig.getAddress(latitude,longitude);
                                             txt.setText(locationConfig.getAddressComplete());
-                                            myLocatoin.noteMyLocation(locationConfig.getCity().toLowerCase());
+//                                            myLocatoin.noteMyLocation(locationConfig.getSubAdminArea().toLowerCase());
+                                            myLocatoin.updateMyLocation(locationConfig.getSubAdminArea().toLowerCase());
+
+                                            reSshedule();
+
+                                            Log.e("lokasiku",myLocatoin.getMynotedLocation());
                                         }else{
                                             Toast.makeText(context,"GPS Sedang Diaktifkan, Harap Tunggu sebentar dan Coba lagi",Toast.LENGTH_SHORT).show();
                                         }
@@ -185,5 +192,11 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
                 dialog.cancel();
             }
         });
+    }
+
+    public void reSshedule(){
+        SholatAPI sholatAPI = new SholatAPI(getContext());
+        sholatAPI.setKota();
+        sholatAPI.updateSchedule();
     }
 }

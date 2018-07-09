@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActionBarDrawerToggle mToogle;
     private NavigationView navigationView;
     private Realm realm;
+    private MyLocatoin myLocatoin;
     private MyLoginConfig myLoginConfig;
-    private TextView txtNama;
+    private TextView txtNama,txtAsal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         myLoginConfig = new MyLoginConfig(MainActivity.this);
+        myLocatoin = new MyLocatoin(MainActivity.this);
 
         Log.e("ceksession","apakah masuk ?");
         if(!myLoginConfig.isLogedIn()){
@@ -64,7 +66,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             View root = navigationView.getHeaderView(0);
             txtNama = (TextView) root.findViewById(R.id.txtNama);
+            txtAsal = (TextView) root.findViewById(R.id.txtAsal);
             txtNama.setText(myLoginConfig.getDataString(myLoginConfig.KEY_USERNAME));
+            txtAsal.setText(myLocatoin.getMynotedLocation());
+
 
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
@@ -101,6 +106,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.pengaturan) {
             ft.replace(R.id.fragment, new SettingFragment());
             getSupportActionBar().setTitle("Pengaturan");
+        }else if(id==R.id.logout){
+            myLoginConfig.deleteSession();
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
+            return true;
         }
 
         ft.commit();

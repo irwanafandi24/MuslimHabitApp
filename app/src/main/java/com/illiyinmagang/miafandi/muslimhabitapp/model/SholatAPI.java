@@ -13,6 +13,7 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.RequestHandler;
 
 import org.json.JSONArray;
@@ -35,23 +36,38 @@ public class SholatAPI {
     public ArrayList<SholatWajib> sholats = new ArrayList();
     public ArrayList<SholatWajib> sholatA = new ArrayList();
     private Realm realm;
+    private String kota,metode;
     private RealmResults<SholatWajib>sholatWajibs;
     private AndroidNetworking androidNetworking;
+    private MyLocatoin myLocatoin;
 
-    public SholatAPI(String kota, Context context) {
-        Log.e("kota", kota);
-        if (kota == "") {
-            this.URL = "http://muslimsalat.com/yearly.json?key=api_key";
-        } else {
-            this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/5.json?key=api_key";
-        }
+    public SholatAPI(String kota, String metode, Context context) {
+        this.kota = kota;
+        this.metode = metode;
+        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/"+metode+".json?key=api_key";
         this.context = context;
+        myLocatoin = new MyLocatoin(context);
         this.realm = Realm.getDefaultInstance();
+    }
+
+    //ini untuk ngubah posisi kotanya, karena seingetku belum ada untuk pergantian lokasinya, makanya kalo mau pindah lokasi, panggil metode ini dulu, baru panggail metode sholat1year
+    public void setKota() {
+        this.kota = myLocatoin.getMynotedLocation();
+        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/"+metode+".json?key=api_key";
+    }
+
+    public void setMetode(String metode) {
+        this.metode = metode;
+        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/"+metode+".json?key=api_key";
     }
 
     public SholatAPI(Context context) {
         this.context = context;
         this.realm = Realm.getDefaultInstance();
+        this.kota = "malang";
+        this.metode = "2";
+        myLocatoin = new MyLocatoin(context);
+        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/"+metode+".json?key=api_key";
     }
 
     public SholatWajib getShalatofDay(int i) {
@@ -62,7 +78,7 @@ public class SholatAPI {
         final ProgressDialog progressBar = new ProgressDialog(context);
         progressBar.setMessage("Mohon Menunggu");
         progressBar.show();
-
+        Log.e("alamaturl",this.URL);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
                 this.URL,
@@ -151,6 +167,19 @@ public class SholatAPI {
             a++;
         }
         return a;
+    }
+
+    public void updateSchedule(){
+        deleteAllSchedule();
+        setJadwalSholat1Year();
+    }
+
+    public void deleteAllSchedule(){
+        RealmResults<SholatWajib> results = realm.where(SholatWajib.class).findAll();
+        realm.beginTransaction();
+        results.deleteAllFromRealm();
+        realm.commitTransaction();
+        realm.close();
     }
 
 }

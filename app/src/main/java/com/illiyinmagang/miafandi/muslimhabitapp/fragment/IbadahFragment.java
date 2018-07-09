@@ -225,7 +225,7 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
         Log.d("tanggal1", getDateNow());
 
         //getData jadwal dari API + masuk ke local db
-        sholatAPI = new SholatAPI(myLocatoin.getMynotedLocation(),getContext());
+        sholatAPI = new SholatAPI(myLocatoin.getMynotedLocation(),"5",getContext());
 
         RealmResults results = realm.where(SholatWajib.class).findAll();
 
