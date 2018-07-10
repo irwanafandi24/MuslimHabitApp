@@ -1,14 +1,21 @@
 package com.illiyinmagang.miafandi.muslimhabitapp;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Application;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
@@ -37,7 +44,7 @@ import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajib;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Application.ActivityLifecycleCallbacks {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
     private NavigationView navigationView;
@@ -45,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private SholatAPI sholatAPI;
     private Realm realm;
     private MyLoginConfig myLoginConfig;
+    //run program in background
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +83,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView = (NavigationView) findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
 
+
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
                 navigationView.setCheckedItem(R.id.ibadah);
             }
         }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -120,6 +131,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onActivityCreated(Activity activity, Bundle bundle) {
+        super.onCreate(bundle);
+        setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
     }
 
 //    public void setUpLokasi() {

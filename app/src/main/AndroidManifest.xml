@@ -48,6 +48,15 @@
             android:name=".Notif.AlarmService"
             android:enabled="true"
             android:exported="true" />
+
+        <service android:name=".fragment.SholatFragment$MyService"
+            android:exported="true"
+            android:enabled="true"></service>
+
+        <service android:name=".Srevice.myService"
+            android:exported="true"
+            android:enabled="true"
+            android:process="Service.myService"/>
     </application>
 
 </manifest>
