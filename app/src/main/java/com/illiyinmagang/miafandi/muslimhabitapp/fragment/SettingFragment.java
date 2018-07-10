@@ -2,6 +2,7 @@ package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -51,6 +53,7 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
     private double longitude,latitude;
     private FusedLocationProviderClient mFusedLocationClient;
     private MyLocatoin myLocatoin;
+    private int metodeCalculation;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,35 +107,59 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
                 if(v == rd_isna){
                     lp.setMargins(0,0,0,20);
                     lp.addRule(RelativeLayout.ABOVE,ln3.getId());
-                    imgCheckKalkulasi.setLayoutParams(lp);
+                    metodeCalculation = 4;
+                    showDialogChangeMetode(rd_isna);
                 }else if(v == rd_wml){
                     lp.setMargins(0,0,0,20);
                     lp.addRule(RelativeLayout.ABOVE,ln4.getId());
-                    imgCheckKalkulasi.setLayoutParams(lp);
+                    metodeCalculation = 5;
+                    showDialogChangeMetode(rd_wml);
                 }else if(rd_unisma == v){
                     lp.addRule(RelativeLayout.ABOVE,ln2.getId());
                     lp.setMargins(0,0,0,20);
-                    imgCheckKalkulasi.setLayoutParams(lp);
+                    metodeCalculation = 2;
+                    showDialogChangeMetode(rd_unisma);
                 }else if(rd_ithna == v){
                     lp.setMargins(0,0,0,20);
                     lp.addRule(RelativeLayout.ABOVE,ln1.getId());
-                    imgCheckKalkulasi.setLayoutParams(lp);
+                    metodeCalculation = 1;
+                    showDialogChangeMetode(rd_ithna);
                 }else if(rd_umm == v){
                     lp.addRule(RelativeLayout.ABOVE,ln5.getId());
                     lp.setMargins(0,0,0,20);
-                    imgCheckKalkulasi.setLayoutParams(lp);
+                    metodeCalculation = 6;
+                    showDialogChangeMetode(rd_umm);
                 }else if(rd_hanafi == v){
                     lp2.addRule(RelativeLayout.ABOVE,ln7.getId());
                     lp2.setMargins(0,0,0,20);
-                    imgCheckJuristik.setLayoutParams(lp2);
                 }else if(rd_salafi == v){
                     lp2.addRule(RelativeLayout.ABOVE,ln6.getId());
                     lp2.setMargins(0,0,0,20);
-                    imgCheckJuristik.setLayoutParams(lp2);
                 }else if(v==relPickLoc){
                     showDialogChangeLocation(this.getContext(),txtLokasi);
                 }
 
+    }
+
+    public void showDialogChangeMetode(final TextView rd){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Ubah metode menjadi "+"\""+rd.getText().toString()+"\" ?")
+                .setTitle("Perubahan Metode Perhitungan")
+                .setPositiveButton("UBAH", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        imgCheckJuristik.setLayoutParams(lp2);
+                        reSshedule("calculation");
+                        Toast.makeText(getContext(),"Berhasil diubah menjadi "+rd.getText().toString(),Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setCancelable(true)
+                .setNegativeButton("BATAL", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        builder.create();
+        builder.show();
     }
 
     private void showDialogChangeLocation(final Context context, final TextView txt) {
@@ -169,10 +196,9 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
                                             locationConfig = new LocationConfig(context);
                                             locationConfig.getAddress(latitude,longitude);
                                             txt.setText(locationConfig.getAddressComplete());
-//                                            myLocatoin.noteMyLocation(locationConfig.getSubAdminArea().toLowerCase());
                                             myLocatoin.updateMyLocation(locationConfig.getSubAdminArea().toLowerCase());
 
-                                            reSshedule();
+                                            reSshedule("place");
 
                                             Log.e("lokasiku",myLocatoin.getMynotedLocation());
                                         }else{
@@ -194,9 +220,13 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
         });
     }
 
-    public void reSshedule(){
+    public void reSshedule(String dependency){
         SholatAPI sholatAPI = new SholatAPI(getContext());
-        sholatAPI.setKota();
+        if(dependency.equals("place")){
+            sholatAPI.setKota();
+        }else if(dependency.equals("calculation")){
+            sholatAPI.setMetode(metodeCalculation+"");
+        }
         sholatAPI.updateSchedule();
     }
 }

@@ -77,10 +77,6 @@ public class SholatFragment extends MyFragment {
         sholatMaghrib = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatMaghrib();
         sholatIsya = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatIsya();
 
-//<<<<<<< HEAD
-
-//=======
-        //=============Get it
         RealmConfiguration configuration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(configuration);
 
@@ -120,7 +116,6 @@ public class SholatFragment extends MyFragment {
         beforeTime = getTimeBeforeAlarm(showTime);
         waktuTunggu = Long.parseLong(beforeTime);
         Log.v("UBAH KE INTEGER",waktuTunggu+"");
-//>>>>>>> 7a685e399a190e325e181e8eb198986967978dc0
 
         sholatArrayList = new ArrayList();
         gambar = new ArrayList();
@@ -177,8 +172,6 @@ public class SholatFragment extends MyFragment {
         }else if(String.valueOf(sholatArrayList.get(4).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(4).isSwitchSholat()== true){
             getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
         }
-
-//        Log.v("CEK NOOOOOOOTIIIIIF ",sholatArrayList.get(2).getWaktuTunggu().equals("0")+" BOOLEAN "+sholatList.get(2).isSwitchSholat());
     }
 
     public String getDifferenceTime(String time){
@@ -202,8 +195,7 @@ public class SholatFragment extends MyFragment {
             }else{
                 imbuhan = "Adzan";
             }
-
-            jam = selisih / 60; //menit
+            jam = (selisih / 60); //menit
             menit = selisih % 60;
 
             Log.e("selisih",imbuhan+""+jam+" jam,"+menit+" menit,") ;
@@ -225,7 +217,7 @@ public class SholatFragment extends MyFragment {
     public long convertMinutes(Date now, Date sholat){
         long jam_now, jm_sholat, menit_now, menit_sholat, totalMenit, alarmBerbunyi;
         jam_now = now.getHours();
-        jm_sholat = sholat.getHours();
+        jm_sholat = sholat.getHours()-1; // ini soalnya dari API dapetnya +1 jam
         menit_now = now.getMinutes();
         menit_sholat = sholat.getMinutes();
 

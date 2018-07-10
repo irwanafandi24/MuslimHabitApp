@@ -44,7 +44,7 @@ public class SholatAPI {
     public SholatAPI(String kota, String metode, Context context) {
         this.kota = kota;
         this.metode = metode;
-        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/"+metode+".json?key=api_key";
+        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/false/"+metode+".json?key=api_key";
         this.context = context;
         myLocatoin = new MyLocatoin(context);
         this.realm = Realm.getDefaultInstance();
@@ -53,12 +53,12 @@ public class SholatAPI {
     //ini untuk ngubah posisi kotanya, karena seingetku belum ada untuk pergantian lokasinya, makanya kalo mau pindah lokasi, panggil metode ini dulu, baru panggail metode sholat1year
     public void setKota() {
         this.kota = myLocatoin.getMynotedLocation();
-        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/"+metode+".json?key=api_key";
+        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/false/"+metode+".json?key=api_key";
     }
 
     public void setMetode(String metode) {
         this.metode = metode;
-        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/"+metode+".json?key=api_key";
+        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/false/"+metode+".json?key=api_key";
     }
 
     public SholatAPI(Context context) {
@@ -67,7 +67,7 @@ public class SholatAPI {
         this.kota = "malang";
         this.metode = "2";
         myLocatoin = new MyLocatoin(context);
-        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/true/"+metode+".json?key=api_key";
+        this.URL = "http://muslimsalat.com/"+ kota +"/yearly/false/"+metode+".json?key=api_key";
     }
 
     public SholatWajib getShalatofDay(int i) {
