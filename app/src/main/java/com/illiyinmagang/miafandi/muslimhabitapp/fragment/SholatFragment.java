@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyDateSelected;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyDateSelected;
 import com.illiyinmagang.miafandi.muslimhabitapp.Notif.AlarmService;
 import com.illiyinmagang.miafandi.muslimhabitapp.Notif.NotificationDisplayService;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
@@ -81,14 +81,17 @@ public class SholatFragment extends MyFragment {
         myDateSelected.getMyPosisition();
         Toast.makeText(getContext(),myDateSelected.getMyPosisition()+"",Toast.LENGTH_LONG).show();
 
-        sholatAPI = new SholatAPI();
+        sholatAPI = new SholatAPI(getContext());
         sholatSubuh = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatsubuh();
         sholatDuhur = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatDuhur();
         sholatAshar = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatAshar();
         sholatMaghrib = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatMaghrib();
         sholatIsya = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatIsya();
 
+//<<<<<<< HEAD
         //=============Get it
+//=======
+///>>>>>>> 6c943c7f481c9b3b2c234289ea0d0d4dbbdfc051
         RealmConfiguration configuration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(configuration);
 
@@ -116,6 +119,7 @@ public class SholatFragment extends MyFragment {
         return rootView;
     }
 
+//<<<<<<< HEAD
     private final Runnable m_Runnable = new Runnable()
     {
         public void run()
@@ -138,12 +142,20 @@ public class SholatFragment extends MyFragment {
                 Log.v("InsertData","DOne inserted");
             }
             sholatList = realmHelper.getAllSholat();
+            Log.v("AA========",alarmSholat.size()+"");
 
             if(alarmSholat.size() == 0){
                 Alarm n = new Alarm("10 Menit Sebelumnya");
+                Log.v("AA","ENTER KOK");
                 realmHelper.saveAlarem(n);
             }
             alarmSholat = realmHelper.getAllAlarm();
+//=======
+//        Log.v("SHOW TIME",showTime+"");
+//        beforeTime = getTimeBeforeAlarm(showTime);
+//        waktuTunggu = Long.parseLong(beforeTime);
+//        Log.v("UBAH KE INTEGER",waktuTunggu+"");
+//>>>>>>> 6c943c7f481c9b3b2c234289ea0d0d4dbbdfc051
 
 
             for(Alarm alarmX:alarmSholat){
@@ -234,6 +246,7 @@ public class SholatFragment extends MyFragment {
         }else if(pin4.equals("0") && sholatList.get(4).isSwitchSholat()== true && y==false && c==true){
             getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
         }
+//<<<<<<< HEAD
 
         if(pin0.equals("0") || pin0.equals("1") && pin0.equals("2") && pin0.equals("3")){
             y = true;
@@ -250,6 +263,8 @@ public class SholatFragment extends MyFragment {
         }
 
 //        Log.v("CEK NOOOOOOOTIIIIIF ",sholatArrayList.get(2).getWaktuTunggu().equals("0")+" BOOLEAN "+sholatList.get(2).isSwitchSholat());
+//=======
+//>>>>>>> 6c943c7f481c9b3b2c234289ea0d0d4dbbdfc051
     }
 
     public String getDifferenceTime(String time){
@@ -273,8 +288,7 @@ public class SholatFragment extends MyFragment {
             }else{
                 imbuhan = "Adzan";
             }
-
-            jam = selisih / 60; //menit
+            jam = (selisih / 60); //menit
             menit = selisih % 60;
 
             Log.e("selisih",imbuhan+""+jam+" jam,"+menit+" menit,") ;
@@ -296,7 +310,7 @@ public class SholatFragment extends MyFragment {
     public long convertMinutes(Date now, Date sholat) throws ParseException {
         long jam_now, jm_sholat, menit_now, menit_sholat, totalMenit, alarmBerbunyi;
         jam_now = now.getHours();
-        jm_sholat = sholat.getHours();
+        jm_sholat = sholat.getHours()-1; // ini soalnya dari API dapetnya +1 jam
         menit_now = now.getMinutes();
         menit_sholat = sholat.getMinutes();
         boolean x = false;
@@ -312,7 +326,7 @@ public class SholatFragment extends MyFragment {
             z = false;
         }
 
-        totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now)-47;
+        totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now);
         alarmBerbunyi = totalMenit-waktuTunggu;
         Log.v("ALARm TUNGGU ADALAH: ",alarmBerbunyi+" YOWWWW");
 

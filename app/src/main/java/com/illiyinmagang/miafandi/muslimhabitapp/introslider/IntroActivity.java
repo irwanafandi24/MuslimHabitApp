@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyIntroConfig;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyIntroConfig;
 import com.illiyinmagang.miafandi.muslimhabitapp.LoginActivity;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 

@@ -1,4 +1,4 @@
-package com.illiyinmagang.miafandi.muslimhabitapp.Config;
+package com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -33,6 +33,12 @@ public class MyLoginConfig {
         editor.commit();
     }
 
+    public void noteIntro(String user){
+        editor.putString(KEY_USERNAME,user);
+        editor.putBoolean(KEY_AUTH,true);
+        editor.commit();
+    }
+
     public boolean isLogedIn(){
         return sharedPreferences.getBoolean(KEY_AUTH,false);
     }
@@ -40,5 +46,9 @@ public class MyLoginConfig {
     public void deleteSession(){
         editor.clear();
         editor.commit();
+    }
+
+    public String getDataString(String key){
+        return sharedPreferences.getString(key,"");
     }
 }

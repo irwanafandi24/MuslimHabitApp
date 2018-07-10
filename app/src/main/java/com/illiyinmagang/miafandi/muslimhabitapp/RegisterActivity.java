@@ -5,12 +5,23 @@ import android.graphics.drawable.Drawable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.ConfigDB;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.ServerHelper;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.User;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import io.realm.Realm;
 import io.realm.exceptions.RealmPrimaryKeyConstraintException;
@@ -19,6 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btn_registrasi;
     private TextInputEditText etEmail, etUsername, etPassword, etNama, etRepasword;
     private Realm realm;
+    private ServerHelper serverHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +38,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         realm = Realm.getDefaultInstance();
-
+        serverHelper = new ServerHelper(RegisterActivity.this);
         etEmail = (TextInputEditText) findViewById(R.id.et_email_reg);
         etPassword = (TextInputEditText) findViewById(R.id.et_password);
         etRepasword = (TextInputEditText) findViewById(R.id.et_retype_password);
@@ -83,9 +95,11 @@ public class RegisterActivity extends AppCompatActivity {
     public boolean addUser(String nama, String username, String pass, String email){
         realm.beginTransaction();
         try {
+            //server
+            serverHelper.InserServer(username,email,pass,nama);
+//            local
             User u = new User(username,email,pass,nama);
             u.setId(generateId());
-
             realm.copyToRealm(u);
             realm.commitTransaction();
         }catch (Exception exception){

@@ -14,10 +14,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,34 +27,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.TextView;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLocatoin;
-import com.illiyinmagang.miafandi.muslimhabitapp.Config.MyLoginConfig;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLocatoin;
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLoginConfig;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.GrafikFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.IbadahFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.InfoFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.NotifikasiFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.SettingFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
-import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatWajib;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Application.ActivityLifecycleCallbacks {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
     private NavigationView navigationView;
-    private MyLocatoin myLocatoin;
-    private SholatAPI sholatAPI;
     private Realm realm;
+    private MyLocatoin myLocatoin;
     private MyLoginConfig myLoginConfig;
     //run program in background
 
+    private TextView txtNama,txtAsal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
 
         myLoginConfig = new MyLoginConfig(MainActivity.this);
+        myLocatoin = new MyLocatoin(MainActivity.this);
 
         Log.e("ceksession","apakah masuk ?");
         if(!myLoginConfig.isLogedIn()){
@@ -83,6 +81,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView = (NavigationView) findViewById(R.id.navigationView);
             navigationView.setNavigationItemSelectedListener(this);
 
+            View root = navigationView.getHeaderView(0);
+            txtNama = (TextView) root.findViewById(R.id.txtNama);
+            txtAsal = (TextView) root.findViewById(R.id.txtAsal);
+            txtNama.setText(myLoginConfig.getDataString(myLoginConfig.KEY_USERNAME));
+            txtAsal.setText(myLocatoin.getMynotedLocation());
 
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
@@ -120,6 +123,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.pengaturan) {
             ft.replace(R.id.fragment, new SettingFragment());
             getSupportActionBar().setTitle("Pengaturan");
+        }else if(id==R.id.logout){
+            myLoginConfig.deleteSession();
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
+            return true;
         }
 
         ft.commit();
@@ -168,40 +176,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onActivityDestroyed(Activity activity) {
     }
-
-//    public void setUpLokasi() {
-//        final LocationConfig[] locationConfig = new LocationConfig[1];
-//        final double[] longitude = new double[1];
-//        final double[] latitude = new double[1];
-//        FusedLocationProviderClient mFusedLocationClient;
-//
-//        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-//
-//        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
-//        } else {
-//            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-//            } else {
-//                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
-//                mFusedLocationClient.getLastLocation()
-//                        .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
-//                            @Override
-//                            public void onSuccess(Location location) {
-//                                if (location != null) {
-//                                    longitude[0] = location.getLongitude();
-//                                    latitude[0] = location.getLatitude();
-//
-//                                    locationConfig[0] = new LocationConfig(MainActivity.this);
-//                                    //                            locationConfig.getAddress(latitude,longitude);
-//                                } else {
-//                                    Toast.makeText(MainActivity.this, "GPS Sedang Diaktifkan, Harap Tunggu sebentar dan Coba lagi", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                        });
-//            }
-//        }
-//
-//    }
-
 }

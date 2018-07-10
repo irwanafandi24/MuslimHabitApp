@@ -13,17 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical">
 
-        <!--<de.hdodenhof.circleimageview.CircleImageView-->
-            <!--android:id="@+id/imageMakanananItem"-->
-            <!--android:layout_width="80dp"-->
-            <!--android:layout_height="80dp"-->
-            <!--android:scaleType="centerCrop"-->
-            <!--app:civ_border_color="@color/darkgrey"-->
-            <!--app:civ_border_width="3dp"-->
-            <!--app:srcCompat="@drawable/profilefoto"-->
-            <!--android:layout_marginRight="15dp"-->
-            <!--android:layout_gravity="center_vertical"-->
-            <!--/>-->
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
