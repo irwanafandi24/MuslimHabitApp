@@ -53,8 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Realm realm;
     private MyLocatoin myLocatoin;
     private MyLoginConfig myLoginConfig;
-    private TwitterSession twitterSession;
-    private TwitterAuthToken authToken;
     //run program in background
 
     private TextView txtNama,txtAsal;
@@ -189,5 +187,4 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onActivityDestroyed(Activity activity) {
     }
-//>>>>>>> 3d4f639613f6af4812c194b13af16843962140b7
 }

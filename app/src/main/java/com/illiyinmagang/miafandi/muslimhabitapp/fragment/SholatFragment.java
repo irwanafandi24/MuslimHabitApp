@@ -200,6 +200,7 @@ public class SholatFragment extends MyFragment {
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("HH:mm");
         try {
             Date date = dateFormat.parse(time);
+            date.setHours(date.getHours()-1); // ini di kurangin satu jam kerna error dari APInya yang selalu lebih dari 1 jam
             out = dateFormat2.format(date);
             return out;
         } catch (ParseException e) {
@@ -277,7 +278,7 @@ public class SholatFragment extends MyFragment {
         try {
             date = sdf.parse(sdf1.format(cal.getTime()));
             date1 = sdf.parse(time);
-
+            Log.e("waktu1jam",date.getHours()+"|"+date1.getHours());
             selisih = convertMinutes(date,date1);
             if( selisih > 0){
                 imbuhan = "Menuju Adzan";
@@ -309,7 +310,7 @@ public class SholatFragment extends MyFragment {
     public long convertMinutes(Date now, Date sholat) throws ParseException {
         long jam_now, jm_sholat, menit_now, menit_sholat, totalMenit, alarmBerbunyi;
         jam_now = now.getHours();
-        jm_sholat = sholat.getHours()-1; // ini soalnya dari API dapetnya +1 jam
+        jm_sholat = sholat.getHours();
         menit_now = now.getMinutes();
         menit_sholat = sholat.getMinutes();
         boolean x = false;

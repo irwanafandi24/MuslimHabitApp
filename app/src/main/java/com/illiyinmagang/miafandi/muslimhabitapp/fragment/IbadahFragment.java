@@ -312,7 +312,6 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-
         position = sholatAPI.getDataPosistionByDate(getDateNow());
         myDateSelected.notePosition(position);
         RealmResults r1 = realm.where(SholatWajib.class).findAll();
