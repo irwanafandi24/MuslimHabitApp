@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLoginConfig;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.GrafikFragment;
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         myLoginConfig = new MyLoginConfig(MainActivity.this);
         myLocatoin = new MyLocatoin(MainActivity.this);
 
-        Log.e("ceksession","apakah masuk ?");
+        Log.e("ceksession",myLoginConfig.getDataString(myLoginConfig.KEY_USERNAME)+""+myLoginConfig.isLogedIn());
         if(!myLoginConfig.isLogedIn()){
 //            finish();
             Log.e("masuksession","berhasil masuk"+!myLoginConfig.isLogedIn());
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            finish();
         }
     }
 
@@ -108,6 +110,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setTitle("Pengaturan");
         }else if(id==R.id.logout){
             myLoginConfig.deleteSession();
+            if(LoginManager.getInstance() != null){
+                LoginManager.getInstance().logOut();
+            }
+            Log.e("Logoutfb","FB");
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
             return true;
@@ -123,40 +129,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
     }
-
-//    public void setUpLokasi() {
-//        final LocationConfig[] locationConfig = new LocationConfig[1];
-//        final double[] longitude = new double[1];
-//        final double[] latitude = new double[1];
-//        FusedLocationProviderClient mFusedLocationClient;
-//
-//        LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-//
-//        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//            startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS), 1);
-//        } else {
-//            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-//            } else {
-//                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
-//                mFusedLocationClient.getLastLocation()
-//                        .addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
-//                            @Override
-//                            public void onSuccess(Location location) {
-//                                if (location != null) {
-//                                    longitude[0] = location.getLongitude();
-//                                    latitude[0] = location.getLatitude();
-//
-//                                    locationConfig[0] = new LocationConfig(MainActivity.this);
-//                                    //                            locationConfig.getAddress(latitude,longitude);
-//                                } else {
-//                                    Toast.makeText(MainActivity.this, "GPS Sedang Diaktifkan, Harap Tunggu sebentar dan Coba lagi", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                        });
-//            }
-//        }
-//
-//    }
 
 }

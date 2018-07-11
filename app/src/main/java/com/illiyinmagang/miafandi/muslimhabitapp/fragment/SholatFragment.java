@@ -175,7 +175,6 @@ public class SholatFragment extends MyFragment {
     }
 
     public String getDifferenceTime(String time){
-//        Log.e("selisih",time) ;
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
@@ -222,11 +221,6 @@ public class SholatFragment extends MyFragment {
         menit_sholat = sholat.getMinutes();
 
         totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now);
-//        alarmBerbunyi = totalMenit-waktuTunggu;
-
-//        if(alarmBerbunyi == 0){
-//            getActivity().startService(new Intent(getActivity(),AlarmService.class));
-//        }
 
         Log.v("Tanda Menit adalah",totalMenit+"");
         return  totalMenit;

@@ -10,9 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.Login;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -35,6 +41,11 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -49,32 +60,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private SholatAPI sholatAPI;
     private Realm realm;
     private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TwitterConfig config = new TwitterConfig.Builder(this)
-                .logger(new DefaultLogger(Log.DEBUG))
-                .twitterAuthConfig(new TwitterAuthConfig(getResources().getString(R.string.CONSUMER_KEY), getResources().getString(R.string.CONSUMER_SECRET)))
-                .debug(true)
-                .build();
-
-        Twitter.initialize(config);
-
+        configTwitterLogin();
         callbackManager = CallbackManager.Factory.create();
-
         setContentView(R.layout.activity_login);
 
         myIntroConfig = new MyIntroConfig(LoginActivity.this);
-
         if(!myIntroConfig.getMyIntro()){
             startActivity(new Intent(LoginActivity.this, IntroActivity.class));
         }
 
         realm = Realm.getDefaultInstance();
         myLoginConfig = new MyLoginConfig(LoginActivity.this);
-
         myLocatoin = new MyLocatoin(LoginActivity.this);
+
         sholatAPI = new SholatAPI(myLocatoin.getMynotedLocation(),"5",LoginActivity.this);
 
         btn_daftar = (Button) findViewById(R.id.btn_register);
@@ -83,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         et_password = (TextInputEditText) findViewById(R.id.et_password);
 
         btn_fb = (LoginButton) findViewById(R.id.btn_fb);
-        btn_fb.setReadPermissions("email");
 
         btn_twitter = (TwitterLoginButton) findViewById(R.id.btn_twt);
 
@@ -118,39 +121,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         });
 
-        btn_fb.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                insertDataSosmed(loginResult.getAccessToken().getUserId());
-                myLoginConfig.noteIntro(loginResult.getAccessToken().getUserId());
-                RealmResults results = realm.where(SholatWajib.class).findAll();
-                if(results.size() == 0) {
-                    sholatAPI.setJadwalSholat1Year();
-                }
-                Log.e("datasholat", sholatAPI.getDataShalat().size()+"");
-                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                finish();
-                Toast.makeText(LoginActivity.this,"Login Berhasil"+loginResult.getAccessToken().getUserId(),Toast.LENGTH_LONG).show();
-            }
+        btn_fb.registerCallback(callbackManager, myFacebookLogin());
 
+        accessTokenTracker= new AccessTokenTracker() {
             @Override
-            public void onCancel() {
-                // App code
-            }
+            protected void onCurrentAccessTokenChanged(AccessToken oldToken, AccessToken newToken) {
 
+            }
+        };
+        profileTracker = new ProfileTracker() {
             @Override
-            public void onError(FacebookException exception) {
-                Toast.makeText(LoginActivity.this,"Login gagal,"+exception.getMessage(),Toast.LENGTH_LONG).show();
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
             }
-        });
-    }
+        };
+        accessTokenTracker.startTracking();
+        profileTracker.startTracking();
+        btn_fb.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday", "user_friends"));
 
-    public boolean isSavedInDb(String username){
-        User u = realm.where(User.class).equalTo("username",username).findFirst();
-        if(u == null){
-            return false;
-        }
-        return true;
     }
 
     @Override
@@ -183,6 +170,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -191,6 +179,60 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btn_twitter.onActivityResult(requestCode, resultCode, data);
         //fb
         callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close();
+    }
+
+    public FacebookCallback myFacebookLogin(){
+        return new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    String fnm = object.getString("first_name");
+                                    String lnm = object.getString("last_name");
+                                    String mail = object.getString("email");
+                                    myLoginConfig.noteIntro(new User(fnm+""+lnm,mail,"",fnm+" "+lnm));
+
+                                    insertDataSosmed(fnm,mail,fnm+lnm);
+                                    Toast.makeText(LoginActivity.this,"Login Berhasil"+myLoginConfig.getDataString(myLoginConfig.KEY_USERNAME),Toast.LENGTH_SHORT).show();
+                                    Log.e("dataku",myLoginConfig.getDataString(myLoginConfig.KEY_USERNAME));
+                                    RealmResults results = realm.where(SholatWajib.class).findAll();
+                                    if(results.size() == 0) {
+                                        sholatAPI.setJadwalSholat1Year();
+                                    }
+                                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                                    finish();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id, first_name, last_name, email, gender, birthday, location");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                Toast.makeText(LoginActivity.this,"Login gagal,"+exception.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        };
+
     }
 
     public void insertDataSosmed(String username){
@@ -203,6 +245,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             realm.copyToRealm(u);
             realm.commitTransaction();
             Log.e("twitterlog","done insert");
+        }
+    }
+
+    public void insertDataSosmed(String username,String email, String nama){
+        if(!isSavedInDb(username)){
+            realm.beginTransaction();
+            User u = new User(username," "," "," ");
+            u.setId(generateID());
+            realm.copyToRealm(u);
+            realm.commitTransaction();
         }
     }
 
@@ -232,11 +284,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        realm.close();
+    private void configTwitterLogin() {
+        TwitterConfig config = new TwitterConfig.Builder(this)
+                .logger(new DefaultLogger(Log.DEBUG))
+                .twitterAuthConfig(new TwitterAuthConfig(getResources().getString(R.string.CONSUMER_KEY), getResources().getString(R.string.CONSUMER_SECRET)))
+                .debug(true)
+                .build();
+
+        Twitter.initialize(config);
     }
 
-
+    public boolean isSavedInDb(String username){
+        User u = realm.where(User.class).equalTo("username",username).findFirst();
+        if(u == null){
+            return false;
+        }
+        return true;
+    }
 }
