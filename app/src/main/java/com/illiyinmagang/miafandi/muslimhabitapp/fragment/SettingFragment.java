@@ -100,6 +100,7 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
         rd_hanafi.setOnClickListener(this);
 
         relPickLoc.setOnClickListener(this);
+        centangSetting();
 
         return v;
     }
@@ -140,7 +141,32 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
                 }else if(v==relPickLoc){
                     showDialogChangeLocation(this.getContext(),txtLokasi);
                 }
+                myLocatoin.noteMyCalculation(metodeCalculation);
+    }
 
+    public void centangSetting(){
+        switch (myLocatoin.getMynotedCalculation()){
+            case 1:
+                lp.setMargins(0,0,0,20);
+                lp.addRule(RelativeLayout.ABOVE,ln1.getId());
+                break;
+            case 2:
+                lp.addRule(RelativeLayout.ABOVE,ln2.getId());
+                lp.setMargins(0,0,0,20);
+                break;
+            case 6:
+                lp.addRule(RelativeLayout.ABOVE,ln5.getId());
+                lp.setMargins(0,0,0,20);
+                break;
+            case 5:
+                lp.setMargins(0,0,0,20);
+                lp.addRule(RelativeLayout.ABOVE,ln4.getId());
+                break;
+            case 4:
+                lp.setMargins(0,0,0,20);
+                lp.addRule(RelativeLayout.ABOVE,ln3.getId());
+                break;
+        }
     }
 
     public void showDialogChangeMetode(final TextView rd){
