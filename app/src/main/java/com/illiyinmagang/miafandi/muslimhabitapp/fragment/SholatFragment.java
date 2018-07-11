@@ -1,7 +1,13 @@
 package com.illiyinmagang.miafandi.muslimhabitapp.fragment;
 
+import android.app.Service;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyDateSelected;
+import com.illiyinmagang.miafandi.muslimhabitapp.Notif.AlarmService;
 import com.illiyinmagang.miafandi.muslimhabitapp.Notif.NotificationDisplayService;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.Alarm;
@@ -36,6 +43,9 @@ public class SholatFragment extends MyFragment {
     private SholatAPI sholatAPI;
     private MyDateSelected myDateSelected;
     private Sholat sholatSubuh, sholatDuhur, sholatAshar, sholatMaghrib, sholatIsya;
+    Handler mHandler;
+    boolean y = false;
+    String pin0, pin1, pin2, pin3, pin4;
 
     //for alarm and get Sholat time
     private Realm realm;
@@ -44,6 +54,7 @@ public class SholatFragment extends MyFragment {
     private List<Alarm> alarmSholat;
     private String showTime, beforeTime;
     private Long waktuTunggu;
+    View rootView;
 
     public SholatFragment() {
         // Required empty public constructor
@@ -64,7 +75,7 @@ public class SholatFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_sholat, container, false);
+        rootView = inflater.inflate(R.layout.fragment_sholat, container, false);
 
         myDateSelected = new MyDateSelected(getContext());
         myDateSelected.getMyPosisition();
@@ -77,6 +88,10 @@ public class SholatFragment extends MyFragment {
         sholatMaghrib = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatMaghrib();
         sholatIsya = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatIsya();
 
+//<<<<<<< HEAD
+        //=============Get it
+//=======
+///>>>>>>> 6c943c7f481c9b3b2c234289ea0d0d4dbbdfc051
         RealmConfiguration configuration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(configuration);
 
@@ -84,59 +99,100 @@ public class SholatFragment extends MyFragment {
         sholatList = new ArrayList<>();
         alarmSholat = new ArrayList<>();
 
-        sholatList = realmHelper.getAllSholat();
-        alarmSholat = realmHelper.getAllAlarm();
-        if(sholatList.size() == 0){
-            SholatWajibNotif s1 = new SholatWajibNotif("Subuh",true);
-            realmHelper.saveData(s1);
-            SholatWajibNotif s2 = new SholatWajibNotif("Duhur",true);
-            realmHelper.saveData(s2);
-            SholatWajibNotif s3 = new SholatWajibNotif("Ashar",false);
-            realmHelper.saveData(s3);
-            SholatWajibNotif s4 = new SholatWajibNotif("Magrib",true);
-            realmHelper.saveData(s4);
-            SholatWajibNotif s5 = new SholatWajibNotif("Isya",false);
-            realmHelper.saveData(s5);
-            Log.v("InsertData","DOne inserted");
-        }
-        sholatList = realmHelper.getAllSholat();
 
-        if(alarmSholat.size() == 0){
-            Alarm n = new Alarm("10 Menit Sebelumnya");
-            realmHelper.saveAlarem(n);
-        }
-        alarmSholat = realmHelper.getAllAlarm();
+        //startService(new Intent(this,MyService.class));
+        Log.v("TASK 1 ==========="," OK ");
+        this.mHandler = new Handler();
+        m_Runnable.run();
+//        sholatArrayList.clear();
+//        sholatArrayList.add(new Sholat(sholatSubuh.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatSubuh.getJamSholat())),convertDateFormat(sholatSubuh.getJamSholat()),gambar.get(0)));
+//        sholatArrayList.add(new Sholat(sholatDuhur.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatDuhur.getJamSholat())),convertDateFormat(sholatDuhur.getJamSholat()),gambar.get(0)));
+//        sholatArrayList.add(new Sholat(sholatAshar.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatAshar.getJamSholat())),convertDateFormat(sholatAshar.getJamSholat()),gambar.get(0)));
+//        sholatArrayList.add(new Sholat(sholatMaghrib.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatMaghrib.getJamSholat())),convertDateFormat(sholatMaghrib.getJamSholat()),gambar.get(0)));
+//        sholatArrayList.add(new Sholat(sholatIsya.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatIsya.getJamSholat())),convertDateFormat(sholatIsya.getJamSholat()),gambar.get(0)));
 
-
-        for(Alarm alarmX:alarmSholat){
-            showTime = alarmX.getWaktuAlaram();
-        }
-
-        Log.v("SHOW TIME",showTime+"");
-        beforeTime = getTimeBeforeAlarm(showTime);
-        waktuTunggu = Long.parseLong(beforeTime);
-        Log.v("UBAH KE INTEGER",waktuTunggu+"");
-
-        sholatArrayList = new ArrayList();
-        gambar = new ArrayList();
-
-        gambar.add(R.drawable.ibadahicon);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycleIbadah);
-
-        sholatArrayList.clear();
-        sholatArrayList.add(new Sholat(sholatSubuh.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatSubuh.getJamSholat())),convertDateFormat(sholatSubuh.getJamSholat()),gambar.get(0)));
-        sholatArrayList.add(new Sholat(sholatDuhur.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatDuhur.getJamSholat())),convertDateFormat(sholatDuhur.getJamSholat()),gambar.get(0)));
-        sholatArrayList.add(new Sholat(sholatAshar.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatAshar.getJamSholat())),convertDateFormat(sholatAshar.getJamSholat()),gambar.get(0)));
-        sholatArrayList.add(new Sholat(sholatMaghrib.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatMaghrib.getJamSholat())),convertDateFormat(sholatMaghrib.getJamSholat()),gambar.get(0)));
-        sholatArrayList.add(new Sholat(sholatIsya.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatIsya.getJamSholat())),convertDateFormat(sholatIsya.getJamSholat()),gambar.get(0)));
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recyclerView.setAdapter(new SholatRecyclerViewAdapter(sholatArrayList, this.getContext()));
-        soundNotif();
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+//        recyclerView.setAdapter(new SholatRecyclerViewAdapter(sholatArrayList, this.getContext()));
 
 //        Log.e("konvert",convertDateFormat(sholatAshar.getJamSholat()));
+        //getActivity().startService(new Intent(getActivity(),MyService.class));
         return rootView;
     }
+
+//<<<<<<< HEAD
+    private final Runnable m_Runnable = new Runnable()
+    {
+        public void run()
+
+        {
+            //Toast.makeText(getContext(),"in runnable",Toast.LENGTH_SHORT).show();
+            sholatList = realmHelper.getAllSholat();
+            alarmSholat = realmHelper.getAllAlarm();
+            if(sholatList.size() == 0){
+                SholatWajibNotif s1 = new SholatWajibNotif("Subuh",true);
+                realmHelper.saveData(s1);
+                SholatWajibNotif s2 = new SholatWajibNotif("Duhur",true);
+                realmHelper.saveData(s2);
+                SholatWajibNotif s3 = new SholatWajibNotif("Ashar",false);
+                realmHelper.saveData(s3);
+                SholatWajibNotif s4 = new SholatWajibNotif("Magrib",true);
+                realmHelper.saveData(s4);
+                SholatWajibNotif s5 = new SholatWajibNotif("Isya",false);
+                realmHelper.saveData(s5);
+                Log.v("InsertData","DOne inserted");
+            }
+            sholatList = realmHelper.getAllSholat();
+            Log.v("AA========",alarmSholat.size()+"");
+
+            if(alarmSholat.size() == 0){
+                Alarm n = new Alarm("10 Menit Sebelumnya");
+                Log.v("AA","ENTER KOK");
+                realmHelper.saveAlarem(n);
+            }
+            alarmSholat = realmHelper.getAllAlarm();
+//=======
+//        Log.v("SHOW TIME",showTime+"");
+//        beforeTime = getTimeBeforeAlarm(showTime);
+//        waktuTunggu = Long.parseLong(beforeTime);
+//        Log.v("UBAH KE INTEGER",waktuTunggu+"");
+//>>>>>>> 6c943c7f481c9b3b2c234289ea0d0d4dbbdfc051
+
+
+            for(Alarm alarmX:alarmSholat){
+                showTime = alarmX.getWaktuAlaram();
+            }
+
+            Log.v("SHOW TIME",showTime+"");
+            beforeTime = getTimeBeforeAlarm(showTime);
+            waktuTunggu = Long.parseLong(beforeTime);
+            Log.v("WAKTU TUNGGGGGGUUU",waktuTunggu+"");
+
+            sholatArrayList = new ArrayList();
+            gambar = new ArrayList();
+
+            gambar.add(R.drawable.ibadahicon);
+            recyclerView = (RecyclerView) rootView.findViewById(R.id.recycleIbadah);
+
+            sholatArrayList.clear();
+            sholatArrayList.add(new Sholat(sholatSubuh.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatSubuh.getJamSholat())),convertDateFormat(sholatSubuh.getJamSholat()),gambar.get(0)));
+            sholatArrayList.add(new Sholat(sholatDuhur.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatDuhur.getJamSholat())),convertDateFormat(sholatDuhur.getJamSholat()),gambar.get(0)));
+            Log.v("GEET ======== ",sholatArrayList.get(1).getWaktuTunggu());
+            sholatArrayList.add(new Sholat(sholatAshar.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatAshar.getJamSholat())),convertDateFormat(sholatAshar.getJamSholat()),gambar.get(0)));
+            sholatArrayList.add(new Sholat(sholatMaghrib.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatMaghrib.getJamSholat())),convertDateFormat(sholatMaghrib.getJamSholat()),gambar.get(0)));
+            sholatArrayList.add(new Sholat(sholatIsya.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatIsya.getJamSholat())),convertDateFormat(sholatIsya.getJamSholat()),gambar.get(0)));
+
+            recyclerView.setLayoutManager(new LinearLayoutManager(SholatFragment.this.getContext()));
+            recyclerView.setAdapter(new SholatRecyclerViewAdapter(sholatArrayList, SholatFragment.this.getContext()));
+            try {
+                soundNotif();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            SholatFragment.this.mHandler.postDelayed(m_Runnable,3000);
+        }
+
+    };
 
     public String convertDateFormat(String time){
         String out;
@@ -159,19 +215,56 @@ public class SholatFragment extends MyFragment {
         return x;
     }
 
-    public void soundNotif(){
-        if(String.valueOf(sholatArrayList.get(0).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(0).isSwitchSholat()== true){
+    public void soundNotif() throws ParseException {
+        pin0 = String.valueOf(sholatArrayList.get(0).getWaktuTunggu().charAt(6));
+        pin1 = String.valueOf(sholatArrayList.get(1).getWaktuTunggu().charAt(6));
+        pin2 = String.valueOf(sholatArrayList.get(2).getWaktuTunggu().charAt(6));
+        pin3 = String.valueOf(sholatArrayList.get(3).getWaktuTunggu().charAt(6));
+        pin4 = String.valueOf(sholatArrayList.get(4).getWaktuTunggu().charAt(6));
+
+        //get detik
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        Date dateSecond = null;
+        dateSecond = sdf.parse(sdf1.format(cal.getTime()));
+        boolean c = false;
+        int a = dateSecond.getSeconds();
+        if (a==0 || a==1 || a==2 || a==3 || a==4 || a==5){
+            c = true;
+        }
+        Log.v("BOOLEAN C ADALAH: ",c+" INI BOS " + a);
+        if(pin0.equals("0") && sholatList.get(0).isSwitchSholat()== true && y==false  && c==true){
             getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
-        }else if(String.valueOf(sholatArrayList.get(1).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(1).isSwitchSholat()== true){
+        }else if(pin1.equals("0") && sholatList.get(1).isSwitchSholat()== true && y==false && c==true){
             getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
-        }else if(String.valueOf(sholatArrayList.get(2).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(2).isSwitchSholat()== true){
+        }else if(pin2.equals("0") && sholatList.get(2).isSwitchSholat()== true && y==false && c==true){
             getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
             Log.v("INI DIA","MASUK BOS");
-        }else if(String.valueOf(sholatArrayList.get(3).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(3).isSwitchSholat()== true){
+        }else if(pin3.equals("0") && sholatList.get(3).isSwitchSholat()== true && y==false && c==true){
             getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
-        }else if(String.valueOf(sholatArrayList.get(4).getWaktuTunggu().charAt(6)).equals("0") && sholatList.get(4).isSwitchSholat()== true){
+        }else if(pin4.equals("0") && sholatList.get(4).isSwitchSholat()== true && y==false && c==true){
             getActivity().startService(new Intent(getActivity(),NotificationDisplayService.class));
         }
+//<<<<<<< HEAD
+
+        if(pin0.equals("0") || pin0.equals("1") && pin0.equals("2") && pin0.equals("3")){
+            y = true;
+        }else if(pin1.equals("0") || pin1.equals("1") && pin1.equals("2") && pin1.equals("3")){
+            y = true;
+        }else if(pin2.equals("0") || pin2.equals("1") && pin2.equals("2") && pin2.equals("3")){
+            y = true;
+        }else if(pin3.equals("0") || pin3.equals("1") && pin3.equals("2") && pin3.equals("3")){
+            y = true;
+        }else if(pin4.equals("0") || pin4.equals("1") && pin4.equals("2") && pin4.equals("3")){
+            y = true;
+        }else{
+            y=false;
+        }
+
+//        Log.v("CEK NOOOOOOOTIIIIIF ",sholatArrayList.get(2).getWaktuTunggu().equals("0")+" BOOLEAN "+sholatList.get(2).isSwitchSholat());
+//=======
+//>>>>>>> 6c943c7f481c9b3b2c234289ea0d0d4dbbdfc051
     }
 
     public String getDifferenceTime(String time){
@@ -213,21 +306,77 @@ public class SholatFragment extends MyFragment {
         return "";
     }
 
-    public long convertMinutes(Date now, Date sholat){
+    public long convertMinutes(Date now, Date sholat) throws ParseException {
         long jam_now, jm_sholat, menit_now, menit_sholat, totalMenit, alarmBerbunyi;
         jam_now = now.getHours();
         jm_sholat = sholat.getHours()-1; // ini soalnya dari API dapetnya +1 jam
         menit_now = now.getMinutes();
         menit_sholat = sholat.getMinutes();
+        boolean x = false;
+        boolean z = true;
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        Date dateSecond = null;
+        dateSecond = sdf.parse(sdf1.format(cal.getTime()));
+        int a = dateSecond.getSeconds();
+        if (a==0 || a==1 || a==2 ){
+            z = false;
+        }
 
         totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now);
+//<<<<<<< HEAD
+//=======
+        alarmBerbunyi = totalMenit-waktuTunggu;
+        Log.v("ALARm TUNGGU ADALAH: ",alarmBerbunyi+" YOWWWW");
 
-        Log.v("Tanda Menit adalah",totalMenit+"");
+        if(alarmBerbunyi == 0  && x == false && z==false){
+            getActivity().startService(new Intent(getActivity(),AlarmService.class));
+        }
+        Log.v("NILAI PENGINGAT", alarmBerbunyi+ " = 0 DAN "+ Boolean.toString(x) + " = false DAN "+z+" = false");
+//>>>>>>> 3d4f639613f6af4812c194b13af16843962140b7
+
+
+        Log.v("Tanda Menit adalah",totalMenit+" BOOLEAN ");
         return  totalMenit;
     };
 
-    @Override
-    public void onResume() {
-        super.onResume();
+    //========================
+    public static class MyService extends Service {
+        private MediaPlayer mediaPlayer;
+
+        @Nullable
+        @Override
+        public IBinder onBind(Intent intent) {
+            return null;
+        }
+
+        @Override
+        public int onStartCommand(Intent intent, int flags, int startId) {
+//            mediaPlayer = MediaPlayer.create(this, Settings.System.DEFAULT_NOTIFICATION_URI);
+//            mediaPlayer.setLooping(true);
+//            mediaPlayer.start();
+//            Log.v("AFAAAAAAAAAAAAAN","Masuk kok stick");
+            return START_STICKY;
+        }
+
+        @Override
+        public void onDestroy() {
+            mediaPlayer = MediaPlayer.create(this, Settings.System.DEFAULT_NOTIFICATION_URI);
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+            Log.v("AFAAAAAAAAAAAAAN","Masuk kok destroy");
+           // mediaPlayer.stop();
+            Log.v("AFAAAAAAAAAAAAAN","Masuk kok");
+        }
     }
+    //=======================
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//    }
+
+
 }

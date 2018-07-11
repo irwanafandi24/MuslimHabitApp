@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<!--<<<<<<< HEAD-->
+
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar"
@@ -49,6 +49,15 @@
             android:enabled="true"
             android:exported="true" />
 
+        <service android:name=".fragment.SholatFragment$MyService"
+            android:exported="true"
+            android:enabled="true"></service>
+
+        <service android:name=".Srevice.myService"
+            android:exported="true"
+            android:enabled="true"
+            android:process="Service.myService"/>
+
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
 
@@ -66,7 +75,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

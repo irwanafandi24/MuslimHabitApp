@@ -1,8 +1,23 @@
 package com.illiyinmagang.miafandi.muslimhabitapp;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Application;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.provider.Settings;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -27,13 +42,15 @@ import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
 
 import io.realm.Realm;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Application.ActivityLifecycleCallbacks {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToogle;
     private NavigationView navigationView;
     private Realm realm;
     private MyLocatoin myLocatoin;
     private MyLoginConfig myLoginConfig;
+    //run program in background
+
     private TextView txtNama,txtAsal;
 
     @Override
@@ -71,13 +88,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             txtNama.setText(myLoginConfig.getDataString(myLoginConfig.KEY_USERNAME));
             txtAsal.setText(myLocatoin.getMynotedLocation());
 
-
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
                 navigationView.setCheckedItem(R.id.ibadah);
             }
         }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -130,4 +147,42 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+//<<<<<<< HEAD
+//=======
+
+    @Override
+    public void onActivityCreated(Activity activity, Bundle bundle) {
+        super.onCreate(bundle);
+        setContentView(R.layout.activity_main);
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment, new IbadahFragment()).commit();
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+    }
+//>>>>>>> 3d4f639613f6af4812c194b13af16843962140b7
 }
