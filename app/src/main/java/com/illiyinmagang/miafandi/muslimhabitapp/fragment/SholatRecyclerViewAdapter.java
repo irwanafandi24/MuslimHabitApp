@@ -201,7 +201,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
 
         @Override
         public void onClick(View v) {
-
+            reportingForm();
         }
     }
 

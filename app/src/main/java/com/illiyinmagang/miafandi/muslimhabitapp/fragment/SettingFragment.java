@@ -64,6 +64,7 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
 
         relPickLoc = (RelativeLayout) v.findViewById(R.id.rel_pick_location);
         txtLokasi = (TextView) v.findViewById(R.id.txt_location_now);
+        txtLokasi.setText(myLocatoin.getMynotedLocation().toUpperCase());
 
         rd_isna = (TextView) v.findViewById(R.id.rd_ISNA);
         rd_ithna = (TextView) v.findViewById(R.id.rd_itna);
@@ -99,6 +100,7 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
         rd_hanafi.setOnClickListener(this);
 
         relPickLoc.setOnClickListener(this);
+
         return v;
     }
 

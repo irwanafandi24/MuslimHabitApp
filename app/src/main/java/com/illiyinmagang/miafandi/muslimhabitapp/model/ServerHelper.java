@@ -122,4 +122,45 @@ public class ServerHelper {
 
         RequestHandler.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
+
+//    public void InsertRekap(){
+//        StringRequest stringRequest = new StringRequest(
+//                Request.Method.GET,
+//                ConfigDB.INSERTUSER,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            Toast.makeText(context,"Register Berhasil Server",Toast.LENGTH_LONG).show();
+//                        }catch (JSONException e){
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener(){
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Toast.makeText(context,error.getMessage(),Toast.LENGTH_LONG).show();
+//                    }
+//                }){
+//
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String,String> params = new HashMap<>();
+//                params.put("username",username);
+//                params.put("password",pass);
+//                params.put("email",email);
+//                params.put("nama",nama);
+//                return params;
+//            }
+//        };
+//
+//        RequestHandler.getInstance(context).addToRequestQueue(stringRequest);
+//    }
+
+//    public HashMap<String,String> getNilaiRekap(){
+
+
 }
+
