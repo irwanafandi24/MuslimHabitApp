@@ -87,7 +87,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         et_password = (TextInputEditText) findViewById(R.id.et_password);
 
         btn_fb = (LoginButton) findViewById(R.id.btn_fb);
-
         btn_twitter = (TwitterLoginButton) findViewById(R.id.btn_twt);
 
         btn_masuk.setOnClickListener(this);
@@ -99,6 +98,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 // Do something with result, which provides a TwitterSession for making API calls
                 Log.e("twitterlog","berhasil");
                 TwitterSession session = TwitterCore.getInstance().getSessionManager().getActiveSession();
+
                 Log.e("twitterlog",session.getUserName());
 
                 insertDataSosmed(session.getUserName());

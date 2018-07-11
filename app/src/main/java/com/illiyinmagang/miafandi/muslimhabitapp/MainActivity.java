@@ -39,6 +39,10 @@ import com.illiyinmagang.miafandi.muslimhabitapp.fragment.InfoFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.NotifikasiFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.fragment.SettingFragment;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.SholatAPI;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterSession;
 
 import io.realm.Realm;
 
@@ -49,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Realm realm;
     private MyLocatoin myLocatoin;
     private MyLoginConfig myLoginConfig;
+    private TwitterSession twitterSession;
+    private TwitterAuthToken authToken;
     //run program in background
 
     private TextView txtNama,txtAsal;
@@ -63,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Log.e("ceksession",myLoginConfig.getDataString(myLoginConfig.KEY_USERNAME)+""+myLoginConfig.isLogedIn());
         if(!myLoginConfig.isLogedIn()){
-//            finish();
             Log.e("masuksession","berhasil masuk"+!myLoginConfig.isLogedIn());
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
         }else{

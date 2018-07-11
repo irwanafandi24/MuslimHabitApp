@@ -326,8 +326,7 @@ public class SholatFragment extends MyFragment {
         }
 
         totalMenit = (jm_sholat*60+menit_sholat)-(jam_now*60+menit_now);
-//<<<<<<< HEAD
-//=======
+
         alarmBerbunyi = totalMenit-waktuTunggu;
         Log.v("ALARm TUNGGU ADALAH: ",alarmBerbunyi+" YOWWWW");
 
