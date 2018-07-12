@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLoginConfig;
 import com.illiyinmagang.miafandi.muslimhabitapp.R;
+import com.illiyinmagang.miafandi.muslimhabitapp.model.ServerHelper;
 import com.illiyinmagang.miafandi.muslimhabitapp.model.Sholat;
 
 import java.util.List;
@@ -27,10 +32,16 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
     private final List<Sholat> mValues;
     private Context context;
     private  int row_index = -1;
+    private ServerHelper serverHelper;
+    private String vWaktu = "";
+    private MyLoginConfig myLoginConfig;
+
 
     public SholatRecyclerViewAdapter(List<Sholat> items, Context context) {
         mValues = items;
         this.context = context;
+        this.serverHelper = new ServerHelper(context);
+        this.myLoginConfig = new MyLoginConfig(context);
     }
 
     @Override
@@ -201,23 +212,25 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
 
         @Override
         public void onClick(View v) {
-            reportingForm();
+            reportingForm(namaSholat.getText().toString());
         }
     }
 
-    public void reportingForm(){
+    public void reportingForm(final String namaSholat){
+
         LayoutInflater li = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
 
         final View mView = li.inflate(R.layout.dialogsholat, null);
-        Spinner spinnerJenisSholat = (Spinner) mView.findViewById(R.id.spinnerShalat);
+
+        final Spinner spinnerJenisSholat = (Spinner) mView.findViewById(R.id.spinnerShalat);
         ArrayAdapter<CharSequence> myAdapter = ArrayAdapter.createFromResource(context,R.array.spinSholat,android.R.layout.simple_spinner_item);
         myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerJenisSholat.setAdapter(myAdapter);
         spinnerJenisSholat.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+                spinnerJenisSholat.getSelectedItem().toString();
             }
 
             @Override
@@ -226,7 +239,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             }
         });
 
-        Spinner spinnerTempatSholat = (Spinner) mView.findViewById(R.id.spinnerTempat);
+        final Spinner spinnerTempatSholat = (Spinner) mView.findViewById(R.id.spinnerTempat);
         ArrayAdapter<CharSequence> myAdapter2 = ArrayAdapter.createFromResource(context,R.array.spinTempatSholat,android.R.layout.simple_spinner_item);
         myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerTempatSholat.setAdapter(myAdapter2);
@@ -242,7 +255,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             }
         });
 
-        Spinner spinnerQobliyah = (Spinner) mView.findViewById(R.id.spinnerQobliyah);
+        final Spinner spinnerQobliyah = (Spinner) mView.findViewById(R.id.spinnerQobliyah);
         ArrayAdapter<CharSequence> myAdapter3 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
         myAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerQobliyah.setAdapter(myAdapter3);
@@ -258,7 +271,7 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             }
         });
 
-        Spinner spinnerBadiyah = (Spinner) mView.findViewById(R.id.spinnerBadiyah);
+        final Spinner spinnerBadiyah = (Spinner) mView.findViewById(R.id.spinnerBadiyah);
         ArrayAdapter<CharSequence> myAdapter4 = ArrayAdapter.createFromResource(context,R.array.spinKonfir,android.R.layout.simple_spinner_item);
         myAdapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerBadiyah.setAdapter(myAdapter4);
@@ -274,16 +287,31 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
             }
         });
 
+
         Button btnKonfirmasi =  (Button) mView.findViewById(R.id.btnKonfirmSholat);
 
         mBuilder.setView(mView);
         final AlertDialog dialog = mBuilder.create();
         dialog.show();
 
+        final RadioButton radioButtonYes = (RadioButton) mView.findViewById(R.id.waktuYes);
+        final RadioButton radioButtonNo = (RadioButton) mView.findViewById(R.id.waktuNo);
+
         btnKonfirmasi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dialog.cancel();
+                if(radioButtonYes.isChecked()){
+                    vWaktu = "100";
+                }else if(radioButtonNo.isChecked()){
+                    vWaktu = "0";
+                }
+
+//                Log.e("rekap",myLoginConfig.getDataString(myLoginConfig.KEY_ID)+""+vWaktu+""+spinnerTempatSholat.getSelectedItem().toString()+""+spinnerJenisSholat.getSelectedItem().toString()+""+
+//                        spinnerBadiyah.getSelectedItem().toString()+""+spinnerQobliyah.getSelectedItem().toString());
+//
+//                serverHelper.InsertRekap(myLoginConfig.getDataString(myLoginConfig.KEY_ID),namaSholat,vWaktu,spinnerTempatSholat.getSelectedItem().toString(),spinnerJenisSholat.getSelectedItem().toString(),
+//                        spinnerBadiyah.getSelectedItem().toString(),spinnerQobliyah.getSelectedItem().toString());
+                dialog.dismiss();
             }
         });
     }

@@ -1,5 +1,6 @@
 package com.illiyinmagang.miafandi.muslimhabitapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.design.widget.TextInputEditText;
@@ -56,11 +57,6 @@ public class RegisterActivity extends AppCompatActivity {
                             etPassword.getText().toString(),
                     etEmail.getText().toString()
                             );
-                    startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-                    Toast.makeText(RegisterActivity.this,"Registrasi Berhasil",Toast.LENGTH_LONG).show();
-                    finish();
-                }else{
-                    Toast.makeText(RegisterActivity.this,"Registrasi Gagal",Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -92,20 +88,9 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    public boolean addUser(String nama, String username, String pass, String email){
-        realm.beginTransaction();
-        try {
-            //server
-            serverHelper.InserServer(username,email,pass,nama);
-//            local
-            User u = new User(username,email,pass,nama);
-            u.setId(generateId());
-            realm.copyToRealm(u);
-            realm.commitTransaction();
-        }catch (Exception exception){
-            return false;
-        }
-        return true;
+    public void addUser(String nama, String username, String pass, String email){
+        serverHelper.InserServer(username,email,pass,nama);
+
     }
 
     public int generateId(){

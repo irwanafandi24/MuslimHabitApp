@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if(!myLoginConfig.isLogedIn()){
             Log.e("masuksession","berhasil masuk"+!myLoginConfig.isLogedIn());
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
         }else{
             Log.e("keluarifsession","ga boleh kseini"+!myLoginConfig.isLogedIn());
 

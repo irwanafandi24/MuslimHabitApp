@@ -16,6 +16,7 @@ public class MyLoginConfig {
     public final String KEY_EMAIL = "EMAIL";
     public final String KEY_PASS = "PASS";
     public final String KEY_AUTH = "AUTH";
+    public final String KEY_ID = "ID";
 
     public final String POSITION = "MY_SESSION";
     private SharedPreferences.Editor editor;
@@ -25,6 +26,7 @@ public class MyLoginConfig {
     }
 
     public void noteIntro(User user){
+        editor.putInt(KEY_ID,user.getId());
         editor.putString(KEY_USERNAME,user.getUsername());
         editor.putString(KEY_PASS,user.getPassword());
         editor.putString(KEY_EMAIL,user.getEmail());
