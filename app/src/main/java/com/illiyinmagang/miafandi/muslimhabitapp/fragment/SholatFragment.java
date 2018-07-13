@@ -182,7 +182,7 @@ public class SholatFragment extends MyFragment {
             sholatArrayList.add(new Sholat(sholatIsya.getNamaSholat(),getDifferenceTime(convertDateFormat(sholatIsya.getJamSholat())),convertDateFormat(sholatIsya.getJamSholat()),gambar.get(0)));
 
             recyclerView.setLayoutManager(new LinearLayoutManager(SholatFragment.this.getContext()));
-            recyclerView.setAdapter(new SholatRecyclerViewAdapter(sholatArrayList, SholatFragment.this.getContext()));
+            recyclerView.setAdapter(new SholatRecyclerViewAdapter(sholatArrayList,getContext()));
             try {
                 soundNotif();
             } catch (ParseException e) {

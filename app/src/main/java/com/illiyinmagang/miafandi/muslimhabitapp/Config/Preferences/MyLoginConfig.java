@@ -53,4 +53,8 @@ public class MyLoginConfig {
     public String getDataString(String key){
         return sharedPreferences.getString(key,"");
     }
+
+    public Integer getDataID(String key){
+        return sharedPreferences.getInt(key,0);
+    }
 }

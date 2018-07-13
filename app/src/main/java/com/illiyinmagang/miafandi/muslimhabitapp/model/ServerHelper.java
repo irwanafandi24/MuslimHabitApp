@@ -38,10 +38,10 @@ public class ServerHelper {
 
     public ServerHelper(Context context) {
         this.context = context;
-        this.progressDialog = new ProgressDialog(context);
     }
 
     public void InserServer(final String username, final String email, final String pass, final String nama){
+        progressDialog = new ProgressDialog(this.context);
         progressDialog.setMessage("Waiting Register");
         progressDialog.show();
 
@@ -88,8 +88,8 @@ public class ServerHelper {
     public void LoginUser(final String username, final String password){
         final SholatAPI sholatAPI = new SholatAPI(context);
         final MyLoginConfig myLoginConfig = new MyLoginConfig(context);
-        final ProgressDialog progressDialog = new ProgressDialog(context);
 
+        final ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.setMessage("Waiting for Login");
         progressDialog.show();
 
@@ -103,17 +103,17 @@ public class ServerHelper {
                             JSONObject jsonObject = new JSONObject(response);
                             Log.e("jsonku",jsonObject.getBoolean("error")+"");
                             if(jsonObject.getBoolean("error") == false){
-                                Toast.makeText(context,"Login Berhasil",Toast.LENGTH_SHORT).show();
-
                                 myLoginConfig.noteIntro(new User(
                                         jsonObject.getJSONObject("msg").getString("username"),
                                         jsonObject.getJSONObject("msg").getString("email"),
                                         jsonObject.getJSONObject("msg").getString("password"),
                                         jsonObject.getJSONObject("msg").getString("nama"),
-                                        jsonObject.getJSONObject("msg").getInt("id")
+                                        jsonObject.getJSONObject("msg").getInt("id_user")
                                 ));
                                 Log.e("jsonku",jsonObject.getJSONObject("msg").getString("username")+"");
                                 context.startActivity(new Intent(context, MainActivity.class));
+
+                                Toast.makeText(context,"Login Berhasil"+jsonObject.getJSONObject("msg").getString("username")+jsonObject.getJSONObject("msg").getInt("id_user"),Toast.LENGTH_SHORT).show();
                                 ((Activity)context).finish();
                             }else{
                                 Toast.makeText(context,"Login Gagal",Toast.LENGTH_SHORT).show();
@@ -143,27 +143,50 @@ public class ServerHelper {
     }
 
     public void InsertRekap(final String idUser, final String namaIbadah, final String waktu, final String tempat, final String jenis, final String badiyah, final String qobliyah){
+        progressDialog = new ProgressDialog(this.context);
         progressDialog.setMessage("Sedang merekap");
         progressDialog.show();
+
         StringRequest stringRequest = new StringRequest(
-                Request.Method.GET,
+                Request.Method.POST,
                 ConfigDB.INSERTREKAP,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressDialog.dismiss();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            progressDialog.dismiss();
-                            Toast.makeText(context,"Rekap Berhasil ke Server",Toast.LENGTH_LONG).show();
+                            Log.e("LOL","LOL"+jsonObject.getBoolean("hasilRekap"));
+                            if(jsonObject.getBoolean("hasilRekap")){
+                                Toast.makeText(context,"Rekap Berhasil ke Server",Toast.LENGTH_LONG).show();
+                            }else{
+                                Toast.makeText(context,"Rekap Gagal ke Server",Toast.LENGTH_LONG).show();
+                            }
                         }catch (JSONException e){
                             e.printStackTrace();
+                            Log.e("LOL","LOL"+e.getMessage());
                         }
                     }
                 },
                 new Response.ErrorListener(){
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Log.e("LOL","LOL"+error.getMessage());
                         Toast.makeText(context,error.getMessage(),Toast.LENGTH_LONG).show();
+
+                        Log.d("LOL", "Failed with error msg:\t" + error.getMessage());
+                        Log.d("LOL", "Error StackTrace: \t" + error.getStackTrace());
+                        // edited here
+                        try {
+                            byte[] htmlBodyBytes = error.networkResponse.data;
+                            Log.e("LOL", new String(htmlBodyBytes), error);
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
+                        if (error.getMessage() == null){
+                            Toast.makeText(context,error.getMessage(),Toast.LENGTH_LONG).show();
+                        }
                     }
                 }){
 
@@ -175,7 +198,7 @@ public class ServerHelper {
                 params.put("jenis",jenis);
                 params.put("qobliyah",qobliyah);
                 params.put("badiyah",badiyah);
-                params.put("namaIbadah",namaIbadah);
+                params.put("namaIbadah",namaIbadah.toLowerCase());
                 params.put("idUser",idUser);
                 return params;
             }

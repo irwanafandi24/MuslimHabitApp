@@ -306,11 +306,11 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
                     vWaktu = "0";
                 }
 
-//                Log.e("rekap",myLoginConfig.getDataString(myLoginConfig.KEY_ID)+""+vWaktu+""+spinnerTempatSholat.getSelectedItem().toString()+""+spinnerJenisSholat.getSelectedItem().toString()+""+
-//                        spinnerBadiyah.getSelectedItem().toString()+""+spinnerQobliyah.getSelectedItem().toString());
-//
-//                serverHelper.InsertRekap(myLoginConfig.getDataString(myLoginConfig.KEY_ID),namaSholat,vWaktu,spinnerTempatSholat.getSelectedItem().toString(),spinnerJenisSholat.getSelectedItem().toString(),
-//                        spinnerBadiyah.getSelectedItem().toString(),spinnerQobliyah.getSelectedItem().toString());
+                Log.e("rekap",myLoginConfig.getDataID(myLoginConfig.KEY_ID)+""+namaSholat+""+vWaktu+""+spinnerTempatSholat.getSelectedItem().toString()+""+spinnerJenisSholat.getSelectedItem().toString()+""+
+                        spinnerBadiyah.getSelectedItem().toString()+""+spinnerQobliyah.getSelectedItem().toString());
+
+                serverHelper.InsertRekap(String.valueOf(myLoginConfig.getDataID(myLoginConfig.KEY_ID)),namaSholat,vWaktu,spinnerTempatSholat.getSelectedItem().toString(),spinnerJenisSholat.getSelectedItem().toString(),
+                        spinnerBadiyah.getSelectedItem().toString(),spinnerQobliyah.getSelectedItem().toString());
                 dialog.dismiss();
             }
         });
