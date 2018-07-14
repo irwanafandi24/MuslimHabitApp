@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:hint="Password"
-            android:inputType="textVisiblePassword"
+            android:inputType="textPassword"
             android:layout_gravity="center_horizontal"
             />
     </android.support.design.widget.TextInputLayout>
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:hint="Ketik Ulang Password"
-            android:inputType="textVisiblePassword"
+            android:inputType="textPassword"
             android:layout_gravity="center_horizontal"
             />
     </android.support.design.widget.TextInputLayout>

@@ -19,7 +19,7 @@ import com.illiyinmagang.miafandi.muslimhabitapp.R;
 public class SliderAdapter extends PagerAdapter {
     Context context;
     LayoutInflater layoutInflater;
-    public String isikonten[] = {"isi konten 1","isi konten 2", "isi konten 3"};
+    public String isikonten[] = {"Track dan Catat Ibadah Harianmu","Pengingat Waktu Ibadah Tiap Hari", "Pantau dan Koreksi Kualitas Ibadah Harianmu"};
     public int isiGambar[] = {R.drawable.notepad,R.drawable.bell,R.drawable.stats};
 
     public SliderAdapter(Context context) {
