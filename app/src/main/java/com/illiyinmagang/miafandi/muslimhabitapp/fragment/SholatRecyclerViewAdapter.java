@@ -41,7 +41,13 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
         mValues = items;
         this.context = context;
         this.serverHelper = new ServerHelper(context);
-        this.myLoginConfig = new MyLoginConfig(context);
+        try {
+            this.myLoginConfig = new MyLoginConfig(context);
+        }catch (Exception w){
+            Log.e("errornjir",w.getLocalizedMessage());
+            w.printStackTrace();
+        }
+
     }
 
     @Override

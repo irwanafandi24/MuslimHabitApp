@@ -2,6 +2,7 @@ package com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.illiyinmagang.miafandi.muslimhabitapp.model.User;
 
@@ -11,6 +12,7 @@ import com.illiyinmagang.miafandi.muslimhabitapp.model.User;
 
 public class MyLoginConfig {
     private SharedPreferences sharedPreferences;
+
     public final String KEY_USERNAME = "USERNAME";
     public final String KEY_NAMA = "NAMA";
     public final String KEY_EMAIL = "EMAIL";
@@ -21,6 +23,7 @@ public class MyLoginConfig {
     public final String POSITION = "MY_SESSION";
     private SharedPreferences.Editor editor;
     public MyLoginConfig(Context context) {
+        Log.e("errornull",context.getSharedPreferences(POSITION, Context.MODE_PRIVATE)+"");
         this.sharedPreferences = context.getSharedPreferences(POSITION, Context.MODE_PRIVATE);
         this.editor = sharedPreferences.edit();
     }
