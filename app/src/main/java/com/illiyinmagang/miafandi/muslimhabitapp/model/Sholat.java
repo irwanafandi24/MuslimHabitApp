@@ -59,4 +59,8 @@ public class Sholat extends RealmObject{
     public void setImage(int image) {
         this.image = image;
     }
+
+    public void setTanggal(String tanggal) {
+        this.tanggal = tanggal;
+    }
 }
