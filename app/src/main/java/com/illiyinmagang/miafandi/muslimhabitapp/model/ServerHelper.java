@@ -207,5 +207,52 @@ public class ServerHelper {
         RequestHandler.getInstance(context).addToRequestQueue(stringRequest);
     }
 
+    public boolean SelectRekap(final String idUser, final String namaIbadah, final String tanggal){
+        final boolean[] a = new boolean[1];
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                ConfigDB.INSERTREKAP,
+                new Response.Listener<String>() {
+                    boolean b;
+
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            Log.e("LOL","LOL"+jsonObject.getBoolean("hasilRekap"));
+                            if(jsonObject.getBoolean("hasilRekap")){
+                                a[0] = true;
+                            }else{
+                                a[0] = false;
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                            Log.e("LOL","LOL"+e.getMessage());
+                        }
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+
+                    }
+                }){
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("tanggal",tanggal);
+                params.put("namaIbadah",namaIbadah.toLowerCase());
+                params.put("idUser",idUser);
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(context).addToRequestQueue(stringRequest);
+        return a[0];
+    }
 }
 
