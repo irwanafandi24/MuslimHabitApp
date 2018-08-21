@@ -15,6 +15,7 @@ import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLocatoin;
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.RequestHandler;
+import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -180,6 +181,19 @@ public class SholatAPI {
         results.deleteAllFromRealm();
         realm.commitTransaction();
         realm.close();
+    }
+
+    public void updateResetGambar(){
+        realm.beginTransaction();
+        sholatWajibs = realm.where(SholatWajib.class).findAll();
+        for (int i = 0; i < sholatWajibs.size(); i++) {
+            sholatWajibs.get(i).getSholatsubuh().setImage(R.drawable.ibadahicon);
+            sholatWajibs.get(i).getSholatDuhur().setImage(R.drawable.ibadahicon);
+            sholatWajibs.get(i).getSholatAshar().setImage(R.drawable.ibadahicon);
+            sholatWajibs.get(i).getSholatMaghrib().setImage(R.drawable.ibadahicon);
+            sholatWajibs.get(i).getSholatIsya().setImage(R.drawable.ibadahicon);
+        }
+        realm.commitTransaction();
     }
 
 }

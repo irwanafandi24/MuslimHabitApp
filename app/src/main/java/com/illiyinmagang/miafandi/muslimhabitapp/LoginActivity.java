@@ -143,20 +143,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if(v==btn_masuk){
-//            if(isLoginCorrect(et_email.getText().toString(),et_password.getText().toString())){
-////            if(true){
-//                Log.e("login", "berhasil login");
-//                //cek di lokal dulu
-//                RealmResults results = realm.where(SholatWajib.class).findAll();
-//                if(results.size() == 0){
-//                    sholatAPI.setJadwalSholat1Year();
-//                    Log.e("datasholat", sholatAPI.getDataShalat().size()+"");
-//                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
-//                }else{
-//                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
-//                }
-//            }//cek di server
-//            else{
                 RealmResults results = realm.where(SholatWajib.class).findAll();
                 if(results.size() == 0) {
                     sholatAPI.setJadwalSholat1Year();

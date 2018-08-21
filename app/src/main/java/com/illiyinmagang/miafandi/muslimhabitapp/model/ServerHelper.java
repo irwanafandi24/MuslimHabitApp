@@ -18,6 +18,7 @@ import com.illiyinmagang.miafandi.muslimhabitapp.Config.Preferences.MyLoginConfi
 import com.illiyinmagang.miafandi.muslimhabitapp.Config.RequestHandler;
 import com.illiyinmagang.miafandi.muslimhabitapp.LoginActivity;
 import com.illiyinmagang.miafandi.muslimhabitapp.MainActivity;
+import com.illiyinmagang.miafandi.muslimhabitapp.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by user on 09/07/2018.
@@ -207,25 +209,91 @@ public class ServerHelper {
         RequestHandler.getInstance(context).addToRequestQueue(stringRequest);
     }
 
-    public boolean SelectRekap(final String idUser, final String namaIbadah, final String tanggal){
-        final boolean[] a = new boolean[1];
+    public void SelectRekap(final int idUser, final String namaIbadah, final String tanggal){
+        progressDialog = new ProgressDialog(context);
+//        final boolean[] a = new boolean[1];
+//        a[0] = true;
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                ConfigDB.INSERTREKAP,
+                ConfigDB.SELECTREKAP,
                 new Response.Listener<String>() {
-                    boolean b;
+//                    boolean b;
 
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            Log.e("LOL","LOL"+jsonObject.getBoolean("hasilRekap"));
+                            Log.e("LOL","LOLini"+jsonObject.getBoolean("hasilRekap"));
                             if(jsonObject.getBoolean("hasilRekap")){
-                                a[0] = true;
+//                                a[0] = true;
+                                Log.e("LOLBenar","LOLini"+jsonObject.getBoolean("hasilRekap"));
+                                realm.beginTransaction();
+                                SholatWajib sholatWajib = null;
+                                RealmResults<SholatWajib> sholatWajibs = realm.where(SholatWajib.class).findAll();
+                                for (int i = 0; i < sholatWajibs.size(); i++) {
+                                    if(sholatWajibs.get(i).getTanggalLengkap().equals(tanggal)){
+                                        sholatWajib = sholatWajibs.get(i);
+                                        break;
+                                    }
+                                }
+
+                                switch (namaIbadah){
+                                    case "Subuh":
+                                        sholatWajib.getSholatsubuh().setImage(R.drawable.ibadahhijauicon);
+                                        break;
+                                    case "Duhur":
+                                        sholatWajib.getSholatDuhur().setImage(R.drawable.ibadahhijauicon);
+                                        break;
+                                    case "Ashar":
+                                        sholatWajib.getSholatAshar().setImage(R.drawable.ibadahhijauicon);
+                                        break;
+                                    case "Maghrib":
+                                        sholatWajib.getSholatMaghrib().setImage(R.drawable.ibadahhijauicon);
+                                        break;
+                                    case "Isya":
+                                        sholatWajib.getSholatIsya().setImage(R.drawable.ibadahhijauicon);
+                                        break;
+                                }
+
+                                realm.commitTransaction();
+
                             }else{
-                                a[0] = false;
+//                                a[0] = false;
+                                Log.e("LOLBenar","LOLsalah"+jsonObject.getBoolean("hasilRekap"));
+                                realm.beginTransaction();
+                                SholatWajib sholatWajib = null;
+                                RealmResults<SholatWajib> sholatWajibs = realm.where(SholatWajib.class).findAll();
+                                for (int i = 0; i < sholatWajibs.size(); i++) {
+                                    if(sholatWajibs.get(i).getTanggalLengkap().equals(tanggal)){
+                                        sholatWajib = sholatWajibs.get(i);
+                                        break;
+                                    }
+                                }
+
+                                Log.e("tangganjing",sholatWajib.getTanggalLengkap().equals(tanggal)+"");
+//                                SholatWajib sholatWajib = realm.where(SholatWajib.class).equalTo("tanggal",tanggal).findFirst();
+
+                                switch (namaIbadah){
+                                    case "Subuh":
+                                        sholatWajib.getSholatsubuh().setImage(R.drawable.ibadahicon);
+                                        break;
+                                    case "Duhur":
+                                        sholatWajib.getSholatDuhur().setImage(R.drawable.ibadahicon);
+                                        break;
+                                    case "Ashar":
+                                        sholatWajib.getSholatAshar().setImage(R.drawable.ibadahicon);
+                                        break;
+                                    case "Maghrib":
+                                        sholatWajib.getSholatMaghrib().setImage(R.drawable.ibadahicon);
+                                        break;
+                                    case "Isya":
+                                        sholatWajib.getSholatIsya().setImage(R.drawable.ibadahicon);
+                                        break;
+                                }
+
+                                realm.commitTransaction();
                             }
                         }catch (JSONException e){
                             e.printStackTrace();
@@ -237,6 +305,21 @@ public class ServerHelper {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
+                        Log.e("LOL","LOL"+error.getMessage());
+                        Toast.makeText(context,error.getMessage(),Toast.LENGTH_LONG).show();
+
+                        Log.d("LOL", "Failed with error msg:\t" + error.getMessage());
+                        Log.d("LOL", "Error StackTrace: \t" + error.getStackTrace());
+                        // edited here
+                        try {
+                            byte[] htmlBodyBytes = error.networkResponse.data;
+                            Log.e("LOL", new String(htmlBodyBytes), error);
+                        } catch (NullPointerException e) {
+                            e.printStackTrace();
+                        }
+                        if (error.getMessage() == null){
+                            Toast.makeText(context,error.getMessage(),Toast.LENGTH_LONG).show();
+                        }
 
                     }
                 }){
@@ -246,13 +329,13 @@ public class ServerHelper {
                 Map<String,String> params = new HashMap<>();
                 params.put("tanggal",tanggal);
                 params.put("namaIbadah",namaIbadah.toLowerCase());
-                params.put("idUser",idUser);
+                params.put("idUser",idUser+"");
                 return params;
             }
         };
 
         RequestHandler.getInstance(context).addToRequestQueue(stringRequest);
-        return a[0];
     }
+
 }
 

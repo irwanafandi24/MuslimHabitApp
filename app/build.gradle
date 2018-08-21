@@ -42,6 +42,9 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
     //circle image
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    // chart
+//    implementation 'com.github.AnyChart:AnyChart-Android:0.2.9'
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 

@@ -71,7 +71,6 @@ public class SholatAdapter extends RecyclerView.Adapter<SholatAdapter.MyViewHold
             Boolean switched = true;
             Log.v("Detail Checked",posisi + " - "+check);
 
-            //=============================================
             if(check == true) {
                 AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
                 View mView = LayoutInflater.from(context).inflate(R.layout.dialog_warning_notifshalat, null);

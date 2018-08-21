@@ -9,4 +9,5 @@ public class ConfigDB {
     public static final String INSERTUSER = DOMAIN +"InsertUser";
     public static final String LOGINTUSER = DOMAIN +"LoginUser";
     public static final String INSERTREKAP = DOMAIN +"InsertRekap";
+    public static final String SELECTREKAP = DOMAIN +"SelectRekap";
 }

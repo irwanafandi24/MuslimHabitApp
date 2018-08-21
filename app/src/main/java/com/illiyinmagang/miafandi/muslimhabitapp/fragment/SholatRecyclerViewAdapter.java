@@ -69,28 +69,45 @@ public class SholatRecyclerViewAdapter extends RecyclerView.Adapter<SholatRecycl
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
-
         holder.namaSholat.setText(mValues.get(position).getNamaSholat());
         holder.jamSholat.setText(mValues.get(position).getJamSholat());
         holder.tungguSholat.setText(mValues.get(position).getWaktuTunggu());
         Log.e("gambar",holder.mItem.getImage()+"");
 
-        if(holder.mItem.getImage() == 0){
-            holder.imageSholat.setImageResource(R.drawable.ibadahicon);
+        serverHelper.SelectRekap(myLoginConfig.getDataID(myLoginConfig.KEY_ID),mValues.get(position).getNamaSholat(),sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getTanggalLengkap());
+
+        holder.imageSholat.setImageResource(holder.mItem.getImage());
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(getDateNow().equals(sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getTanggalLengkap())){
-                        reportingForm(holder.namaSholat.getText().toString());
-                    }else{
+                        if(holder.mItem.getImage() == R.drawable.ibadahhijauicon){
+                            Toast.makeText(context,"Udah pernah ngisi",Toast.LENGTH_SHORT).show();
+                        }else{
+                            reportingForm(holder.namaSholat.getText().toString());
+                        }
+                    }
+                    else{
                         Toast.makeText(context,"Belum saatnya anda ngisi ini",Toast.LENGTH_SHORT).show();
                     }
                 }
             });
-        }else{
-            holder.imageSholat.setImageResource(holder.mItem.getImage());
-        }
-
+//        if(!serverHelper.SelectRekap(myLoginConfig.getDataID(myLoginConfig.KEY_ID),mValues.get(position).getNamaSholat(),sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getTanggalLengkap())){
+//            holder.imageSholat.setImageResource(R.drawable.ibadahicon);
+//            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(getDateNow().equals(sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getTanggalLengkap())){
+//                        reportingForm(holder.namaSholat.getText().toString());
+//                    }else{
+//                        Toast.makeText(context,"Belum saatnya anda ngisi ini",Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//            });
+//        }else{
+//            Log.e("pastigakada","naofalgakkerjadiluarnegeri");
+//            holder.imageSholat.setImageResource(holder.mItem.getImage());
+//        }
     }
 
     private String getDateNow() {

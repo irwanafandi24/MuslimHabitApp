@@ -75,7 +75,7 @@ public class IbadahFragment extends MyFragment implements View.OnClickListener{
         myLocatoin = new MyLocatoin(this.getContext());
 
         if(!myLocatoin.getMynotedLocation().equals("malang")){
-            Toast.makeText(this.getContext(),"Jadwal Lokasi Anda Sekarang berada di Kota Malang, Atur Lokasi anda di menu setting",Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this.getContext(),"Jadwal Lokasi Anda Sekarang berada di Kota Malang, Atur Lokasi anda di menu setting",Toast.LENGTH_SHORT).show();
         }
 
         realm = Realm.getDefaultInstance();

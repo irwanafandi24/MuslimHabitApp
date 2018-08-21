@@ -137,6 +137,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 LoginManager.getInstance().logOut();
             }
             Log.e("Logoutfb","FB");
+
+            SholatAPI sholatAPI = new SholatAPI(MainActivity.this);
+            sholatAPI.updateResetGambar();
+
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
             finish();
             return true;
@@ -153,8 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
-//<<<<<<< HEAD
-//=======
 
     @Override
     public void onActivityCreated(Activity activity, Bundle bundle) {
@@ -190,4 +192,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onActivityDestroyed(Activity activity) {
     }
+
 }

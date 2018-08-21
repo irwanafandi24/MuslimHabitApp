@@ -79,7 +79,7 @@ public class SholatFragment extends MyFragment {
 
         myDateSelected = new MyDateSelected(getContext());
         myDateSelected.getMyPosisition();
-        Toast.makeText(getContext(),myDateSelected.getMyPosisition()+"",Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(),myDateSelected.getMyPosisition()+"",Toast.LENGTH_LONG).show();
 
         sholatAPI = new SholatAPI(getContext());
         sholatSubuh = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatsubuh();
@@ -88,10 +88,6 @@ public class SholatFragment extends MyFragment {
         sholatMaghrib = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatMaghrib();
         sholatIsya = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatIsya();
 
-//<<<<<<< HEAD
-        //=============Get it
-//=======
-///>>>>>>> 6c943c7f481c9b3b2c234289ea0d0d4dbbdfc051
         RealmConfiguration configuration = new RealmConfiguration.Builder().build();
         realm = Realm.getInstance(configuration);
 
@@ -100,7 +96,6 @@ public class SholatFragment extends MyFragment {
         alarmSholat = new ArrayList<>();
 
 
-        //startService(new Intent(this,MyService.class));
         Log.v("TASK 1 ==========="," OK ");
         this.mHandler = new Handler();
         m_Runnable.run();
@@ -108,9 +103,9 @@ public class SholatFragment extends MyFragment {
         return rootView;
     }
 
-//<<<<<<< HEAD
     private final Runnable m_Runnable = new Runnable()
     {
+
         public void run()
 
         {
@@ -139,12 +134,6 @@ public class SholatFragment extends MyFragment {
                 realmHelper.saveAlarem(n);
             }
             alarmSholat = realmHelper.getAllAlarm();
-//=======
-//        Log.v("SHOW TIME",showTime+"");
-//        beforeTime = getTimeBeforeAlarm(showTime);
-//        waktuTunggu = Long.parseLong(beforeTime);
-//        Log.v("UBAH KE INTEGER",waktuTunggu+"");
-//>>>>>>> 6c943c7f481c9b3b2c234289ea0d0d4dbbdfc051
 
 
             for(Alarm alarmX:alarmSholat){
