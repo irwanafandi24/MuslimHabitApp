@@ -176,7 +176,7 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
                 .setPositiveButton("UBAH", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         imgCheckJuristik.setLayoutParams(lp2);
-                        reSshedule("calculation");
+//                        reSshedule("calculation");
                         Toast.makeText(getContext(),"Berhasil diubah menjadi "+rd.getText().toString(),Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -226,7 +226,7 @@ public class SettingFragment extends MyFragment implements View.OnClickListener 
                                             txt.setText(locationConfig.getAddressComplete());
                                             myLocatoin.updateMyLocation(locationConfig.getSubAdminArea().toLowerCase());
 
-                                            reSshedule("place");
+//                                            reSshedule("place");
 
                                             Log.e("lokasiku",myLocatoin.getMynotedLocation());
                                         }else{

@@ -32,6 +32,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -81,6 +84,8 @@ public class SholatFragment extends MyFragment {
         myDateSelected.getMyPosisition();
 //        Toast.makeText(getContext(),myDateSelected.getMyPosisition()+"",Toast.LENGTH_LONG).show();
 
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycleIbadah);
+
         sholatAPI = new SholatAPI(getContext());
         sholatSubuh = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatsubuh();
         sholatDuhur = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatDuhur();
@@ -98,10 +103,21 @@ public class SholatFragment extends MyFragment {
 
         Log.v("TASK 1 ==========="," OK ");
         this.mHandler = new Handler();
+
+        ExecutorService threadPoolExecutor = Executors.newSingleThreadExecutor();
+        Future longRunningTaskFuture = threadPoolExecutor.submit(m_Runnable);
         m_Runnable.run();
 
+//        longRunningTaskFuture.cancel(true);
         return rootView;
     }
+
+    private final Runnable SholatRunable = new Runnable() {
+        @Override
+        public void run() {
+
+        }
+    };
 
     private final Runnable m_Runnable = new Runnable()
     {
@@ -149,13 +165,12 @@ public class SholatFragment extends MyFragment {
             gambar = new ArrayList();
 
             gambar.add(R.drawable.ibadahicon);
-            recyclerView = (RecyclerView) rootView.findViewById(R.id.recycleIbadah);
 
-            sholatSubuh = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatsubuh();
-            sholatDuhur = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatDuhur();
-            sholatAshar = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatAshar();
-            sholatMaghrib = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatMaghrib();
-            sholatIsya = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatIsya();
+//            sholatSubuh = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatsubuh();
+//            sholatDuhur = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatDuhur();
+//            sholatAshar = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatAshar();
+//            sholatMaghrib = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatMaghrib();
+//            sholatIsya = sholatAPI.getDataShalat().get(myDateSelected.getMyPosisition()).getSholatIsya();
 
             Log.e("gambar",sholatSubuh.getImage()+"");
             sholatArrayList.clear();
